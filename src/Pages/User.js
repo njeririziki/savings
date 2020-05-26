@@ -7,15 +7,31 @@ import Button from '@material-ui/core/Button';
 import {Link,withRouter} from 'react-router-dom'
 import * as Icon from 'react-feather';
 import Home from '../Components/Home'
+import {makeStyles} from '@material-ui/core/styles'
+import FileUploader from 'react-firebase-file-uploader'
+
+const useStyles = makeStyles( (theme) => ({
+  root : {
+      display:'flex',
+      flexDirection: 'column',
+      justifyContent:'center',
+      alignContent:'center',
+      marginTop:theme.spacing(15),
+     
+  },
+  table:{
+      width : 460
+  }
+}))
 const User = () => {
-    
+    const classes= useStyles()
     const [open,setOpen]=React.useState(false);
     const [values,setValues] = React.useState({
         name:'',
         idno:'',
         phone:''
   })
-  const [image,setImage] = React.useState([]);
+  const [image,setImage] = React.useState();
   const [url,setUrl] = React.useState(null)
   React.useEffect(()=>{
     const goal={
@@ -39,32 +55,38 @@ const User = () => {
     const closeModal=()=>{
        setOpen(false)
     }
-    React.useEffect(()=>{
-      const handleChange =()=>{
+    const handleUploadSuccess=(filename)=>{
+      setImage(filename)
+    Firebase.storage().ref('images').child(filename)
+    .getDownloadURL()
+    .then(url=> setUrl(url))
+    }
+    // React.useEffect(()=>{
+    //   const handleChange =()=>{
        
-        const storage= Firebase.storage()
-        const storageRef= storage.ref(`Image/${image.name}`)
-        const uploadTask = storageRef.put(image);
+    //     const storage= Firebase.storage()
+    //     const storageRef= storage.ref(`Image/${image}`)
+    //     const uploadTask = storageRef.put(image);
        
-        const unsubscribe= uploadTask.on( 'state_changed',
-          snapshot=>{
-            let percent = snapshot.bytesTransferred /
-            snapshot.totalBytes*100;
-            console.log(percent +'% done')
-          },
-          ()=>{
-            storage().ref('image')
-            .child(image.name)
-            .getDownloadURL()
-            .then(url=>{
-              setUrl(url);
-          });
-          }
-            );
-            unsubscribe();
-    }   
-    return ()=>handleChange()
-    },[image])
+    //     const unsubscribe= uploadTask.on( 'state_changed',
+    //       snapshot=>{
+    //         let percent = snapshot.bytesTransferred /
+    //         snapshot.totalBytes*100;
+    //         console.log(percent +'% done')
+    //       },
+    //       ()=>{
+    //         storage().ref('image')
+    //         .child(image)
+    //         .getDownloadURL()
+    //         .then(url=>{
+    //           setUrl(url);
+    //       });
+    //       }
+    //         );
+    //         unsubscribe();
+    // }   
+    // return ()=>handleChange()
+    // })
    
      
     
@@ -107,25 +129,16 @@ onClick={openModal}
 />
 </Fab> 
 <br/>
-<input type = 'file' name ='image'
-onChange={(e)=>
-setImage(e.target.files[0])}/>
+<FileUploader
+           accept = 'image/*'
+           name='profile'
+          storageRef={Firebase.storage().ref('images')}
+          onUploadError={console.log('Error')}
+          onUploadSuccess={handleUploadSuccess}
+            />
 <br/><br/>
+ 
 
-  <Fab
-color='primary'
-variant='round'
-
->
-<Icon.Plus
-/>
-</Fab> 
-<Button
-variant='contained'
-color='secondary'
->
- open Image
-</Button>
 <br/> <br/>
 <img src= {url} alt='profile'/>
 < UserProfile
@@ -140,7 +153,7 @@ Expense
 </div> 
   )
     return (
-   <div>
+   <div  className={classes.root}>
    <Home
    Appbarname='User profile'
    Content={content}
