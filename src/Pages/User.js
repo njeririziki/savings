@@ -27,25 +27,25 @@ const User = () => {
     const classes= useStyles()
     const [open,setOpen]=React.useState(false);
     const [values,setValues] = React.useState({
-        name:'',
-        idno:'',
-        phone:''
-  })
+      name :'',
+      idno:'',
+      phone:''
+    })
   const [image,setImage] = React.useState();
   const [url,setUrl] = React.useState(null)
+
   React.useEffect(()=>{
-    const goal={
-        name:'',
-        idno:'',
-        phone:''}
-    const unsub = Firebase.firestore().collection('Goal').doc('userdets').onSnapshot(doc=>{
-               goal.name=doc.data().username
-                goal.idno=doc.data().useridno
-               goal.phone = doc.data().userphone
-               setValues(goal) 
-      })
+    const uid = Firebase.auth().currentUser.uid
     
-      
+    const unsub = Firebase.firestore().collection('Users').doc(uid)
+    .onSnapshot( doc=> {
+      const goal = {
+        name : doc.data().Name ,
+        idno : doc.data().Idno ,
+        phone: doc.data().Phone }
+        setValues(goal)    
+    })
+   
           return ()=>unsub()
     },[])
 
@@ -104,7 +104,7 @@ const User = () => {
     <Typography
 variant='h5'
 >
-{values.name? `Name: ${values.name }` :'Set your goal'}
+{values.name? `Name: ${values.name }` :'Set your profilr'}
 </Typography>
 <br/>
 <Typography

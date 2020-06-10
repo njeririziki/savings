@@ -8,6 +8,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -16,7 +17,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import {Link} from 'react-router-dom'
 import Firebase from '../config'
-
+import Njeri from './profile.jpg'
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   appToolbar:{
     display:'flex',
     justifyContent:'space-between',
-    backgroundColor: '#263238',
+    backgroundColor: '#000000',
     height:100, 
   },
   title: {
@@ -41,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     fontFamily:'Sriracha'
   },
   avatar:{
-    marginRight:theme.spacing(2),
+    marginLeft:theme.spacing(5),
     width:100,
     height:100,
   },
@@ -64,7 +65,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor:'#263238',
+    backgroundColor:'#ffffff',
     
     '&hover, &focus' : {
       backgroundColor: theme.palette.grey[300],
@@ -75,9 +76,8 @@ const useStyles = makeStyles(theme => ({
     },
   },
   listItems:{
-    color:'#ffffff',
-    fontSize:25,
-    fontFamily:'Sriracha'
+    color:'#000000',
+    
   },
   content: {
     flexGrow: 1,
@@ -100,50 +100,63 @@ const Home  = (props) => {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-      <Box  className={classes.avatar}>
+      
       <Avatar 
       variant='circle'
+      src ={Njeri}
+      className={classes.avatar}
       component={Link} to ='/user'
       />
-      </Box>
+     
       
-      <Divider style={{backgroundColor:'#ffffff'}}/>
+      
       <List>
       
           <ListItem 
           button 
           component={Link} to ='/goals'>
-            
+            <ListItemIcon>
+            <Icon.Target/>
+            </ListItemIcon>
             <ListItemText 
             primary= 'Goals'
             className={classes.listItems} 
             /> 
           </ListItem>
-          <Divider style={{backgroundColor:'#ffffff'}}/>
+          
           <ListItem button 
           component={Link} to ='/budget'>>
+          <ListItemIcon>
+           <Icon.PieChart/>
+          </ListItemIcon>
           <ListItemText 
             primary= 'Budget'
             className={classes.listItems} 
             /> 
           </ListItem>
-          <Divider style={{backgroundColor:'#ffffff'}}/>
+          
           <ListItem button 
           component={Link} to ='/expense'>>
+          <ListItemIcon>
+            <Icon.Layers/> 
+          </ListItemIcon>
           <ListItemText 
             primary= 'Expenses'
             className={classes.listItems} 
             /> 
           </ListItem>
-          <Divider style={{backgroundColor:'#ffffff'}}/> 
+           
           <ListItem button 
           component={Link} to ='/goals'>>
+          <ListItemIcon>
+            <Icon.Database/>
+          </ListItemIcon>
           <ListItemText 
             primary= 'Savings'
             className={classes.listItems} 
             /> 
           </ListItem>
-          <Divider style={{backgroundColor:'#ffffff'}}/>
+          
       </List>
     </div>
   );

@@ -34,17 +34,16 @@ const Budget = () => {
   
   const [ values, setValues] = React.useState([])
    React.useEffect(()=>{
-     const unsubscribe =  Firebase.firestore().collection('Goal')
-      .onSnapshot((snapshot)=>{
+    const uid = Firebase.auth().currentUser.uid
+     const unsubscribe =  Firebase.firestore().collection('Budget').doc(uid)
+      .onSnapshot((doc)=>{
         const budget = [] ;
-        snapshot.docs.forEach(doc=>{
+       
           budget.push({
-            category: doc.data().Budget,
+            category: doc.data().Category,
             amount: doc.data().Amount
-          })
-          setValues(budget)
         })
-        
+        setValues(budget)
       })
       return()=>unsubscribe()
    },[values])
@@ -57,7 +56,7 @@ const Budget = () => {
   }
   const content=(
     <div className={classes.root}>
-    <Fab color = 'primary'
+     <Fab color = 'primary'
     onClick={getData}>
     <Icon.Plus/>
     </Fab>
@@ -66,19 +65,18 @@ const Budget = () => {
     OnOpen={openForm}
     OnClose ={closeModal}
     />
-    
-    <List>
+     <List>
     {values.map( (item) =>(
+         
       <ListItem 
       key={item}>
-      <ListItemText primary ={item.category} 
-      secondary= {item.amount}/>
+      <ListItemText
+       primary ={item.category} 
+       secondary= {item.amount}/>
       </ListItem>
       
        )) }
-    
-    </List>
-   
+   </List>
    
        <Button 
           color='secondary'

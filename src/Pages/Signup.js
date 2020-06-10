@@ -62,7 +62,7 @@ const SignUp = (props) => {
         const { email ,password } = event.target.elements;
         try{
            await Firebase.auth().createUserWithEmailAndPassword(email.value,password.value);
-                props.history.push('/')
+                props.history.push('/goals')
                 console.log ('successful')
         } catch {
        alert ('not done')

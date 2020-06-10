@@ -39,13 +39,14 @@ const GoalModal = (props) => {
         phone:''
    })
      
+   const uid = Firebase.auth().currentUser.uid
   const submitValues = async (event)=>{
      event.preventDefault();
      try{
-      await Firebase.firestore().collection('Goal').doc ('userdets').set({
-         useridno : values.idno,
-         userphone : values.phone,
-         username : values.name
+      await Firebase.firestore().collection('Users').doc (uid).set({
+        Idno : values.idno,
+        Phone : values.phone,
+        Name : values.name
       })
       props.OnClose()
       setValues({})

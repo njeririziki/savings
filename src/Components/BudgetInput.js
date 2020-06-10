@@ -36,10 +36,12 @@ const BgDialog = (props) => {
 
     const handleInput =async (e)=>{
         e.preventDefault();
+        const uid = Firebase.auth().currentUser.uid
      try{
-         await Firebase.firestore().collection('Goal').doc().set(
+         await Firebase.firestore().collection('Budget').doc(uid).set(
              {
-               Budget : values
+              Amount: values[0].amount ,
+              Category : values[0].category
              }
          );
          setValues([]);

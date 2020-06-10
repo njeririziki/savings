@@ -40,12 +40,13 @@ const GoalModal = (props) => {
    })
      
   const submitValues = async (event)=>{
+    const uid = Firebase.auth().currentUser.uid
      event.preventDefault();
      try{
-      await Firebase.firestore().collection('Goal').doc ().set({
-         goalAmount : values.amount,
-         goalTime : values.time,
-         goalTitle : values.title
+      await Firebase.firestore().collection('Goal').doc (uid).set({
+         Amount : values.amount,
+        Time : values.time,
+        Title : values.title
       })
       props.OnClose()
       setValues({})
@@ -99,9 +100,10 @@ const GoalModal = (props) => {
                     className={classes.other}
                     /><br/><br/>
                     <Button
-                     className={classes.icon}
+                     
                     variant='contained'
                     type= 'submit'
+
                     >
                         submit
                     </Button>

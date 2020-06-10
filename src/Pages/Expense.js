@@ -1,10 +1,12 @@
 import React from 'react';
 import {Table,TableBody,TableCell,TableHead,TableRow} from '@material-ui/core'
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import * as Icon from 'react-feather';
 import TextField from '@material-ui/core/TextField';
 import {makeStyles} from '@material-ui/core/styles';
 import {produce} from 'immer'
 import Home from '../Components/Home'
+import Exdialog from '../Components/ExInput'
 
 const useStyles = makeStyles( (theme) => ({
     root : {
@@ -16,8 +18,18 @@ const useStyles = makeStyles( (theme) => ({
        
     },
     table:{
-        width : 460
-    }
+        [theme.breakpoints.up('sm')] :{
+            width : 560
+        }
+        
+    },
+    fab:{
+        backgroundColor:'#000000',
+        alignSelf:'flex-end'
+     },
+     icon:{
+        color:'#ffffff',   
+    },
 }))
 
 // interface Schedule {
@@ -29,16 +41,19 @@ const useStyles = makeStyles( (theme) => ({
 
 const Expense = () => {
     const classes = useStyles()
-    const [fields,setFields] = React.useState([
-        { time:'6.00',activity:'budget',budget: 300,expense:400 }
+    const [fields,setFields] = React.useState([ 
+ 
      ]);
     const [savings,setSavings] = React.useState()
-
-    const openField=()=>{
-         setFields((another) =>[...another,{
-            time:'',activity:'',budget :'',expense: ''
-         }])
-     }
+    const [openForm,setOpenForm]= React.useState(false);
+    
+    const openDialog =()=>{
+        setOpenForm(true)
+      }
+      const closeDialog=()=>{
+        setOpenForm(false)
+      }
+   
      const sum = (arr,prop)=>{
         const math = arr.reduce(
             function (a,b){
@@ -48,22 +63,30 @@ const Expense = () => {
         return math;
     }
     React.useEffect( ()=>{
+       
+        const json = localStorage.getItem('Schedule')
+        const values = JSON.parse(json);
+        setFields(values)
+    },[])
+
+    React.useEffect( ()=>{
         const totalBudget = sum (fields,'budget')
         const totalExpense = sum(fields,'expense')
-        const diff =totalExpense-totalBudget
-        setSavings(diff)
+        const diff = totalBudget-totalExpense
+        setSavings(Math.abs(diff))
+       
+    
     },[fields]
-    )
+    ) 
+  
+
     const content =(
         <div className={classes.root}>
-        <p>Expense</p>
-        <Button variant= 'contained'>
-            Create Schedule
-        </Button>
+        
         <Table  className={classes.table}>
             <TableHead>
                 <TableRow>
-                <TableCell onClick= {openField}>Time</TableCell>
+                <TableCell >Time</TableCell>
                 <TableCell align='right' >Activity</TableCell>
                 <TableCell align='right'>Budget</TableCell>
                 <TableCell align='right'>Expenses</TableCell>
@@ -74,71 +97,47 @@ const Expense = () => {
                 {fields.map((p,index)=>(
                    <TableRow key={p.time}>
                      <TableCell >
-                     <TextField 
-                    onChange={ (e)=>{ 
-                      const rn =e.target.value
-                        setFields( currentField=> produce(currentField,v =>{
-                            v[index].time = rn
-                           }))
-                        }
-                  }
-                  value={p.time} 
-                  variant='outlined'/>
-                         </TableCell>  
+                   {p.time? p.time: 'Create a schedule'
+                   } 
+                    </TableCell>  
                   
-                       <TableCell align='right' >
-                   <TextField 
-                    variant='outlined'
-                    onChange={ (e)=>{ 
-                         const rn =e.target.value
-                        setFields( currentField=> produce(currentField,v =>{
-                            v[index].activity = rn
-                           }))
-                        }
-                  }
-                  value={p.activity} />
+                  <TableCell align='right' >
+                  {p.activity} 
                   </TableCell>
                   <TableCell align='right'  > 
-                  <TextField 
-                   variant = 'outlined'
-                    onChange={ (e)=>{ 
-                        const rn = e.target.value; 
-                        setFields( currentField=> produce(currentField,v =>{
-                            v[index].budget = Number(rn)
-                           }))
-                        }
-                  }
-                  value={p.budget}
-                  />
+                { p.budget}
+                  
                   </TableCell>
                   <TableCell align='right' > 
-                   <TextField 
-                   align='right'
-                    onChange={ (e)=>{ 
-                         const rn = e.target.value;
-                        setFields( currentField=> produce(currentField,v =>{
-                            v[index].expense = Number(rn)
-                           }))
-                        }
-                  }
-                  value={p.expense}
-                  variant='outlined' />
+                  {p.expense}
+                  
                   </TableCell>
                    </TableRow> 
                 ))}
                 
             </TableBody>
         </Table>
-                   <pre>{JSON.stringify(fields,null,2)}</pre>
-                <p>{savings}</p>
+                 
+                <p> Savings {savings}</p>
+                
+        <Fab 
+        className={classes.fab}
+        onClick={openDialog}>
+        <Icon.Plus
+        className={classes.icon}/>
+        </Fab>
     </div>
     )
 
     return ( 
       <div>
      <Home
-     Appbarname='expenses'
+     Appbarname='Expenses'
      Content={content}
+     />
+     <Exdialog
+     open ={openForm}
+     close ={closeDialog}
      />
       </div>
      );

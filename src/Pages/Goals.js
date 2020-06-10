@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Textfield from '@material-ui/core/TextField';
 import * as Icon from 'react-feather';
 import {makeStyles} from '@material-ui/core/styles';
+import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import Firebase from '../config'
 import  GoalModal from '../Components/GoalModal'
 import Home from '../Components/Home';
@@ -37,8 +39,9 @@ const useStyles = makeStyles(theme=>({
       fontSize: '20px'
    },
    circular:{
-      width:200,
-      height:200,
+      width:250,
+      height:250,
+      alignSelf:'center'
    }
    
 }))
@@ -52,19 +55,19 @@ const Goals = (props) => {
       amount:'',
       time:''
  })
+ const percentage = 75;
  React.useEffect(()=>{
-   const unsub = Firebase.firestore().collection('Goal')
-   .onSnapshot((snapshot)=>{
-     const goal={ title:'',
-     amount:'',
-     time:'' }
-     snapshot.docs.forEach(doc=>{
-              goal.amount=doc.data().goalAmount 
-               goal.title=doc.data().goalTitle
-              goal.time = doc.data().goalTime
+   
+   const uid = Firebase.auth().currentUser.uid
+   const unsub = Firebase.firestore().collection('Goal').doc(uid)
+   .onSnapshot((doc)=>{
+      const goal={
+          title:  doc.data().Title,
+         amount: doc.data().Amount ,
+         time:  doc.data().Time 
+      }
        setValues(goal) 
      })
-   })
    
          
          return ()=>unsub()
@@ -88,7 +91,7 @@ const Goals = (props) => {
        <Typography
        variant='h5'
        className={classes.typography}>
-         {values.amount? `Amount: ${values.amount }` : 'nothing'}
+         {values.amount? `Amount: ${values.amount }` : null}
        </Typography>
        <br/>
        <Typography
@@ -96,7 +99,22 @@ const Goals = (props) => {
        className={classes.typography}>
          {values.time? `Time : ${values.time }` : null}
        </Typography>
-       
+       <CircularProgressbar
+       className={classes.circular}
+       value = {percentage}
+       text={`${percentage}%`}
+       strokeWidth={5}
+       styles ={ buildStyles({
+           rotation : 0,
+           textSize:'20px',
+           strokeLinecap:'butt',
+           pathTransitionDuration: 0.5,
+           pathColor: `#c62828`,
+           trailColor:'#d6d6d6',
+           textColor: '#000000',
+       })
+       }
+       />
          <Fab
          className={classes.fab}
          variant='round'
