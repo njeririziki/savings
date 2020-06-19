@@ -1,6 +1,8 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogBody from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 import Textfield from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import Firebase from '../config'
@@ -8,20 +10,27 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme=>({
     modal:{
-        width :500,
-        height:400,
+        [theme.breakpoints.up('sm')] :{
+            width : 560,
+            height:400,
+        },
         backgroundColor: theme.palette.background.paper,
         border: 'none',
-        
          padding: theme.spacing(2, 4, 3),
         
        },
        modalPaper:{
-       
           display:'flex',
           flexDirection:'row',
           justifyContent:'center',
-          alignSelf:'center'
+          alignSelf:'center',
+          [theme.breakpoints.up('sm')] :{
+            width : 560,
+            height:400,
+        },
+       },
+       dialog:{
+
        },
     other:{
         marginTop:theme.spacing(5)
@@ -63,16 +72,14 @@ const GoalModal = (props) => {
             open ={props.OnOpen}
             onClose={props.OnClose}
             >
-                  <DialogTitle>
-                Set your goal
-                </DialogTitle>
-                 <div   className={classes.modalPaper}>
+              
+                 <DialogBody>
                  <form  autoComplete='off'
                  onSubmit = {submitValues}
-                 className={classes.modal}
-                 >
-                
-                    <Textfield
+                  className={classes.modal}
+                 > 
+                 <p>Set your goal</p>
+                 <Textfield
                     variant='outlined'
                     id='title'
                     placeholder='title'
@@ -80,7 +87,7 @@ const GoalModal = (props) => {
                     onChange={handleChange('title')}
                     fullWidth
                     className={classes.other}
-                    /><br/><br/>
+                    /><br/>
                     <Textfield
                     variant='outlined'
                     id='Amount'
@@ -89,7 +96,7 @@ const GoalModal = (props) => {
                     onChange={handleChange('amount')}
                     fullWidth
                     className={classes.other}
-                    /><br/><br/>
+                    /><br/>
                      <Textfield
                     variant='outlined'
                     id='time'
@@ -98,17 +105,25 @@ const GoalModal = (props) => {
                     onChange={handleChange('time')}
                     fullWidth
                     className={classes.other}
-                    /><br/><br/>
+                    />
+                    <br/>
+                    <DialogActions>
                     <Button
-                     
+                    variant='contained'
+                    onClick = {props.onClose}
+                    >
+                    cancel
+                    </Button>
+                    <Button
                     variant='contained'
                     type= 'submit'
-
                     >
-                        submit
+                    submit
                     </Button>
+                    </DialogActions>
+                    
                 </form>
-                 </div>
+                </DialogBody>
             
             </Dialog>
         </div>

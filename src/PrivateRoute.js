@@ -13,7 +13,7 @@ const PrivateRoute = ({
         component= {(props)=>(
             user?
             (<Component {...props} />) :
-             (< Redirect to='./'/>)
+             (< Redirect to='/logIn'/>)
         )
           
         }/>
@@ -31,7 +31,7 @@ const PrivateRoute = ({
         <Route  {...rest}
         component= {(props)=>(
             user?
-            (< Redirect to='./goals'/>):
+            (< Redirect to='/'/>):
             (<Component {...props} />) 
              
         )

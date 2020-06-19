@@ -5,7 +5,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import {produce} from 'immer'
 import Dialog from '@material-ui/core/Dialog';
-import {DialogContent,DialogActions} from '@material-ui/core'
+import {DialogContent,DialogActions} from '@material-ui/core';
+import * as Icon from 'react-feather'
+
 
 
  const Expense = (props) => {
@@ -34,10 +36,14 @@ import {DialogContent,DialogActions} from '@material-ui/core'
                   <Table  >
             <TableHead>
                 <TableRow>
-                <TableCell onClick= {openField}>Time</TableCell>
-                <TableCell align='right' >Activity</TableCell>
-                <TableCell align='right'>Budget</TableCell>
-                <TableCell align='right'>Expenses</TableCell>
+                <TableCell >Time</TableCell>
+                <TableCell  >Activity</TableCell>
+                <TableCell >Budget</TableCell>
+                <TableCell >Expenses</TableCell>
+                <TableCell >
+                    <Icon.Edit
+                 onClick= {openField}/>
+                 </TableCell>
                 </TableRow>
                 
             </TableHead>
@@ -99,7 +105,8 @@ import {DialogContent,DialogActions} from '@material-ui/core'
                    </TableRow> 
                 ))
                
-             }   
+             } 
+
             </TableBody>
           
         </Table>

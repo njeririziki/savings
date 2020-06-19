@@ -15,7 +15,8 @@ const Router = () => {
         <AuthProvider>
              <BrowserRouter>
         <div>
-            <PublicRoute path='/' component={Login} exact/>
+        <PrivateRoute path='/' component={Goal} exact/>
+            <PublicRoute path='/logIn' component={Login} exact/>
             <PrivateRoute path='/goals' component={Goal} exact/>
             <PrivateRoute path='/user' component={User} exact/>
             <PrivateRoute path='/expense' component={Expense} exact/>

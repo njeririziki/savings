@@ -50,28 +50,39 @@ const Goals = (props) => {
 
    const classes= useStyles();
    const [open,setOpen]=React.useState(false);
+   const [isLoading,setIsloading] = React.useState(false)
    const [values,setValues] = React.useState({
       title:'',
       amount:'',
       time:''
  })
  const percentage = 75;
+ 
  React.useEffect(()=>{
-   
    const uid = Firebase.auth().currentUser.uid
-   const unsub = Firebase.firestore().collection('Goal').doc(uid)
-   .onSnapshot((doc)=>{
-      const goal={
-          title:  doc.data().Title,
-         amount: doc.data().Amount ,
-         time:  doc.data().Time 
-      }
-       setValues(goal) 
-     })
-   
-         
-         return ()=>unsub()
-   })
+   const userRef =  Firebase.firestore().collection('Goal').doc(uid)
+   async function unsub() {
+      try{
+        await userRef.get().then((docSnapshot)=>{
+        if(docSnapshot.exists){
+         userRef.onSnapshot((doc)=>{
+            const goal={
+               title:  doc.data().Title,
+               amount: doc.data().Amount ,
+               time:  doc.data().Time 
+            };
+             setValues(goal) ;
+             
+            });
+        }
+        })
+       
+      } catch (error){
+         alert(error)
+      }   
+   } 
+   unsub()  
+    },[])
    const openModal=()=>{
       setOpen(true)
    }
@@ -80,8 +91,9 @@ const Goals = (props) => {
    }
    const Content=(
       <div
-      className={classes.root}
+      
     >
+       <div className={classes.root}>
        <Typography
        variant='h5'
        className={classes.typography}>
@@ -115,15 +127,15 @@ const Goals = (props) => {
        })
        }
        />
-         <Fab
-         className={classes.fab}
-         variant='round'
-         onClick={openModal}
-         >
-         <Icon.Plus
-         className={classes.icon}/>
-         </Fab> 
-     
+        <Fab
+       className={classes.fab}
+       variant='round'
+       onClick={openModal}
+       >
+       <Icon.Plus
+       className={classes.icon}/>
+       </Fab>
+       </div>
         <GoalModal 
         OnOpen={open}
         OnClose={closeModal}/> 

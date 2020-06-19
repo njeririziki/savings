@@ -8,6 +8,7 @@ import {produce} from 'immer';
 import { generate } from "shortid";
 import Fab from '@material-ui/core/Fab';
 import * as Icon from 'react-feather'
+import { DialogActions } from '@material-ui/core';
 
 const useStyles= makeStyles(theme=>({
  root:{
@@ -21,6 +22,12 @@ const useStyles= makeStyles(theme=>({
     flexDirection: 'column',
     justifyContent: 'space-between',
     margin : theme.spacing(3)
+ },
+ button :{
+    backgroundColor:'#000000',
+    color:'#ffffff',
+    width:200,
+    alignSelf:'flex-end'
  }
 }))
 const BgDialog = (props) => {
@@ -33,15 +40,17 @@ const BgDialog = (props) => {
     ]    
     );
     const [savings,setSavings] =React.useState()
+    
+    const uid = Firebase.auth().currentUser.uid;
 
     const handleInput =async (e)=>{
         e.preventDefault();
-        const uid = Firebase.auth().currentUser.uid
+      
      try{
          await Firebase.firestore().collection('Budget').doc(uid).set(
              {
-              Amount: values[0].amount ,
-              Category : values[0].category
+             Budget: values,
+             Savings : savings
              }
          );
          setValues([]);
@@ -62,7 +71,7 @@ const BgDialog = (props) => {
     React.useEffect(()=>{
         const totalAmount = sum(values,`amount`);
         setSavings(totalAmount)
-    },[values])
+    },[values,savings])
     
     // const takeInput= (index) =>(e)=>{
     //         setValues( (currentCategory)=>
@@ -79,21 +88,7 @@ const BgDialog = (props) => {
         <div >
           <Dialog
           open = {props.OnOpen}
-          onClose= {props.OnClose}>
-          <Fab color = 'secondary'
-                 onClick={() =>
-                  setValues(currentValues=>[
-                      ...currentValues,
-                      {
-                          id:generate(),
-                          category:'',
-                          amount:''
-                      }
-                  ])
-                }
-                  >
-                <Icon.Plus/>
-                </Fab>
+          onClose= {props.OnClose}>     
             <form  
              className= { classes.dialog}
              onSubmit ={handleInput}
@@ -134,16 +129,36 @@ const BgDialog = (props) => {
             }
             }
             value={p.amount}
-            /> <br/>
+            />
              </div>)
                  })}
-           
-            
+                    <Icon.Edit
+                  onClick={() =>
+                    setValues(currentValues=>[
+                        ...currentValues,
+                        {
+                            id:generate(),
+                            category:'',
+                            amount:''
+                        }
+                    ])
+                  }/>
+             <br/><br/>
+             <DialogActions>
              <Button 
+             className={classes.button}
+                onClick = {props.onClose}
+                variant= 'contained'>
+                 Cancel
+                </Button>
+             <Button 
+             className={classes.button}
                 type = 'submit'
                 variant= 'contained'>
                  Submit
                 </Button>
+             </DialogActions>
+            
             </form>  
           </Dialog>
  
