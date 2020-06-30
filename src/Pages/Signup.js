@@ -47,22 +47,18 @@ fontSize:20
 
 const SignUp = (props) => {
     const classes =useStyle()
-    // const [values,setValues] = React.useState(
-    //     {
-    //         email:'',
-    //         password:'',
-    //         passwordII:''
-    //     }
-    // )
-    // const takeInput = name =>event =>{
-    //    setValues({...values,[name]: event.target.value})
-    // }
     const submitInput = async (event)=>{
         event.preventDefault();
         const { email ,password } = event.target.elements;
         try{
            await Firebase.auth().createUserWithEmailAndPassword(email.value,password.value);
                 props.history.push('/goals')
+                const uid = Firebase.auth().currentUser.uid;
+              await Firebase.firestore().collection('Goal').doc(uid).set(
+                 {
+                     Savings: 0
+                } 
+              )
                 console.log ('successful')
         } catch {
        alert ('not done')

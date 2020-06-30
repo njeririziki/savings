@@ -6,40 +6,56 @@ import Button from '@material-ui/core/Button'
 import {produce} from 'immer'
 import Dialog from '@material-ui/core/Dialog';
 import {DialogContent,DialogActions} from '@material-ui/core';
-import * as Icon from 'react-feather'
-
+import * as Icon from 'react-feather';
+import Firebase from '../config';
+import { generate } from "shortid";
 
 
  const Expense = (props) => {
     const [fields,setFields] = React.useState([ 
-       {}  
+       {
+           id:'0',
+           time:0,
+           activity:'',
+           budget:0
+       }  
      ]);
+
     const openField=()=>{
-        setFields((another) =>[...another,{
-           time:0 ,activity:'',budget :0,expense: 0
-        }])
+        setFields((another) =>[...another,
+            {
+         id: generate() , 
+         time:0 ,
+         activity:'',
+         budget :0
+        }
+    ])
     }
-    const saveInput =()=>{
+    const saveInput =(e)=>{
+       e.preventDefault()
         if (fields){
             const json = JSON.stringify(fields);
-           localStorage.setItem('Schedule',json)
-    
-        }
+           localStorage.setItem('Schedule',json);
+          
+        };
+        props.close()
+        
     }
+    
     
     return (
         <Dialog
         open ={props.open}
         onClose = {props.close}
-        >
-            <DialogContent>
-                  <Table  >
+        >  
+           <form   onSubmit={saveInput}> 
+           <DialogContent>
+           <Table  >
             <TableHead>
                 <TableRow>
                 <TableCell >Time</TableCell>
                 <TableCell  >Activity</TableCell>
                 <TableCell >Budget</TableCell>
-                <TableCell >Expenses</TableCell>
                 <TableCell >
                     <Icon.Edit
                  onClick= {openField}/>
@@ -49,7 +65,7 @@ import * as Icon from 'react-feather'
             </TableHead>
             <TableBody>
                 {fields.map((p,index)=>(
-                   <TableRow key={p.time}>
+                   <TableRow key={p.id}>
                      <TableCell >
                    
                    <TextField 
@@ -89,19 +105,7 @@ import * as Icon from 'react-feather'
                   value={p.budget}
                   />
                   </TableCell>
-                  <TableCell align='right' > 
-                   <TextField 
-                   align='right'
-                    onChange={ (e)=>{ 
-                         const rn = e.target.value;
-                        setFields( currentField=> produce(currentField,v =>{
-                            v[index].expense = Number(rn)
-                           }))
-                        }
-                  }
-                  value={p.expense}
-                  variant='outlined' />
-                  </TableCell>
+            
                    </TableRow> 
                 ))
                
@@ -110,7 +114,8 @@ import * as Icon from 'react-feather'
             </TableBody>
           
         </Table>
-        </DialogContent>
+        </DialogContent> 
+           
         <DialogActions>
             <Button
               variant='contained'
@@ -120,10 +125,14 @@ import * as Icon from 'react-feather'
             </Button>
             <Button
             variant='contained'
-            onClick={saveInput}>
+            type='submit'>
                 Save
             </Button>
         </DialogActions>
+           </form>
+               
+                 
+        
         </Dialog>
       ); 
  }

@@ -2,12 +2,14 @@ import React from 'react';
 import {Table,TableBody,TableCell,TableHead,TableRow} from '@material-ui/core'
 import Fab from '@material-ui/core/Fab';
 import * as Icon from 'react-feather';
+import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip'
 import {makeStyles} from '@material-ui/core/styles';
-import {produce} from 'immer'
+import {produce} from 'immer';
+import Firebase, { firebase} from '../config'
 import Home from '../Components/Home'
 import Exdialog from '../Components/ExInput'
 
@@ -64,9 +66,8 @@ const useStyles = makeStyles( (theme) => ({
 
 const Expense = () => {
     const classes = useStyles()
-    const [fields,setFields] = React.useState([ 
- 
-     ]);
+    const [fields,setFields] = React.useState([ ]);
+    const [expenses,setExpenses] = React.useState([ ]);
     const [savings,setSavings] = React.useState()
     const [openForm,setOpenForm]= React.useState(false);
     
@@ -95,6 +96,12 @@ const Expense = () => {
         )
         return math;
     }
+    const sumSavings = (arr)=>{
+      const math = arr.reduce((a,b) =>{
+        return a+b
+      },0)
+      return math;
+    }
     // set schedule to local storage
     React.useEffect( ()=>{
        
@@ -102,16 +109,34 @@ const Expense = () => {
         const values = JSON.parse(json);
         setFields(values)
     },[])
-
+   // get the savings 
     React.useEffect( ()=>{
+     if(expenses){
+      const json = JSON.stringify(expenses)
+      localStorage.setItem('Expenses',json)
+     } 
         const totalBudget = sum (fields,'budget')
-        const totalExpense = sum(fields,'expense')
-        const diff = totalBudget-totalExpense
-        setSavings(Math.abs(diff))
-       
-    
-    },[fields]
+       if(expenses > 0) {
+         const totalExpense = sumSavings(expenses)
+        const diff = totalBudget-totalExpense;
+        setSavings(Math.abs(diff)); 
+       }  else{
+        setSavings('0'); 
+       }
+    },[fields,expenses]
     ) 
+    function unsubscribe(){
+      const uid=  Firebase.auth().currentUser.uid
+      try{
+        Firebase.firestore().collection('Goal').doc(uid)
+        .update({
+        Savings : firebase.firestore.FieldValue.increment(savings)
+        })
+      } catch(error){
+        alert(error)
+      }
+     
+    } 
   
 
     const content =(
@@ -148,7 +173,7 @@ const Expense = () => {
             </TableHead>
             <TableBody>
                 {fields.map((p,index)=>(
-                   <TableRow key={p.time}>
+                   <TableRow key={p.id}>
                      <TableCell >
                    {p.time? p.time: 'Create a schedule'
                    } 
@@ -161,8 +186,20 @@ const Expense = () => {
                 { p.budget}
                   
                   </TableCell>
-                  <TableCell align='right' > 
-                  {p.expense}
+                  <TableCell  > 
+                 <TextField
+                 variant ='outlined'
+              
+                 onChange ={ (e)=>{
+                   e.preventDefault();
+                   const val = e.target.value;
+                   setExpenses(
+                     (currentExpense)=>[ 
+                       ...currentExpense,
+                       val
+                     ]
+                    )}}
+                 />
                   
                   </TableCell>
                
@@ -179,7 +216,8 @@ const Expense = () => {
                   <TableCell align='right' > 
                   <Button 
                     className={classes.button}
-                        variant= 'contained'
+                    onClick={unsubscribe}
+                    variant= 'contained'
                         >
                         Save
                   </Button>

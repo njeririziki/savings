@@ -54,22 +54,24 @@ const Goals = (props) => {
    const [values,setValues] = React.useState({
       title:'',
       amount:'',
-      time:''
+      time:'',
+      savings:''
  })
- const percentage = 75;
- 
+ const percentage = Math.ceil(values.savings/ values.amount)  ;
+  const timeLeft = values.amount/values.time*12 ;
  React.useEffect(()=>{
    const uid = Firebase.auth().currentUser.uid
    const userRef =  Firebase.firestore().collection('Goal').doc(uid)
-   async function unsub() {
+   function unsub() {
       try{
-        await userRef.get().then((docSnapshot)=>{
+         userRef.get().then((docSnapshot)=>{
         if(docSnapshot.exists){
          userRef.onSnapshot((doc)=>{
             const goal={
                title:  doc.data().Title,
                amount: doc.data().Amount ,
-               time:  doc.data().Time 
+               time:  doc.data().Time ,
+               savings: doc.data().Savings
             };
              setValues(goal) ;
              
@@ -111,6 +113,11 @@ const Goals = (props) => {
        className={classes.typography}>
          {values.time? `Time : ${values.time }` : null}
        </Typography>
+       <Typography
+       variant='h5'
+       className={classes.typography}>
+         {values.savings? `Savings : ${values.savings }` : null}
+       </Typography>
        <CircularProgressbar
        className={classes.circular}
        value = {percentage}
@@ -127,6 +134,7 @@ const Goals = (props) => {
        })
        }
        />
+       {timeLeft}
         <Fab
        className={classes.fab}
        variant='round'

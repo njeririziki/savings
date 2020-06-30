@@ -21,4 +21,4 @@ const Firebase =firebase.initializeApp({
 // const functions = firebase.functions();
 
 export default Firebase;
-
+ export {firebase}

@@ -34,8 +34,8 @@ const BgDialog = (props) => {
     const [values,setValues] = React.useState([
 
         {   id:'0',
-            amount: 12233 ,
-            category:'Maintainance'   
+            amount: 0 ,
+            category:''   
         },
     ]    
     );
