@@ -58,7 +58,7 @@ const Goals = (props) => {
       savings:''
  })
  const percentage = Math.ceil(values.savings/ values.amount)  ;
-  const timeLeft = values.amount/values.time*12 ;
+ const timeLeft = values.amount/values.time*12 ;
  React.useEffect(()=>{
    const uid = Firebase.auth().currentUser.uid
    const userRef =  Firebase.firestore().collection('Goal').doc(uid)

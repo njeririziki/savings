@@ -8,7 +8,7 @@ import {Link,withRouter} from 'react-router-dom'
 import * as Icon from 'react-feather';
 import Home from '../Components/Home'
 import {makeStyles} from '@material-ui/core/styles'
-import FileUploader from 'react-firebase-file-uploader'
+import Profile from '../Components/Avatar'
 
 const useStyles = makeStyles( (theme) => ({
   root : {
@@ -21,6 +21,10 @@ const useStyles = makeStyles( (theme) => ({
   },
   table:{
       width : 460
+  },
+  avatar:{
+   height:300,
+   width:300
   }
 }))
 const User = () => {
@@ -31,22 +35,26 @@ const User = () => {
       idno:'',
       phone:''
     })
-  const [image,setImage] = React.useState();
-  const [url,setUrl] = React.useState(null)
+  //const [image,setImage] = React.useState();
+  //
 
   React.useEffect(()=>{
     const uid = Firebase.auth().currentUser.uid
-    
     const unsub = Firebase.firestore().collection('Users').doc(uid)
-    .onSnapshot( doc=> {
-      const goal = {
-        name : doc.data().Name ,
-        idno : doc.data().Idno ,
-        phone: doc.data().Phone }
-        setValues(goal)    
+    .get().then( (docsnapshot)=>{
+      if(docsnapshot.exists) {
+        Firebase.firestore().collection('Users').doc(uid)
+        .onSnapshot((doc)=>{
+          const goal = {
+            name : doc.data().Name ,
+            idno : doc.data().Idno ,
+            phone: doc.data().Phone }
+            setValues(goal) 
+        }) 
+      } 
+     
     })
-   
-          return ()=>unsub()
+    return ()=> unsub ;
     },[])
 
     const openModal=()=>{
@@ -55,62 +63,21 @@ const User = () => {
     const closeModal=()=>{
        setOpen(false)
     }
-    const handleUploadSuccess=(filename)=>{
-      setImage(filename)
-    Firebase.storage().ref('images').child(filename)
-    .getDownloadURL()
-    .then(url=> setUrl(url))
-    }
-    // React.useEffect(()=>{
-    //   const handleChange =()=>{
-       
-    //     const storage= Firebase.storage()
-    //     const storageRef= storage.ref(`Image/${image}`)
-    //     const uploadTask = storageRef.put(image);
-       
-    //     const unsubscribe= uploadTask.on( 'state_changed',
-    //       snapshot=>{
-    //         let percent = snapshot.bytesTransferred /
-    //         snapshot.totalBytes*100;
-    //         console.log(percent +'% done')
-    //       },
-    //       ()=>{
-    //         storage().ref('image')
-    //         .child(image)
-    //         .getDownloadURL()
-    //         .then(url=>{
-    //           setUrl(url);
-    //       });
-    //       }
-    //         );
-    //         unsubscribe();
-    // }   
-    // return ()=>handleChange()
-    // })
-   
-     
-    
-      // const showImage=()=>{
-      //    Firebase.storage().ref('image')
-      //     .child(image.name)
-      //     .getDownloadURL()
-      //     .then(url=>{
-      //       setUrl(url);
-      //     })
-      
-      // }
+  
   const content =(
     <div>
+      <Profile className={classes.avatar}/> 
+<br/> <br/>
     <Typography
 variant='h5'
 >
-{values.name? `Name: ${values.name }` :'Set your profilr'}
+{values.name? `Name: ${values.name }` :'Set your profile'}
 </Typography>
 <br/>
 <Typography
 variant='h5'
 >
-{values.idno? `idno: ${values.idno }` : 'nothing'}
+{values.idno? `idno: ${values.idno }` : ' '}
 </Typography>
 <br/>
 <Typography
@@ -129,18 +96,10 @@ onClick={openModal}
 />
 </Fab> 
 <br/>
-<FileUploader
-           accept = 'image/*'
-           name='profile'
-          storageRef={Firebase.storage().ref('images')}
-          onUploadError={console.log('Error')}
-          onUploadSuccess={handleUploadSuccess}
-            />
-<br/><br/>
- 
 
-<br/> <br/>
-<img src= {url} alt='profile'/>
+<br/><br/>
+
+
 < UserProfile
 OnOpen={open}
 OnClose={closeModal}/> 
