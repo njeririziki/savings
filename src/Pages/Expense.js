@@ -52,8 +52,7 @@ const useStyles = makeStyles( (theme) => ({
       button :{
         width:'300',
         backgroundColor:'#000000',
-        color:'#ffffff',
-        
+        color:'#ffffff', 
       }
 }))
 
@@ -87,7 +86,7 @@ const Expense = () => {
      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
      let weekday = days[date.getDay()]
       
-     // getting the savings amount
+     // getting the expense and budget amount
      const sum = (arr,prop)=>{
         const math = arr.reduce(
             function (a,b){
@@ -96,6 +95,7 @@ const Expense = () => {
         )
         return math;
     }
+    // get the savings
     const sumSavings = (arr)=>{
       const math = arr.reduce((a,b) =>{
         return a+b
@@ -125,6 +125,7 @@ const Expense = () => {
        }
     },[fields,expenses]
     ) 
+    // upload savings to firebase
     function unsubscribe(){
       const uid=  Firebase.auth().currentUser.uid
       try{
@@ -172,7 +173,7 @@ const Expense = () => {
                 </TableRow>  
             </TableHead>
             <TableBody>
-                {fields.map((p,index)=>(
+            {fields.map ((p)=>(
                    <TableRow key={p.id}>
                      <TableCell >
                    {p.time? p.time: 'Create a schedule'
@@ -186,19 +187,16 @@ const Expense = () => {
                 { p.budget}
                   
                   </TableCell>
-                  <TableCell  > 
-                 <TextField
+                  <TableCell  align='right' > 
+                  <TextField
                  variant ='outlined'
               
                  onChange ={ (e)=>{
                    e.preventDefault();
                    const val = e.target.value;
                    setExpenses(
-                     (currentExpense)=>[ 
-                       ...currentExpense,
                        val
-                     ]
-                    )}}
+                  )}}
                  />
                   
                   </TableCell>
@@ -256,3 +254,18 @@ const Expense = () => {
 }
  
 export default Expense;
+/* 
+    <TextField
+                 variant ='outlined'
+              
+                 onChange ={ (e)=>{
+                   e.preventDefault();
+                   const val = e.target.value;
+                   setExpenses(
+                     (currentExpense)=>[ 
+                       ...currentExpense,
+                       val
+                     ]
+                    )}}
+                 />
+                 */

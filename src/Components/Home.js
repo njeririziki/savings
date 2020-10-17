@@ -28,14 +28,19 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
       flexShrink: 0,
+      
     },
+    color:'#ffffff',
+    fontSize:'20px',
+    fontFamily: 'Nunito',
   },
   appToolbar:{
     display:'flex',
     justifyContent:'space-between',
-    backgroundColor: '#000000',
+    backgroundColor: '	#0f1724',
     height:100, 
   },
+ 
   title: {
     justifyContent:'space-between',
     fontSize:40,
@@ -65,7 +70,8 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor:'#ffffff',
+    backgroundColor:'#1d2636',
+    
     
     '&hover, &focus' : {
       backgroundColor: theme.palette.grey[300],
@@ -76,7 +82,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   listItems:{
-    color:'#000000',
+    color:'#ffffff',
     
   },
   content: {
@@ -106,54 +112,51 @@ const Home  = (props) => {
       src ={Njeri}
       className={classes.avatar}
       component={Link} to ='/user'
-      />
-     
-      
-      
-      <List>
+      />   
+      <List className={classes.listItems}  >
       
           <ListItem 
           button 
           component={Link} to ='/goals'>
-            <ListItemIcon>
+            <ListItemIcon className={classes.listItems} >
             <Icon.Target/>
             </ListItemIcon>
             <ListItemText 
             primary= 'Goals'
-            className={classes.listItems} 
+            
             /> 
           </ListItem>
           
           <ListItem button 
-          component={Link} to ='/budget'>>
-          <ListItemIcon>
+          component={Link} to ='/budget'>
+          <ListItemIcon className={classes.listItems}>
            <Icon.PieChart/>
           </ListItemIcon>
           <ListItemText 
             primary= 'Budget'
-            className={classes.listItems} 
+            
             /> 
           </ListItem>
           
           <ListItem button 
-          component={Link} to ='/expense'>>
-          <ListItemIcon>
+          component={Link} to ='/expense'>
+          <ListItemIcon className={classes.listItems}>
             <Icon.Layers/> 
           </ListItemIcon>
           <ListItemText 
             primary= 'Expenses'
-            className={classes.listItems} 
+            
             /> 
           </ListItem>
            
           <ListItem button 
-          component={Link} to ='/goals'>>
-          <ListItemIcon>
+          component={Link} to ='/goals'>
+          <ListItemIcon className={classes.listItems}>
             <Icon.Database/>
           </ListItemIcon>
           <ListItemText 
             primary= 'Savings'
-            className={classes.listItems} 
+            
             /> 
           </ListItem>
           
@@ -167,7 +170,7 @@ const Home  = (props) => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar 
         className={classes.appToolbar}
-        style={{}}>
+         >
           <IconButton
             color="inherit"
             aria-label="open drawer"

@@ -38,9 +38,10 @@ import Firebase from '../config';
          }
           React.useEffect(()=>{
             const uid = Firebase.auth().currentUser.uid
+            const collectionRef = Firebase.firestore().collection('Users').doc(uid)
              if(image){ 
                const storage= Firebase.storage()
-              const storageRef= storage.ref().child(`Image/${image.name}`)
+              const storageRef= storage.ref().child(image.name)
               const uploadTask = storageRef.put(image);
              
               const unsubscribe= uploadTask.on( 'state_changed',
@@ -48,11 +49,12 @@ import Firebase from '../config';
                   let percent = snapshot.bytesTransferred /
                   snapshot.totalBytes*100;
                   console.log(percent +'% done')
-                },
-                async ()=>{
-                const url= await storageRef.getDownloadURL()
-                   await Firebase.firestore().collection('Image').doc(uid)
-                   .set({url})
+                  }, async ()=>{
+                const url= await storageRef.getDownloadURL();
+                   await collectionRef.set({
+                    profile:url
+                  })
+                  console.log('this is me' + url)
                     setUrl(url);
                 });
                 
@@ -63,7 +65,7 @@ import Firebase from '../config';
         return (
             <div>
              <Avatar>
-              {url?<img src={url} alt='profile'/>:<input type='file' onChange={handleChange}/>} 
+              <input type='file' onChange={handleChange}/> 
              </Avatar>
              
             </div>

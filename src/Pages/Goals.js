@@ -120,7 +120,7 @@ const Goals = (props) => {
        </Typography>
        <CircularProgressbar
        className={classes.circular}
-       value = {percentage}
+       value = {percentage? percentage: 2}
        text={`${percentage}%`}
        strokeWidth={5}
        styles ={ buildStyles({
@@ -128,8 +128,8 @@ const Goals = (props) => {
            textSize:'20px',
            strokeLinecap:'butt',
            pathTransitionDuration: 0.5,
-           pathColor: `#c62828`,
-           trailColor:'#d6d6d6',
+           pathColor: `#006978`,
+           trailColor:'#82ada9',
            textColor: '#000000',
        })
        }
