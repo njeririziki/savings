@@ -11,9 +11,7 @@ import Firebase from '../config'
 import AuthContext from '../Context/AuthContext'
 
 const useStyle= makeStyles(theme=>({
- body:{
-    backgroundColor:'#f1f1f1', 
- },
+ 
 
 root:{
     marginTop: theme.spacing(8),
@@ -22,7 +20,8 @@ root:{
     flexDirection:'column'
 },
 container:{
-    backgroundColor:'#f1f1f1'
+    backgroundColor:'#fafafa',
+
 },
 avatar:{
     marginTop:theme.spacing(3),
@@ -33,6 +32,12 @@ avatar:{
 },
 other:{
 marginTop:theme.spacing(3)
+},
+typo:{
+  marginTop:theme.spacing(3),
+  textDecoration:'none',
+  color:'#008ba3',
+  
 },
 submit:{
 marginTop:theme.spacing(5),
@@ -93,21 +98,26 @@ const LogIn = ({history}) => {
                     <Textfield
                     variant='outlined'
                     name='email'
-                    placeholder='Email'
+                    placeholder='person@gmail.com'
+                    label='email'
                     type ='email'
                     fullWidth
                     className={classes.other}
                     required
+                    
                     //onChange={takeInput}
                     />
                     <Textfield
                     variant='outlined'
                     name='password'
-                    placeholder='Password'
+                    placeholder='*3bwhVH8'
                     type= 'password'
                     fullWidth
                     required
+                    label='password'
                     className={classes.other}
+                   
+                    helperText='Use letters and characters 8 or more characters'
                     //onChange={takeInput}
                     />
                     <Button
@@ -120,7 +130,7 @@ const LogIn = ({history}) => {
                     </Button>
                 </form>
                 <Typography
-                 className={classes.other}
+                 className={classes.typo}
                  component ={Link } to ='/signup'
                 >
                     Create account

@@ -3,16 +3,17 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import Button  from '@material-ui/core/Button';
 import Textfield from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton'
 import * as Icon from 'react-feather';
 import { makeStyles } from '@material-ui/core';
 import {withRouter} from 'react-router-dom';
 import Firebase from '../config'
 
 const useStyle= makeStyles(theme=>({
- body:{
-    backgroundColor:'#f1f1f1', 
- },
+
 
 root:{
     marginTop: theme.spacing(8),
@@ -21,7 +22,8 @@ root:{
     flexDirection:'column'
 },
 container:{
-    backgroundColor:'#f1f1f1'
+    backgroundColor:'#fafafa',
+
 },
 avatar:{
     marginTop:theme.spacing(3),
@@ -47,6 +49,7 @@ fontSize:20
 
 const SignUp = (props) => {
     const classes =useStyle()
+    const [showPassword,setShowPassword] = React.useState(false)
     const submitInput = async (event)=>{
         event.preventDefault();
         const { email ,password } = event.target.elements;
@@ -74,7 +77,7 @@ const SignUp = (props) => {
                 <div className={classes.root}>
                 <Avatar
                 className={classes.avatar}>
-                <Icon.LogIn />
+                <Icon.Unlock/>
                 </Avatar>
                 
                 <form
@@ -84,8 +87,9 @@ const SignUp = (props) => {
                     variant='outlined'
                     name='email'
                     type = 'email'
-                    placeholder='Email'
-                   // onChange = {takeInput}
+                    placeholder='person@gmail.com'
+                    required
+                    label='email'
                     fullWidth
                     className={classes.other}
                     />
@@ -93,18 +97,35 @@ const SignUp = (props) => {
                     variant='outlined'
                     name='password'
                     type = 'password'
-                    placeholder='Password'
-                   // onChange= {takeInput}
+                    placeholder='$CT67!gU'
+                    label='password'
                     fullWidth
+                    required
                     className={classes.other}
+                    helperText='Use letters and characters 8 or more characters'
+                    InputProps={
+                       < InputAdornment position='end'>
+                           <IconButton
+                           onClick={setShowPassword(true)}
+                           onMouseDown={(e)=>{
+                               e.preventDefault()
+                               setShowPassword(false)
+                           }}>
+                               {showPassword?<Visibility/>:<VisibilityOff/>}
+                           </IconButton>
+                       </InputAdornment>
+                    }
                     />
                      <Textfield
                     variant='outlined'
                     name='passwordII'
                     type = 'password'
-                    placeholder='Confirm Password'
+                    placeholder='$CT67!gU'
                     fullWidth
+                    required
                     className={classes.other}
+                    helperText='Confirm password'
+                    label='password'
                     />
                     <Button
                     className={classes.submit}
@@ -116,11 +137,7 @@ const SignUp = (props) => {
                         Sign up
                     </Button>
                 </form>
-                <Typography
-                 className={classes.other}
-                >
-                  Proceed
-                </Typography>
+          
                 </div>
             </Container>
       </> 

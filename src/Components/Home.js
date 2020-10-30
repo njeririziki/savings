@@ -109,7 +109,7 @@ const Home  = (props) => {
       
       <Avatar 
       variant='circle'
-      src ={Njeri}
+     
       className={classes.avatar}
       component={Link} to ='/user'
       />   

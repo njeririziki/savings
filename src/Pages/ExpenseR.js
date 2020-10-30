@@ -10,10 +10,8 @@ import Tooltip from '@material-ui/core/Tooltip'
 import {makeStyles} from '@material-ui/core/styles';
 import {produce} from 'immer';
 import Firebase, { firebase} from '../config'
-import Home from '../Components/Home';
-import PayFunc from '../Components/PaypalComp'
+import Home from '../Components/Home'
 import Exdialog from '../Components/ExInput'
-
 
 const useStyles = makeStyles( (theme) => ({
     root : {
@@ -68,7 +66,7 @@ const useStyles = makeStyles( (theme) => ({
 const Expense = () => {
     const classes = useStyles()
     const [fields,setFields] = React.useState([ ]);
-    const [expenses,setExpenses] = React.useState([199,120,250,105]);
+    const [expenses,setExpenses] = React.useState([]);
     const [savings,setSavings] = React.useState()
     const [openForm,setOpenForm]= React.useState(false);
     
@@ -98,16 +96,13 @@ const Expense = () => {
         return math;
     }
     // get the sum  savings
-    /* const sumExpenses = (arr)=>{
-       let math = 0 ;
-       for (const val of arr){
-           math +=val
-       }
-          return math;
-      
-    } */
- 
-    
+     const sumExpenses = (arr)=>{
+      const math = arr.reduce((a,b) =>{
+        return a+b
+      })
+      return math;
+    } 
+    // set schedule to local storage
     React.useEffect( ()=>{
        
         const json = localStorage.getItem('Schedule')
@@ -115,22 +110,29 @@ const Expense = () => {
         if (values){
           setFields(values) 
         }
-
+        
     },[])
-  React.useEffect( () => {
-        const totalBudget = sum (fields,'budget')
-        console.log(`total budget ${totalBudget}`)
-       
-        const totalExpense = sum(fields,'expense')
-        console.log(`total expense ${totalExpense}`)
-        if(totalBudget > totalExpense) {
-            const diff =  totalBudget-totalExpense;
-            console.log(`savings ${diff}`)
-             setSavings(Math.abs(diff)); 
-           }  else{
-            setSavings('0'); 
-           } 
-    },[fields])
+
+
+ const findSavings= async()=>{
+  const totalBudget = sum (fields,'budget')
+  
+     const totalExpense = sumExpenses(expenses);
+    
+     console.log(`total expense ${totalExpense}`)
+    if(totalBudget > totalExpense) {
+    const diff =  totalBudget-totalExpense;
+    console.log(`savings ${diff}`)
+     setSavings(Math.abs(diff)); 
+   }  else{
+    setSavings('0'); 
+   }
+   console.log(`total budget ${totalBudget}`)
+
+   console.log(` expense ${expenses}`)
+  
+}
+
    // get the savings 
    
    
@@ -169,7 +171,6 @@ const Expense = () => {
      </Typography>
     
         </Container>
-      
         <Table  className={classes.table}>
             <TableHead>
                 <TableRow>
@@ -198,21 +199,22 @@ const Expense = () => {
                   
                   </TableCell>
                   <TableCell  align='right' > 
-                  {p.expense? p.expense: ( 
                   <TextField
                  variant ='outlined'
-                 onChange ={(e)=>{
-                    e.preventDefault();
-                    const val = e.target.value;
-                    setExpenses( 
-                     currentamount=>
-                     produce(currentamount,v=>{
-                         v[index] = val
-                     }
-                     )
-                   )}}
-                 />) }
-                 
+              
+                 onChange ={ (e)=>{
+                   e.preventDefault();
+                   const val = e.target.value;
+                   setExpenses( 
+                    currentamount=>
+                    produce(currentamount,v=>{
+                        v[index] = val
+                    }
+                    )
+                  )}
+                  }
+                 />
+                  
                   </TableCell>
                
                    </TableRow> 
@@ -224,13 +226,19 @@ const Expense = () => {
               </TableRow>)
               }
                 <TableRow>
-                <TableCell align='right' > 
-                
-                  </TableCell> 
+                  <TableCell>
+                  <Button 
+                    className={classes.button}
+                    onClick={findSavings}
+                    variant= 'contained'
+                        >
+                        Total Savings
+                  </Button>
+                  </TableCell>
                  
                     
                     <TableCell align='right'
-                    > 
+                    colSpan={2} > 
                    {savings}
                   
                   </TableCell>
@@ -242,24 +250,15 @@ const Expense = () => {
                         >
                         Save
                   </Button>
-                  </TableCell>
-                {savings>0? 
-                 <PayFunc price  ={savings}/>
-                :null}
-                 
-                   
+                  </TableCell> 
                 </TableRow>
-              
-              
-                   
-               
                 
             </TableBody>
         </Table>
-          
-                   
+             
+                  <p>This are {expenses}</p>     
          
-     <Tooltip title =' Create your Schedule '>
+     <Tooltip title =' Create your budget '>
      <Fab 
         className={classes.fab}
         onClick={openDialog}>
@@ -300,13 +299,4 @@ export default Expense;
                      ]
                     )}}
                  />
-                    <TableCell>
-                  <Button 
-                    className={classes.button}
-                    onClick={findSavings}
-                    variant= 'contained'
-                        >
-                        Total Savings
-                  </Button>
-                  </TableCell>
                  */

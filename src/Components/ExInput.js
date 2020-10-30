@@ -27,7 +27,8 @@ import { generate } from "shortid";
          id: generate() , 
          time:0 ,
          activity:'',
-         budget :0
+         budget :0,
+         expense:0
         }
     ])
     }
@@ -56,6 +57,7 @@ import { generate } from "shortid";
                 <TableCell >Time</TableCell>
                 <TableCell  >Activity</TableCell>
                 <TableCell >Budget</TableCell>
+                <TableCell>Expense</TableCell>
                 <TableCell >
                     <Icon.Edit
                  onClick= {openField}/>
@@ -103,6 +105,19 @@ import { generate } from "shortid";
                         }
                   }
                   value={p.budget}
+                  />
+                  </TableCell>
+                  <TableCell align='right'  > 
+                  <TextField 
+                   variant = 'outlined'
+                    onChange={ (e)=>{ 
+                        const rn = e.target.value; 
+                        setFields( currentField=> produce(currentField,v =>{
+                            v[index].expense = Number(rn)
+                           }))
+                        }
+                  }
+                  value={p.expense}
                   />
                   </TableCell>
             

@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button'
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import Textfield from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container'
 import * as Icon from 'react-feather';
 import {makeStyles} from '@material-ui/core/styles';
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme=>({
    root:{
       display:'flex',
       flexDirection:'column',
-      justifyContent:'space-between',
+      justifyContent:'center ',
       
    },
    fab:{
@@ -35,8 +36,21 @@ const useStyles = makeStyles(theme=>({
    },
    typography:{
       
-      fontFamily:'Merienda',
-      fontSize: '20px'
+      
+      fontSize: '30px',
+      alignSelf: 'center '
+     
+   },
+   container:{
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent:'space-around ',
+      backgroundColor:'#006978',
+      padding: '1em 1em 1em 1em',
+      color:'#ffffff',
+        
+    
+    
    },
    circular:{
       width:250,
@@ -50,15 +64,13 @@ const Goals = (props) => {
 
    const classes= useStyles();
    const [open,setOpen]=React.useState(false);
-   const [isLoading,setIsloading] = React.useState(false)
    const [values,setValues] = React.useState({
       title:'',
-      amount:'',
-      time:'',
-      savings:''
+      amount: 0,
+      time:0,
+      savings: 0
  })
- const percentage = Math.ceil(values.savings/ values.amount)  ;
- const timeLeft = values.amount/values.time*12 ;
+ 
  React.useEffect(()=>{
    const uid = Firebase.auth().currentUser.uid
    const userRef =  Firebase.firestore().collection('Goal').doc(uid)
@@ -85,6 +97,11 @@ const Goals = (props) => {
    } 
    unsub()  
     },[])
+    
+ const percentage = Math.ceil(values.savings/ values.amount)  ;
+ const daysLeft = (values.time*365)-(values.savings/(values.amount/(values.time*365 )))
+ const timeLeft =   Math.ceil(daysLeft/30)
+ 
    const openModal=()=>{
       setOpen(true)
    }
@@ -96,32 +113,46 @@ const Goals = (props) => {
       
     >
        <div className={classes.root}>
-       <Typography
-       variant='h5'
-       className={classes.typography}>
-         {values.title? `Goal: ${values.title }` :'Set your goal'}
+       <Container 
+    className={classes.container}>
+         <Typography
+       variant='h3'
+       >
+         {values.title? ` ${values.title }` :'Set your goal'}
        </Typography>
+     
+      {values.title?( <Typography
+       variant='h4'
+       >
+        { timeLeft? timeLeft : values.time *12 } months to go!
+       </Typography>): null}
+    </Container>
+     
        <br/>
        <Typography
        variant='h5'
-       className={classes.typography}>
+       className={classes.typography}
+
+      >
          {values.amount? `Amount: ${values.amount }` : null}
        </Typography>
-       <br/>
+    
        <Typography
        variant='h5'
-       className={classes.typography}>
-         {values.time? `Time : ${values.time }` : null}
+       className={classes.typography}
+      >
+         {values.time? `Time : ${values.time } years` : null}
        </Typography>
        <Typography
        variant='h5'
        className={classes.typography}>
-         {values.savings? `Savings : ${values.savings }` : null}
+         {values.savings? `Savings : Ksh ${values.savings }` : null}
        </Typography>
-       <CircularProgressbar
+      <br/>
+             <CircularProgressbar
        className={classes.circular}
        value = {percentage? percentage: 2}
-       text={`${percentage}%`}
+       text={percentage? `${percentage}%`:'0%'}
        strokeWidth={5}
        styles ={ buildStyles({
            rotation : 0,
@@ -134,7 +165,7 @@ const Goals = (props) => {
        })
        }
        />
-       {timeLeft}
+    
         <Fab
        className={classes.fab}
        variant='round'

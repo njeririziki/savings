@@ -1,6 +1,7 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import Typography from '@material-ui/core/Typography'
 import DialogBody from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
 import Textfield from '@material-ui/core/TextField';
@@ -78,11 +79,13 @@ const GoalModal = (props) => {
                  onSubmit = {submitValues}
                   className={classes.modal}
                  > 
-                 <p>Set your goal</p>
+                <Typography variant='h5'>
+                    Set your financial goal
+                </Typography>
                  <Textfield
                     variant='outlined'
                     id='title'
-                    placeholder='title'
+                    placeholder='Goal title ie Masters Degree'
                     value={values.title}
                     onChange={handleChange('title')}
                     fullWidth
@@ -91,7 +94,7 @@ const GoalModal = (props) => {
                     <Textfield
                     variant='outlined'
                     id='Amount'
-                    placeholder='Amount'
+                    placeholder='Amount to reach goal'
                     value={values.amount}
                     onChange={handleChange('amount')}
                     fullWidth
@@ -100,7 +103,7 @@ const GoalModal = (props) => {
                      <Textfield
                     variant='outlined'
                     id='time'
-                    placeholder='time'
+                    placeholder='Years to achieve goal'
                     value={values.time}
                     onChange={handleChange('time')}
                     fullWidth

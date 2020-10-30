@@ -63,8 +63,8 @@ const GoalModal = (props) => {
             onClose={props.OnClose}
             >
                 
-                 <div   className={classes.modalPaper}>
-                 <form  autoComplete='off'
+                 <div className={classes.modalPaper}>
+                 <form autoComplete='off'
                  onSubmit = {submitValues}
                  className={classes.modal}
                  >

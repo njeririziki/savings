@@ -7,7 +7,8 @@ import Firebase from '../config';
 import Button from '@material-ui/core/Button'
 import * as Icon from 'react-feather'
 import BgModal from '../Components/BudgetInput';
-import Home from '../Components/Home'
+import Home from '../Components/Home';
+import PayFunc from '../Components/PaypalComp'
 import {makeStyles} from '@material-ui/core/styles'
 
 // interface BudgetArr {
@@ -40,7 +41,8 @@ const useStyles = makeStyles( (theme) => ({
    color:'#ffffff'
  },
  container:{
-   backgroundColor:'#00bfa5'
+   backgroundColor:'#c8e6c9',
+   padding: '2em 2em 2em 2em'
  },
  table:{
   [theme.breakpoints.up('sm')] :{
@@ -72,6 +74,17 @@ const Budget = () => {
       }
       
    },[])
+   // getting total bills
+   const sum = (arr,prop)=>{
+    const math = arr.reduce(
+        function (a,b){
+            return a+ b[prop] 
+        },0
+    )
+    return math;
+}
+const totalBills = sum(values,'amount')
+console.log(totalBills)
   // opening the dudget input dialog 
   const getData =()=>{
     setOpenForm(true)
@@ -79,6 +92,7 @@ const Budget = () => {
   const closeModal=()=>{
     setOpenForm(false)
   }
+  
   //getting the month
   let date = new Date();
   const months =['Jan','Feb','Mar','Apr','May',
@@ -112,7 +126,7 @@ const Budget = () => {
                 </TableRow>  
             </TableHead>
             <TableBody>
-            {values.map( (item) =>(
+            {values.length>0? values.map( (item) =>(
              <TableRow   key={item.id}>
                <TableCell>
                {item.category} 
@@ -121,30 +135,33 @@ const Budget = () => {
                {item.amount}
                </TableCell>
              </TableRow>
-             )) }
+             )):
+             (<TableRow>
+              <TableCell  colSpan={3}> 
+              Create a Budget
+                </TableCell> 
+             </TableRow>) }
              <TableRow>
              
                <TableCell>
                <Typography
                 variant='h6'
                     >
-                  Daily Savings : 500
+                  Pay your bills
                 </Typography>
               
                </TableCell>
                <TableCell>
-               <Button 
-                className={classes.button}
-                    variant= 'contained'
-                    >
-                    Save
-              </Button>
+              
+               </TableCell>
+               <TableCell >
+               <PayFunc price={totalBills}/>
                </TableCell>
              </TableRow>
             </TableBody>
 
        </Table>
-     
+   
      <br/>
           </Container>
      

@@ -8,24 +8,33 @@ import {Link,withRouter} from 'react-router-dom'
 import * as Icon from 'react-feather';
 import Home from '../Components/Home'
 import {makeStyles} from '@material-ui/core/styles'
-import Profile from '../Components/Avatar'
+import Profile from '../Components/ImageUpload'
 
 const useStyles = makeStyles( (theme) => ({
   root : {
       display:'flex',
       flexDirection: 'column',
       justifyContent:'center',
-      alignContent:'center',
-      marginTop:theme.spacing(15),
+   
+      marginTop:theme.spacing(8),
      
   },
   table:{
       width : 460
   },
   avatar:{
-   height:300,
-   width:300
-  }
+    alignSelf:'center',
+   height:400,
+   width:400
+  },
+  fab:{
+    backgroundColor:'#000000',
+    alignSelf:'flex-end'
+ },
+ icon:{
+     color:'#ffffff',
+     
+ },
 }))
 const User = () => {
     const classes= useStyles()
@@ -35,8 +44,6 @@ const User = () => {
       idno:'',
       phone:''
     })
-  //const [image,setImage] = React.useState();
-  //
 
   React.useEffect(()=>{
     const uid = Firebase.auth().currentUser.uid
@@ -48,7 +55,8 @@ const User = () => {
           const goal = {
             name : doc.data().Name ,
             idno : doc.data().Idno ,
-            phone: doc.data().Phone }
+            phone: doc.data().Phone,
+           profile: doc.data().Avatar }
             setValues(goal) 
         }) 
       } 
@@ -65,9 +73,10 @@ const User = () => {
     }
   
   const content =(
-    <div>
-      <Profile className={classes.avatar}/> 
+    <div className={classes.root}>
+    <Profile className={classes.avatar}/>
 <br/> <br/>
+
     <Typography
 variant='h5'
 >
@@ -91,8 +100,10 @@ variant='h5'
 color='primary'
 variant='round'
 onClick={openModal}
+className={classes.fab}
 >
 <Icon.Plus
+className={classes.icon}
 />
 </Fab> 
 <br/>
@@ -104,9 +115,10 @@ onClick={openModal}
 OnOpen={open}
 OnClose={closeModal}/> 
 <Button
+
 component={Link} to={`/user/expense`}
 >
-Expense
+
 </Button>
 
 </div> 
