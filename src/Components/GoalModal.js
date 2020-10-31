@@ -48,7 +48,7 @@ const GoalModal = (props) => {
         amount:'',
         time:''
    })
-     
+   const [error,setError] = React.useState(false)
   const submitValues = async (event)=>{
     const uid = Firebase.auth().currentUser.uid
      event.preventDefault();
@@ -66,6 +66,7 @@ const GoalModal = (props) => {
     }
     const handleChange =name=>event=>{
         setValues({...values,[name]:event.target.value})
+
     }
     return ( 
        <div>
@@ -87,8 +88,17 @@ const GoalModal = (props) => {
                     id='title'
                     placeholder='Goal title ie Masters Degree'
                     value={values.title}
-                    onChange={handleChange('title')}
+                    onChange={(e)=>{
+                        const val= e.target.value
+                        if (val === ""){
+                            setError(true)
+                           }else {
+                               handleChange('title')
+                           }   
+                        } }
                     fullWidth
+                    error={error}
+                    helperText={error?"Please enter a goal": null}
                     className={classes.other}
                     /><br/>
                     <Textfield
@@ -96,8 +106,19 @@ const GoalModal = (props) => {
                     id='Amount'
                     placeholder='Amount to reach goal'
                     value={values.amount}
-                    onChange={handleChange('amount')}
+                    onChange={(e)=>{
+                        const val= e.target.value
+                        if (isNaN(val)){
+                         setError(true)
+                        }else {
+                            handleChange('amount')
+                        }
+                       
+                    }}
+                    error={error}
+                    helperText={error?"Please enter a number": null}
                     fullWidth
+                    required
                     className={classes.other}
                     /><br/>
                      <Textfield
@@ -105,15 +126,26 @@ const GoalModal = (props) => {
                     id='time'
                     placeholder='Years to achieve goal'
                     value={values.time}
-                    onChange={handleChange('time')}
+                    onChange={(e)=>{
+                        const val= e.target.value
+                        if (isNaN(val)){
+                         setError(true)
+                        }else {
+                            handleChange('time')
+                        }
+                       
+                    }}
+                    error={error}
+                    helperText={error?"Please enter a number": null}
                     fullWidth
+                    required
                     className={classes.other}
                     />
                     <br/>
                     <DialogActions>
                     <Button
                     variant='contained'
-                    onClick = {props.onClose}
+                    onClick = {()=>props.OnClose()}
                     >
                     cancel
                     </Button>

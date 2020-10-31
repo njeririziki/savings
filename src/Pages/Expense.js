@@ -183,7 +183,7 @@ const Expense = () => {
                 </TableRow>  
             </TableHead>
             <TableBody>
-            {fields.length>1? ( fields.map ((p,index)=>(
+            {fields.length>= 1? ( fields.map ((p,index)=>(
                    <TableRow key={p.id}>
                      <TableCell >
                    {p.time? p.time: 'Create a schedule'
@@ -231,7 +231,7 @@ const Expense = () => {
                     
                     <TableCell align='right'
                     > 
-                   {savings}
+                   {`Savings: ${savings}`}
                   
                   </TableCell>
                   <TableCell align='right' > 
@@ -246,14 +246,8 @@ const Expense = () => {
                 {savings>0? 
                  <PayFunc price  ={savings}/>
                 :null}
-                 
-                   
-                </TableRow>
-              
-              
-                   
-               
-                
+                  
+                </TableRow>    
             </TableBody>
         </Table>
           

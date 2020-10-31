@@ -5,6 +5,7 @@ import {Table,TableBody,TableCell,TableHead,TableRow} from '@material-ui/core'
 import Fab from '@material-ui/core/Fab';
 import Firebase from '../config';
 import Button from '@material-ui/core/Button'
+import Tooltip  from '@material-ui/core/Tooltip';
 import * as Icon from 'react-feather'
 import BgModal from '../Components/BudgetInput';
 import Home from '../Components/Home';
@@ -164,7 +165,7 @@ console.log(totalBills)
    
      <br/>
           </Container>
-     
+          <Tooltip title =' Create your Schedule '>
           <Fab 
             className={classes.fab}
     
@@ -172,6 +173,8 @@ console.log(totalBills)
             <Icon.Plus
             className={classes.icon}/>
           </Fab>
+          </Tooltip>
+        
   </div>
   )
   

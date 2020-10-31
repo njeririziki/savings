@@ -20,6 +20,7 @@ import { generate } from "shortid";
            budget:0
        }  
      ]);
+     const [error,setError] = React.useState(false)
 
     const openField=()=>{
         setFields((another) =>[...another,
@@ -42,6 +43,7 @@ import { generate } from "shortid";
         props.close()
         
     }
+ 
     
     
     return (
@@ -99,11 +101,17 @@ import { generate } from "shortid";
                    variant = 'outlined'
                     onChange={ (e)=>{ 
                         const rn = e.target.value; 
-                        setFields( currentField=> produce(currentField,v =>{
-                            v[index].budget = Number(rn)
-                           }))
+                        if(isNaN(rn)){
+                            setError(true)
+                        } else{
+                            setFields( currentField=> produce(currentField,v =>{
+                                v[index].budget = rn
+                               }))
                         }
+                      }
                   }
+                  error={error}
+                  helperText={error?"Please type a number": null}
                   value={p.budget}
                   />
                   </TableCell>
@@ -111,13 +119,19 @@ import { generate } from "shortid";
                   <TextField 
                    variant = 'outlined'
                     onChange={ (e)=>{ 
-                        const rn = e.target.value; 
-                        setFields( currentField=> produce(currentField,v =>{
-                            v[index].expense = Number(rn)
-                           }))
+                        const rn = e.target.value;
+                        if(isNaN(rn)){
+                            setError(true)
+                        } else{
+                            setFields( currentField=> produce(currentField,v =>{
+                                v[index].expense = rn
+                               }))
                         }
+                      }
                   }
-                  value={p.expense}
+                  error={error}
+                  helperText={error?"Please type a number": null}
+                  value ={p.expense}
                   />
                   </TableCell>
             

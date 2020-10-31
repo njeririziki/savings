@@ -3,10 +3,15 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import Button  from '@material-ui/core/Button';
 import Textfield from '@material-ui/core/TextField'
+import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import * as Icon from 'react-feather';
 import { makeStyles } from '@material-ui/core';
 import {withRouter, Link, Redirect}  from 'react-router-dom'
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton'
 import Firebase from '../config'
 import AuthContext from '../Context/AuthContext'
 
@@ -51,6 +56,7 @@ fontSize:20
  
 const LogIn = ({history}) => {
     const classes =useStyle();
+    const [showPassword,setShowPassword] = React.useState(false)
     // const [values,setValues]=React.useState(
     //     {
     //         email:'',
@@ -60,6 +66,9 @@ const LogIn = ({history}) => {
     // const takeInput=name=>e=>{
     //     setValues({ ...values,[name]:e.target.vaue})
     // }
+    const revPassword=()=>{
+      setShowPassword(!showPassword)
+  }
     const handleLogin = useCallback(
         async event => {
           event.preventDefault();
@@ -111,15 +120,28 @@ const LogIn = ({history}) => {
                     variant='outlined'
                     name='password'
                     placeholder='*3bwhVH8'
-                    type= 'password'
+                    type= {showPassword? 'text':'password'}
                     fullWidth
                     required
                     label='password'
                     className={classes.other}
                    
                     helperText='Use letters and characters 8 or more characters'
-                    //onChange={takeInput}
-                    />
+                    InputProps={ {
+                      endAdornment:   <InputAdornment position='end'>
+                      <IconButton
+                      onClick={revPassword}
+                      onMouseDown={(e)=>{
+                          e.preventDefault()
+                         
+                      }}>
+                          {showPassword?<Visibility/>:<VisibilityOff/>}
+                      </IconButton> 
+                  </InputAdornment> 
+                    } 
+                  }
+                   />
+                   
                     <Button
                     className={classes.submit}
                     variant='contained'

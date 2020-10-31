@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import Button from '@material-ui/core/Button'
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
-import Textfield from '@material-ui/core/TextField';
+import Tooltip  from '@material-ui/core/Tooltip';
 import Container from '@material-ui/core/Container'
 import * as Icon from 'react-feather';
 import {makeStyles} from '@material-ui/core/styles';
@@ -159,14 +159,14 @@ const Goals = (props) => {
            textSize:'20px',
            strokeLinecap:'butt',
            pathTransitionDuration: 0.5,
-           pathColor: `#006978`,
+           pathColor: '#b0003a',
            trailColor:'#82ada9',
            textColor: '#000000',
        })
        }
        />
-    
-        <Fab
+      <Tooltip title =' Create your Schedule '>
+      <Fab
        className={classes.fab}
        variant='round'
        onClick={openModal}
@@ -174,6 +174,8 @@ const Goals = (props) => {
        <Icon.Plus
        className={classes.icon}/>
        </Fab>
+      </Tooltip>
+       
        </div>
         <GoalModal 
         OnOpen={open}

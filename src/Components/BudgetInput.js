@@ -40,7 +40,7 @@ const BgDialog = (props) => {
     ]    
     );
     const [savings,setSavings] =React.useState()
-    
+    const [error,setError] = React.useState(false)
     const uid = Firebase.auth().currentUser.uid;
 
     const handleInput =async (e)=>{
@@ -119,15 +119,19 @@ const BgDialog = (props) => {
             placeholder = '13200'
             variant= 'standard'
             onChange = {(e)=>{
-                const amount = Number(e.target.value);
-                setValues( currentamount=>
-                    produce(currentamount,v=>{
-                        v[index].amount =amount
-                    }
-                    )
-                )
-            }
-            }
+                const amount = e.target.value;
+                if(isNaN(amount)){
+                    setError(true)
+                } else{
+                    setValues( currentField=> produce(currentField,v =>{
+                        v[index].amount = amount
+                       }))
+                }
+              }
+          }
+          error={error}
+          helperText={error?"Please type a number": null}
+            
             value={p.amount}
             />
              </div>)
@@ -147,7 +151,7 @@ const BgDialog = (props) => {
              <DialogActions>
              <Button 
              className={classes.button}
-                onClick = {props.onClose}
+                onClick={()=>props.OnClose()}
                 variant= 'contained'>
                  Cancel
                 </Button>
@@ -160,11 +164,7 @@ const BgDialog = (props) => {
              </DialogActions>
             
             </form>  
-          </Dialog>
- 
-            
-                
-          
+          </Dialog> 
         </div>
     );
 }

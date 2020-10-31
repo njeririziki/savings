@@ -49,7 +49,12 @@ fontSize:20
 
 const SignUp = (props) => {
     const classes =useStyle()
+    const [passwordO,setPasswordO]= React.useState()
     const [showPassword,setShowPassword] = React.useState(false)
+    const [error,setError] = React.useState(false)
+    const revPassword=()=>{
+        setShowPassword(!showPassword)
+    }
     const submitInput = async (event)=>{
         event.preventDefault();
         const { email ,password } = event.target.elements;
@@ -96,43 +101,65 @@ const SignUp = (props) => {
                     <Textfield
                     variant='outlined'
                     name='password'
-                    type = 'password'
+                    type = {showPassword? 'text':'password'}
                     placeholder='$CT67!gU'
                     label='password'
+                    onChange={(e)=>{
+                      const val= e.target.value;
+                      if (!val.match(/^[a-zA-Z]+$/)&& val.length<8){
+                          setError(!error)
+                      }else{
+                          setPasswordO(val)
+                      }
+                    }}
+                    error={error}
                     fullWidth
                     required
                     className={classes.other}
-                    helperText='Use letters and characters 8 or more characters'
-                    InputProps={
-                       < InputAdornment position='end'>
-                           <IconButton
-                           onClick={setShowPassword(true)}
-                           onMouseDown={(e)=>{
-                               e.preventDefault()
-                               setShowPassword(false)
-                           }}>
-                               {showPassword?<Visibility/>:<VisibilityOff/>}
-                           </IconButton>
-                       </InputAdornment>
-                    }
+                    InputProps={{
+                        endAdornment:< InputAdornment position='end'>
+                        <IconButton
+                        onClick={revPassword}
+                        onMouseDown={(e)=>{
+                            e.preventDefault()
+                           
+                        }}>
+                            {showPassword?<Visibility/>:<VisibilityOff/>}
+                        </IconButton>
+                    </InputAdornment>
+                    } }
                     />
                      <Textfield
                     variant='outlined'
                     name='passwordII'
-                    type = 'password'
+                    type = {showPassword? 'text':'password'}
                     placeholder='$CT67!gU'
                     fullWidth
+                   
+                    error={error}
                     required
                     className={classes.other}
                     helperText='Confirm password'
                     label='password'
+                    InputProps={{
+                        endAdornment: < InputAdornment position='end'>
+                        <IconButton
+                        onClick={revPassword}
+                        onMouseDown={(e)=>{
+                            e.preventDefault()
+                           
+                        }}>
+                            {showPassword?<Visibility/>:<VisibilityOff/>}
+                        </IconButton>
+                    </InputAdornment>
+                    } }
                     />
                     <Button
                     className={classes.submit}
                     variant='contained'
                     type = 'submit'
                     fullWidth
-                  
+                   disabled={error}
                     >
                         Sign up
                     </Button>
