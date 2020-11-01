@@ -50,7 +50,9 @@ fontSize:20
 const SignUp = (props) => {
     const classes =useStyle()
     const [passwordO,setPasswordO]= React.useState()
+    const [password,setPassword]= React.useState()
     const [showPassword,setShowPassword] = React.useState(false)
+    const [valid,setValid] = React.useState(false)
     const [error,setError] = React.useState(false)
     const revPassword=()=>{
         setShowPassword(!showPassword)
@@ -70,6 +72,13 @@ const SignUp = (props) => {
                 console.log ('successful')
         } catch {
        alert ('not done')
+       }
+    }
+    const invalid =()=>{
+       if(password===passwordO) {
+           setValid(true)
+       }else {
+           setError(true)
        }
     }
    
@@ -106,13 +115,10 @@ const SignUp = (props) => {
                     label='password'
                     onChange={(e)=>{
                       const val= e.target.value;
-                      if (!val.match(/^[a-zA-Z]+$/)&& val.length<8){
-                          setError(!error)
-                      }else{
                           setPasswordO(val)
-                      }
                     }}
                     error={error}
+                    helperText='Use letters and characters 8 or more characters'
                     fullWidth
                     required
                     className={classes.other}
@@ -121,8 +127,7 @@ const SignUp = (props) => {
                         <IconButton
                         onClick={revPassword}
                         onMouseDown={(e)=>{
-                            e.preventDefault()
-                           
+                            e.preventDefault()  
                         }}>
                             {showPassword?<Visibility/>:<VisibilityOff/>}
                         </IconButton>
@@ -135,7 +140,13 @@ const SignUp = (props) => {
                     type = {showPassword? 'text':'password'}
                     placeholder='$CT67!gU'
                     fullWidth
-                   
+                    onChange={ (e)=>{
+                        const val = e.target.value
+                        setPassword(val)
+                        invalid()
+                    }
+                       
+                    }
                     error={error}
                     required
                     className={classes.other}
@@ -159,9 +170,9 @@ const SignUp = (props) => {
                     variant='contained'
                     type = 'submit'
                     fullWidth
-                   disabled={error}
+                   disabled={valid}
                     >
-                        Sign up
+                   Sign up
                     </Button>
                 </form>
           

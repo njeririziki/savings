@@ -148,7 +148,7 @@ import { generate } from "shortid";
         <DialogActions>
             <Button
               variant='contained'
-              onClick = {props.close}
+              onClick = {()=>props.close()}
               >
                 Clear
             </Button>
