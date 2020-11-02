@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Tooltip  from '@material-ui/core/Tooltip';
 import * as Icon from 'react-feather'
 import BgModal from '../Components/BudgetInput';
+import BillsDialog from '../Components/Bills'
 import Home from '../Components/Home';
 import PayFunc from '../Components/PaypalComp'
 import {makeStyles} from '@material-ui/core/styles'
@@ -37,10 +38,11 @@ const useStyles = makeStyles( (theme) => ({
      
  },
  button :{
-  
-   backgroundColor:'#000000',
-   color:'#ffffff'
- },
+  width:'400',
+  backgroundColor:'#000000',
+  color:'#ffffff', 
+},
+
  container:{
    backgroundColor:'#c8e6c9',
    padding: '2em 2em 2em 2em'
@@ -56,8 +58,11 @@ const useStyles = makeStyles( (theme) => ({
 const Budget = () => {
   const classes = useStyles()
   const [openForm,setOpenForm]= React.useState(false);
-  
+  const [openBills,setOpenBills]= React.useState(false);
+  const [total, setTotal]=React.useState()
+  const [totalBills,setTotalBills]= React.useState();
   const [ values, setValues] = React.useState([])
+ 
   // fetching the budget data
    React.useEffect(()=>{
     const uid = Firebase.auth().currentUser.uid
@@ -67,6 +72,10 @@ const Budget = () => {
        userRef.onSnapshot((doc)=>{
          const budget = doc.data().Budget; 
          setValues (budget)
+        const totalBudget= doc.data().Savings;
+         setTotal(totalBudget)
+         const totalBills= doc.data().TotalBills;
+         setTotalBills(totalBills)
        })
       }
        
@@ -76,7 +85,7 @@ const Budget = () => {
       
    },[])
    // getting total bills
-   const sum = (arr,prop)=>{
+/*   const sum = (arr,prop)=>{
     const math = arr.reduce(
         function (a,b){
             return a+ b[prop] 
@@ -85,7 +94,7 @@ const Budget = () => {
     return math;
 }
 const totalBills = sum(values,'amount')
-console.log(totalBills)
+console.log(totalBills) */
   // opening the dudget input dialog 
   const getData =()=>{
     setOpenForm(true)
@@ -93,7 +102,12 @@ console.log(totalBills)
   const closeModal=()=>{
     setOpenForm(false)
   }
-  
+  const closeBills=()=>{
+    setOpenBills(false)
+  }
+  const openDialog=()=>{
+    setOpenBills(true)
+  }
   //getting the month
   let date = new Date();
   const months =['Jan','Feb','Mar','Apr','May',
@@ -108,6 +122,7 @@ console.log(totalBills)
     OnOpen={openForm}
     OnClose ={closeModal}
     />
+ 
     <Container 
     className={classes.container}>
         <Typography
@@ -127,7 +142,7 @@ console.log(totalBills)
                 </TableRow>  
             </TableHead>
             <TableBody>
-            {values.length>0? values.map( (item) =>(
+            {values? values.map( (item) =>(
              <TableRow   key={item.id}>
                <TableCell>
                {item.category} 
@@ -142,33 +157,52 @@ console.log(totalBills)
               Create a Budget
                 </TableCell> 
              </TableRow>) }
-             <TableRow>
-             
-               <TableCell>
-               <Typography
-                variant='h6'
+            
+               <TableRow>
+                 <TableCell>
+                 <Typography
+                variant='body1'
                     >
-                  Pay your bills
+                 Budget Total
                 </Typography>
+                 </TableCell>
+                 <TableCell align='right'>
+                {total}
+                 </TableCell>
+               </TableRow>
+             <TableRow >
+             <TableCell rowSpan={2}>
+               <Button 
+               variant="contained"
+               className={classes.button}
+               onClick={openDialog}>
+                 Pay Bills
+               </Button>
               
                </TableCell>
-               <TableCell>
-              
+               <TableCell rowSpan={2}>
+                 {totalBills}
                </TableCell>
-               <TableCell >
+              
+               <TableCell  rowSpan={2}>
                <PayFunc price={totalBills}/>
                </TableCell>
              </TableRow>
+              
+           
             </TableBody>
 
        </Table>
+       <BillsDialog
+    OpenBillDialog={openBills}
+    CloseBillDialog={closeBills}
+    />
    
      <br/>
           </Container>
           <Tooltip title =' Create your Schedule '>
           <Fab 
             className={classes.fab}
-    
             onClick={getData}>
             <Icon.Plus
             className={classes.icon}/>

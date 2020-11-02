@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
+import Tooltip  from '@material-ui/core/Tooltip';
 import {Link} from 'react-router-dom'
 import Firebase from '../config'
 import Njeri from './profile.jpg'
@@ -66,6 +67,11 @@ const useStyles = makeStyles(theme => ({
   logOut:{
     color:'#000000',
     backgroundColor:'#ffffff',
+      
+    '&:hover' : {
+      backgroundColor: '#cdcdcd',
+     
+    },
  },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
@@ -83,7 +89,11 @@ const useStyles = makeStyles(theme => ({
   },
   listItems:{
     color:'#ffffff',
-    
+
+    '&:hover' : {
+      backgroundColor: '#0f1724',
+     
+    },
   },
   content: {
     flexGrow: 1,
@@ -106,16 +116,18 @@ const Home  = (props) => {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-      
+      <Tooltip title =' User profile'>
       <Avatar 
       variant='circle'
      
       className={classes.avatar}
       component={Link} to ='/user'
-      />   
+      />  
+      </Tooltip> 
+     
       <List className={classes.listItems}  >
-      
-          <ListItem 
+      <Tooltip title ='Set your financial goal'>
+      <ListItem 
           button 
           component={Link} to ='/goals'>
             <ListItemIcon className={classes.listItems} >
@@ -126,7 +138,10 @@ const Home  = (props) => {
             
             /> 
           </ListItem>
-          
+      </Tooltip>
+      
+           
+          <Tooltip title ='Create your budget'>
           <ListItem button 
           component={Link} to ='/budget'>
           <ListItemIcon className={classes.listItems}>
@@ -137,7 +152,9 @@ const Home  = (props) => {
             
             /> 
           </ListItem>
-          
+          </Tooltip>
+       
+          <Tooltip title =' Go to expense tracker'>
           <ListItem button 
           component={Link} to ='/expense'>
           <ListItemIcon className={classes.listItems}>
@@ -145,10 +162,13 @@ const Home  = (props) => {
           </ListItemIcon>
           <ListItemText 
             primary= 'Expenses'
-            
-            /> 
-          </ListItem>
-           
+           />
+            </ListItem> 
+          </Tooltip>
+         
+         
+
+          <Tooltip title =' Dashboard'>
           <ListItem button 
           component={Link} to ='/goals'>
           <ListItemIcon className={classes.listItems}>
@@ -159,7 +179,7 @@ const Home  = (props) => {
             
             /> 
           </ListItem>
-          
+          </Tooltip> 
       </List>
     </div>
   );
@@ -186,6 +206,7 @@ const Home  = (props) => {
           noWrap>
            {props.Appbarname? props.Appbarname:'Every Dime' } 
           </Typography>
+          <Tooltip title ='Log out'>
           <IconButton
             color="inherit"
             aria-label="Log out"
@@ -195,6 +216,8 @@ const Home  = (props) => {
           >
             <Icon.LogOut />
           </IconButton>
+          </Tooltip>
+         
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">

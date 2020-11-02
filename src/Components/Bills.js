@@ -31,20 +31,21 @@ const useStyles= makeStyles(theme=>({
     alignSelf:'flex-end'
  },
  icon:{
-    alignSelf:'flex-end'
-}
+     alignSelf:'flex-end'
+ }
 }))
-const BgDialog = (props) => {
-    const [values,setValues] = React.useState([
+
+const BillsDialog = (props) => {
+   
+    const [bills,setBills] = React.useState([
 
         {   id:'0',
             amount: 0 ,
-            category:''   
+            Name:''   
         },
     ]    
     );
-   
-    const [savings,setSavings] =React.useState()
+    const [total,setTotal] =React.useState()
     const [error,setError] = React.useState(false)
     const uid = Firebase.auth().currentUser.uid;
 
@@ -54,32 +55,33 @@ const BgDialog = (props) => {
      try{
          await Firebase.firestore().collection('Budget').doc(uid).set(
              {
-             Budget: values,
-             Savings : savings
+             
+             Bills: bills,
+             TotalBills : total
              }
          );
-         setValues([]);
-         props.OnClose();
+       
+         props.CloseBillDialog();
         
      } catch (error){
      alert(error)
      }
     }
     const sum =(arr,prop)=>{
-       const math= arr.reduce(
+       const math= arr.reduce (
             function(a,b){
-            return a + b[prop];
+                return a + b[prop] ;
             },0);
         return  math;
       
     }
     React.useEffect(()=>{
-        const totalAmount = sum(values,'amount');
-        setSavings(totalAmount)
-    },[values,savings])
+        const totalAmount = sum(bills,'amount');
+        setTotal(totalAmount)
+    },[bills,total])
     
     // const takeInput= (index) =>(e)=>{
-    //         setValues( (currentCategory)=>
+    //         setBills( (currentCategory)=>
     //             produce(currentCategory,v=>{
     //                 v[index].name = e.target.value;
     //             }
@@ -92,43 +94,43 @@ const BgDialog = (props) => {
     return (  
         <div >
           <Dialog
-          open = {props.OnOpen}
-          onClose= {props.OnClose}>     
+          open = {props.OpenBillDialog}
+          onClose= {props.CloseBillDialog}>     
             <form  
              className= { classes.dialog}
              onSubmit ={handleInput}
              >
-         {values.map((p,index) =>{
+         {bills.map((p,index) =>{
           return (
           <div key ={p.id}  className={classes.root}>
              <Textfield
             type ='text'
-            label = 'category'
-            placeholder = 'Food'
+            label = 'Bill'
+            placeholder = 'Electricity'
             variant= 'standard'
             onChange =  {(e)=>{
                 const category = e.target.value;
-                setValues( currentamount=>
+                setBills( currentamount=>
                     produce(currentamount,v=>{
-                        v[index].category = category
+                        v[index].name = category
                     }
                     )
                 )
             }
             }
-            value={p.category}
+            value={p.name}
             /> 
             <Textfield
             type ='text'
             label= 'amount'
-         
+            placeholder = '13200'
             variant= 'standard'
             onChange = {(e)=>{
                 const amount = e.target.value;
                 if(isNaN(amount)){
                     setError(true)
                 } else{
-                    setValues( currentField=> produce(currentField,v =>{
+                    setBills( currentField=> produce(currentField,v =>{
                         v[index].amount = Number(amount)
                        }))
                 }
@@ -141,12 +143,12 @@ const BgDialog = (props) => {
             />
              </div>)
                  })}
-                   <Tooltip title ='Add'>
-                   <Icon.Edit
-                   className={classes.icon}
+                  <Tooltip title ='Add'>
+                  <Icon.Plus
+                  className={classes.icon}
                   onClick={() =>
-                    setValues(currentValues=>[
-                        ...currentValues,
+                    setBills(currentBills=>[
+                        ...currentBills,
                         {
                             id:generate(),
                             category:'',
@@ -154,13 +156,13 @@ const BgDialog = (props) => {
                         }
                     ])
                   }/>
-                   </Tooltip>
-                 
+                  </Tooltip>
+                   
              <br/><br/>
              <DialogActions>
              <Button 
              className={classes.button}
-                onClick={()=>props.OnClose()}
+                onClick={()=>props.CloseBillDialog()}
                 variant= 'contained'>
                  Cancel
                 </Button>
@@ -178,4 +180,4 @@ const BgDialog = (props) => {
     );
 }
  
-export default BgDialog;
+export default BillsDialog;

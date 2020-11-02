@@ -1,5 +1,4 @@
-import React,{useEffect} from 'react';
-import Button from '@material-ui/core/Button'
+import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import Tooltip  from '@material-ui/core/Tooltip';
@@ -11,6 +10,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import Firebase from '../config'
 import  GoalModal from '../Components/GoalModal'
 import Home from '../Components/Home';
+ 
 const useStyles = makeStyles(theme=>({
    content:{
       marginTop:theme.spacing(15),
@@ -70,6 +70,7 @@ const Goals = (props) => {
       time:0,
       savings: 0
  })
+
  
  React.useEffect(()=>{
    const uid = Firebase.auth().currentUser.uid
@@ -113,6 +114,7 @@ const Goals = (props) => {
       
     >
        <div className={classes.root}>
+    
        <Container 
     className={classes.container}>
          <Typography
@@ -165,6 +167,7 @@ const Goals = (props) => {
        })
        }
        />
+    
       <Tooltip title =' Create your Schedule '>
       <Fab
        className={classes.fab}
