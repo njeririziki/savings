@@ -105,6 +105,7 @@ const Home  = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [imageUrl,setImageUrl] = React.useState(null)
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -112,6 +113,20 @@ const Home  = (props) => {
    const logOut = ()=>{
      Firebase.auth().signOut();
    }
+   React.useEffect(()=>{
+    const uid = Firebase.auth().currentUser.uid
+    const unsub = Firebase.firestore().collection('Users').doc(uid)
+    .get().then( (docsnapshot)=>{
+      if(docsnapshot.exists) {
+        Firebase.firestore().collection('Users').doc(uid)
+        .onSnapshot((doc)=>{
+          setImageUrl(doc.data().Avatar)
+        }) 
+      } 
+     
+    })
+    return ()=> unsub ;
+    },[])
 
   const drawer = (
     <div>
@@ -119,7 +134,7 @@ const Home  = (props) => {
       <Tooltip title =' User profile'>
       <Avatar 
       variant='circle'
-      src={Njeri}
+      src={imageUrl}
       className={classes.avatar}
       component={Link} to ='/user'
       />  

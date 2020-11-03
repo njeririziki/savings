@@ -45,29 +45,50 @@ const useStyles = makeStyles(theme => ({
 const UploadImage = () => {
    const classes= useStyles()
     const [fileUrl,setFileUrl] = React.useState();
+    const [imageUrl,setImageUrl] = React.useState(null)
+    const types =['images/png','image/jpeg'];
   
     const onFileChange= async(e) =>{
       
       const file= e.target.files[0]
-      const storageRef = Firebase.storage().ref();
-      const fileRef= storageRef.child(file.name);
-      await fileRef.put(file);
-      setFileUrl (await fileRef.getDownloadURL());
-      console.log ({fileUrl})
-      if(fileUrl){
-        const uid = Firebase.auth().currentUser.uid
-     await Firebase.firestore().collection('Users').doc(uid).set({
-          Avatar: fileUrl
-        },{merge:true}
-        )}
+      if (file && types.includes(file.type)){
+        const storageRef = Firebase.storage().ref();
+        const fileRef= storageRef.child(file.name);
+        await fileRef.put(file);
+        setFileUrl (await fileRef.getDownloadURL());
+        console.log (fileUrl)
+        if(fileUrl){
+          const uid = Firebase.auth().currentUser.uid
+       await Firebase.firestore().collection('Users').doc(uid).set({
+            Avatar: fileUrl
+          },{merge:true}
+          )}
+     } else{
+      alert('Your internet connection is slow please try again')
     }
+      
+    }
+    React.useEffect(()=>{
+      const uid = Firebase.auth().currentUser.uid
+      const unsub = Firebase.firestore().collection('Users').doc(uid)
+      .get().then( (docsnapshot)=>{
+        if(docsnapshot.exists) {
+          Firebase.firestore().collection('Users').doc(uid)
+          .onSnapshot((doc)=>{
+            setImageUrl(doc.data().Avatar)
+          }) 
+        } 
+       
+      })
+      return ()=> unsub ;
+      },[])
     
     
     return ( 
       <div className={classes.body}>
          <Avatar
        className={classes.avatar}
-       src={fileUrl}/>
+       src={imageUrl} />
       
        
      <form className={classes.container}>
