@@ -5,8 +5,11 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme)=> ({
     page:{
     padding: theme.spacing(4),
-    height: '40px',
-    width:'200px'
+    [theme.breakpoints.up('sm')]:{
+        height: '40px',
+        width:'200px'
+    },
+  
        }
         
     }))
@@ -50,8 +53,9 @@ const useStyles = makeStyles((theme)=> ({
             return(
                 <div className={classes.page}>
                          <Typography
-                        variant='h5'>
-                         Transaction Successful
+                        variant='h5'
+                        color='secondary'>
+                         Transaction Successful!
                         </Typography>
 
                 </div>

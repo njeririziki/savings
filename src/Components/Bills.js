@@ -52,12 +52,13 @@ const BillsDialog = (props) => {
         e.preventDefault();
       
      try{
-         await Firebase.firestore().collection('Budget').doc(uid).set(
+         await Firebase.firestore().collection('Budget').doc(uid)
+         .set(
              {
              
              Bills: bills,
              TotalBills : total
-             }
+             }, {merge:true}
          );
        
          props.CloseBillDialog();

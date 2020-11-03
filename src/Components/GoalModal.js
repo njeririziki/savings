@@ -59,7 +59,7 @@ const GoalModal = (props) => {
         Title : values.title
       })
       props.OnClose()
-      setValues({})
+      setValues({});
      } catch (error){
       alert(error)
      }
@@ -145,7 +145,11 @@ const GoalModal = (props) => {
                     <DialogActions>
                     <Button
                     variant='contained'
-                    onClick = {()=>props.OnClose()}
+                    onClick = {()=>{
+                        props.OnClose();
+                        setValues({});
+                    }
+                       }
                     >
                     cancel
                     </Button>

@@ -24,7 +24,7 @@ import Firebase from '../config';
         const types =['images/png','image/jpeg'];
 
     const Profile = () => {
-        const [image,setImage] = React.useState()
+        const [image,setImage] = React.useState(null)
          const [url,setUrl] = React.useState(null)
 
          const handleChange = (e)=>{
@@ -51,6 +51,7 @@ import Firebase from '../config';
                   console.log(percent +'% done')
                   }, async ()=>{
                 const url= await storageRef.getDownloadURL();
+               
                    await collectionRef.set({
                     profile:url
                   })

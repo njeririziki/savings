@@ -5,25 +5,28 @@ import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {Link,withRouter} from 'react-router-dom'
+import Tooltip from '@material-ui/core/Tooltip'
 import * as Icon from 'react-feather';
 import Home from '../Components/Home'
 import {makeStyles} from '@material-ui/core/styles'
 import Profile from '../Components/ImageUpload'
 
 const useStyles = makeStyles( (theme) => ({
+  content:{
+    marginTop:theme.spacing(15),
+   
+ },
   root : {
       display:'flex',
       flexDirection: 'column',
       justifyContent:'center',
-   
-      marginTop:theme.spacing(8),
      
   },
   table:{
       width : 460
   },
   avatar:{
-    alignSelf:'center',
+   alignSelf:'center',
    height:400,
    width:400
   },
@@ -73,31 +76,34 @@ const User = () => {
     }
   
   const content =(
+
     <div className={classes.root}>
     <Profile className={classes.avatar}/>
 <br/> <br/>
 
-    <Typography
+<Typography
 variant='h5'
 >
-{values.name? `Name: ${values.name }` :'Set your profile'}
+{values.name? `Name: ${values.name }` :null}
 </Typography>
 <br/>
 <Typography
 variant='h5'
 >
-{values.idno? `idno: ${values.idno }` : ' '}
+{values.idno? `Idno: ${values.idno }` : ' '}
 </Typography>
 <br/>
 <Typography
 variant='h5'
 >
-{values.phone? `phone : ${values.phone }` : null}
+
+ 
+{values.phone? `Phone: ${values.phone }` : null}
 </Typography>
 
 
+<Tooltip title='Add details'>
 <Fab
-color='primary'
 variant='round'
 onClick={openModal}
 className={classes.fab}
@@ -106,6 +112,8 @@ className={classes.fab}
 className={classes.icon}
 />
 </Fab> 
+</Tooltip>
+
 <br/>
 
 <br/><br/>
@@ -124,7 +132,7 @@ component={Link} to={`/user/expense`}
 </div> 
   )
     return (
-   <div  className={classes.root}>
+   <div   className={classes.content}>
    <Home
    Appbarname='User profile'
    Content={content}

@@ -160,8 +160,11 @@ const BgDialog = (props) => {
              <DialogActions>
              <Button 
              className={classes.button}
-                onClick={()=>props.OnClose()}
-                variant= 'contained'>
+                onClick={()=>{
+                    props.OnClose();
+                    setValues([]);} 
+                }             
+                 variant= 'contained'>
                  Cancel
                 </Button>
              <Button 

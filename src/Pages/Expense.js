@@ -68,9 +68,11 @@ const useStyles = makeStyles( (theme) => ({
 const Expense = () => {
     const classes = useStyles()
     const [fields,setFields] = React.useState([ ]);
-    const [expenses,setExpenses] = React.useState([199,120,250,105]);
+    const [expenses,setExpenses] = React.useState([]);
+    const [error,setError] = React.useState(false)
     const [savings,setSavings] = React.useState()
     const [openForm,setOpenForm]= React.useState(false);
+    const [transfer,setTrasfer]= React.useState(false)
     
     // opening the input dialog
     const openDialog =()=>{
@@ -97,6 +99,12 @@ const Expense = () => {
         )
         return math;
     }
+    const sumExpenses = (arr)=>{
+      const math = arr.reduce((a,b) =>{
+        return a+b
+      },0)
+      return math;
+    } 
     // get the sum  savings
     /* const sumExpenses = (arr)=>{
        let math = 0 ;
@@ -108,7 +116,7 @@ const Expense = () => {
     } */
  
     
-    React.useEffect( ()=>{
+    /*React.useEffect( ()=>{
        
         const json = localStorage.getItem('Schedule')
         const values = JSON.parse(json);
@@ -116,12 +124,29 @@ const Expense = () => {
           setFields(values) 
         }
 
-    },[])
+    },[])*/
+    React.useEffect(()=>{
+      const uid = Firebase.auth().currentUser.uid
+       const userRef= Firebase.firestore().collection('Expenses').doc(uid)
+      try{ userRef.get().then(((docSnapshot)=>{
+        if (docSnapshot.exists){
+         userRef.onSnapshot((doc)=>{
+           const budget = doc.data().Expenses; 
+           setFields(budget)
+         
+         })
+        }
+         
+        }))} catch (error){
+          alert(`Please try adding a new schedule or refreshing the page${error}`)
+        }
+        
+     },[])
   React.useEffect( () => {
         const totalBudget = sum (fields,'budget')
         console.log(`total budget ${totalBudget}`)
        
-        const totalExpense = sum(fields,'expense')
+        const totalExpense = sumExpenses(expenses)
         console.log(`total expense ${totalExpense}`)
         if(totalBudget > totalExpense) {
             const diff =  totalBudget-totalExpense;
@@ -130,7 +155,7 @@ const Expense = () => {
            }  else{
             setSavings('0'); 
            } 
-    },[fields])
+    },[fields,expenses])
    // get the savings 
    
    
@@ -141,9 +166,11 @@ const Expense = () => {
         Firebase.firestore().collection('Goal').doc(uid)
         .update({
         Savings : firebase.firestore.FieldValue.increment(savings)
-        })
+        },
+        setTrasfer(true)
+        )
       } catch(error){
-        alert(error)
+        alert(`Please add values correctly ${error}`)
       }
      
     } 
@@ -198,20 +225,27 @@ const Expense = () => {
                   
                   </TableCell>
                   <TableCell  align='right' > 
-                  {p.expense? p.expense: ( 
+                   
                   <TextField
                  variant ='outlined'
                  onChange ={(e)=>{
                     e.preventDefault();
                     const val = e.target.value;
-                    setExpenses( 
-                     currentamount=>
-                     produce(currentamount,v=>{
-                         v[index] = val
-                     }
-                     )
-                   )}}
-                 />) }
+                    if(isNaN(val)){
+                      setError(true)
+                    } else{
+                      setExpenses( 
+                        currentamount=>
+                        produce(currentamount,v=>{
+                            v[index] = Number(val) 
+                        }
+                        )
+                      )
+                    }
+                    }}
+                    error={error}
+                    helperText={error?'please enter a number':null}
+                 /> 
                  
                   </TableCell>
                
@@ -227,11 +261,10 @@ const Expense = () => {
                 <TableCell align='right' > 
                 
                   </TableCell> 
-                 
-                    
+                  
                     <TableCell align='right'
                     > 
-                   {`Savings: ${savings}`}
+                  <b>{`Savings: ${savings}`}</b> 
                   
                   </TableCell>
                   <TableCell align='right' > 
@@ -243,7 +276,7 @@ const Expense = () => {
                         Save
                   </Button>
                   </TableCell>
-                {savings>0? 
+                {transfer? 
                  <PayFunc price  ={savings}/>
                 :null}
                   

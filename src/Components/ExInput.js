@@ -2,6 +2,7 @@ import React from 'react';
 import {Table,TableBody,TableCell,TableHead,TableRow} from '@material-ui/core'
 import TextField from '@material-ui/core/TextField';
 import {makeStyles} from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
 import {produce} from 'immer'
 import Dialog from '@material-ui/core/Dialog';
@@ -29,19 +30,28 @@ import { generate } from "shortid";
          time:0 ,
          activity:'',
          budget :0,
-         expense:0
+        
         }
     ])
     }
-    const saveInput =(e)=>{
+    
+    const uid = Firebase.auth().currentUser.uid;
+    const saveInput =async(e)=>{
        e.preventDefault()
-        if (fields){
-            const json = JSON.stringify(fields);
-           localStorage.setItem('Schedule',json);
-          
-        };
-        props.close()
-        
+       
+       try{
+        await Firebase.firestore().collection('Expenses').doc(uid).set(
+            {
+           Expenses:fields
+            }
+        );
+        setFields([]);
+        props.close();
+       
+    } catch (error){
+    alert(error)
+    }
+         
     }
  
     
@@ -59,10 +69,13 @@ import { generate } from "shortid";
                 <TableCell >Time</TableCell>
                 <TableCell  >Activity</TableCell>
                 <TableCell >Budget</TableCell>
-                <TableCell>Expense</TableCell>
+               
                 <TableCell >
+                    <Tooltip title='Add'>
                     <Icon.Edit
                  onClick= {openField}/>
+                    </Tooltip>
+                 
                  </TableCell>
                 </TableRow>
                 
@@ -105,7 +118,7 @@ import { generate } from "shortid";
                             setError(true)
                         } else{
                             setFields( currentField=> produce(currentField,v =>{
-                                v[index].budget = rn
+                                v[index].budget = Number(rn)
                                }))
                         }
                       }
@@ -114,25 +127,7 @@ import { generate } from "shortid";
                   helperText={error?"Please type a number": null}
                   value={p.budget}
                   />
-                  </TableCell>
-                  <TableCell align='right'  > 
-                  <TextField 
-                   variant = 'outlined'
-                    onChange={ (e)=>{ 
-                        const rn = e.target.value;
-                        if(isNaN(rn)){
-                            setError(true)
-                        } else{
-                            setFields( currentField=> produce(currentField,v =>{
-                                v[index].expense = rn
-                               }))
-                        }
-                      }
-                  }
-                  error={error}
-                  helperText={error?"Please type a number": null}
-                  value ={p.expense}
-                  />
+              
                   </TableCell>
             
                    </TableRow> 
@@ -148,7 +143,9 @@ import { generate } from "shortid";
         <DialogActions>
             <Button
               variant='contained'
-              onClick = {()=>props.close()}
+              onClick = {()=>{
+                  props.close();
+                  setFields([]);}}
               >
                 Clear
             </Button>
@@ -167,3 +164,25 @@ import { generate } from "shortid";
  }
 
 export default Expense;
+
+/**
+ *     </TableCell>
+                  <TableCell align='right'  > 
+                  <TextField 
+                   variant = 'outlined'
+                    onChange={ (e)=>{ 
+                        const rn = e.target.value;
+                        if(isNaN(rn)){
+                            setError(true)
+                        } else{
+                            setFields( currentField=> produce(currentField,v =>{
+                                v[index].expense = Number(rn)
+                               }))
+                        }
+                      }
+                  }
+                  error={error}
+                  helperText={error?"Please type a number": null}
+                  value ={p.expense}
+                  />
+ */

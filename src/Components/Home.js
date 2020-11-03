@@ -49,8 +49,8 @@ const useStyles = makeStyles(theme => ({
   },
   avatar:{
     marginLeft:theme.spacing(5),
-    width:100,
-    height:100,
+    width:120,
+    height:120,
   },
   appBar: {
     [theme.breakpoints.up('sm')]: {
@@ -119,12 +119,12 @@ const Home  = (props) => {
       <Tooltip title =' User profile'>
       <Avatar 
       variant='circle'
-     
+      src={Njeri}
       className={classes.avatar}
       component={Link} to ='/user'
       />  
       </Tooltip> 
-     
+     <br/>
       <List className={classes.listItems}  >
       <Tooltip title ='Set your financial goal'>
       <ListItem 

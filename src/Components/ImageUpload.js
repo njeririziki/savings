@@ -2,21 +2,43 @@ import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Firebase from '../config';
 import * as Icon from 'react-feather'
+import Fab from '@material-ui/core/Fab';
+import Tooltip from '@material-ui/core/Tooltip'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
+  body:{
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+  
+    position:'relative',
+    width:200,
+    height:200,
+  },
   avatar:{
     marginLeft:theme.spacing(2),
     width:200,
     height:200,
-    alignSelf:'center'
+    position:'relative',
+    backgroundColor:'#005662'
   },
   container:{
-    display:'flex',
-    flexDirection:'row',
+   alignSelf:'flex-end',
+    position:'absolute',
+    bottom:0
    
-
-  }
+  },
+  input:{
+    width:0,
+    height:0,
+    opacity:0
+  },
+  fab:{
+    backgroundColor:'#000000',
+    alignSelf:'center',
+    color:'#ffffff'
+ },
 
 }))
 
@@ -25,6 +47,7 @@ const UploadImage = () => {
     const [fileUrl,setFileUrl] = React.useState();
   
     const onFileChange= async(e) =>{
+      
       const file= e.target.files[0]
       const storageRef = Firebase.storage().ref();
       const fileRef= storageRef.child(file.name);
@@ -33,26 +56,32 @@ const UploadImage = () => {
       console.log ({fileUrl})
       if(fileUrl){
         const uid = Firebase.auth().currentUser.uid
-     await Firebase.firestore().collection('Users').doc(uid).add({
+     await Firebase.firestore().collection('Users').doc(uid).set({
           Avatar: fileUrl
-        })}
+        },{merge:true}
+        )}
     }
     
     
     return ( 
-      <div>
+      <div className={classes.body}>
          <Avatar
        className={classes.avatar}
        src={fileUrl}/>
       
-       <div className={classes.container}>
-     
-     <Icon.Edit/>
-     <input type='file' onChange={onFileChange}/>
-      </div>
-      </div>
- 
-    
+       
+     <form className={classes.container}>
+       <label>
+       <input 
+       type='file'
+        onChange={onFileChange}
+        className={classes.input}
+        />
+        <Icon.Camera/>
+       
+       </label>
+     </form> 
+      </div>   
      );
 }
  

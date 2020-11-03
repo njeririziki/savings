@@ -26,10 +26,10 @@ const useStyles = makeStyles( (theme) => ({
       marginTop:theme.spacing(15),
      
   },
-  table:{
-      width : 460
-  },
+
+
   fab:{
+    marginTop:theme.spacing(5),
     backgroundColor:'#000000',
     alignSelf:'flex-end'
  },
@@ -49,7 +49,7 @@ const useStyles = makeStyles( (theme) => ({
  },
  table:{
   [theme.breakpoints.up('sm')] :{
-      width : 560
+      width : 460
   }
   
 },
@@ -162,12 +162,13 @@ console.log(totalBills) */
                  <TableCell>
                  <Typography
                 variant='body1'
+
                     >
-                 Budget Total
+                <b>Total</b> 
                 </Typography>
                  </TableCell>
                  <TableCell align='right'>
-                {total}
+                <b>{total}</b>
                  </TableCell>
                </TableRow>
              <TableRow >
@@ -181,11 +182,13 @@ console.log(totalBills) */
               
                </TableCell>
                <TableCell rowSpan={2}>
-                 {totalBills}
+                 <b>Total:{totalBills}</b>
                </TableCell>
               
                <TableCell  rowSpan={2}>
-               <PayFunc price={totalBills}/>
+                 {totalBills?  <PayFunc price={totalBills}/>:
+                 null}
+              
                </TableCell>
              </TableRow>
               
