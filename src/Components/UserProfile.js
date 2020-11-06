@@ -110,8 +110,8 @@ const GoalModal = (props) => {
                     <Textfield
                     variant='outlined'
                     id='name'
-                    placeholder='name'
-                    label='Name'
+                    placeholder='Username'
+                    label='Username'
                     value={values.name}
                     onChange={handleChange('name')}
                     fullWidth

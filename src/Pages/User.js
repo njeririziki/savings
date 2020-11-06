@@ -34,10 +34,21 @@ const useStyles = makeStyles( (theme) => ({
   fab:{
     backgroundColor:'#000000',
     color:'#ffffff',
-     width:'200px'
+   
  },
+ delfab:{
+  backgroundColor:'#c62828',
+  color:'#ffffff',
+   width:'300px'
+},
+typo:{
+  display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    }
+},
  icon:{
-     color:'#ffffff',
+     color:'#ab000d',
      
  },
 }))
@@ -60,6 +71,7 @@ const User = () => {
        setValues(profile)
 
     }
+ 
     /*const unsub = Firebase.firestore().collection('Users').doc(uid)
     .get().then( (docsnapshot)=>{
       if(docsnapshot.exists) {
@@ -76,7 +88,13 @@ const User = () => {
     })   return ()=> unsub ;*/
   
     },[])
+    const delaccount =()=>{
+      const user = Firebase.auth().currentUser
+      user.delete().then(
+        Firebase.auth().signOut()
+      )
 
+    }
     const openModal=()=>{
        setOpen(true)
     }
@@ -96,35 +114,60 @@ variant='body1'
 {values.name? `Name: ${values.name }` :null}
 </Typography>
 <br/>
+<div className={classes.typo}>
+<Icon.Mail/>
 <Typography
 variant='body1'
 >
-{values.email? `Email: ${values.email }` :null}
+ {values.email? `${values.email}`  :null}
 </Typography>
+</div>
+
 <br/>
+<div className={classes.typo}>
+<Icon.AlertCircle/>
 <Typography
 variant='body1'
+
 >
-Reset Password 
-</Typography>
-
-
-<br/>
-
-<Tooltip title='Add details'>
+ Personal Information 
+ </Typography>
+<Tooltip title='Reset password'>
 <Fab
-variant='extended'
+variant='round'
 onClick={openModal}
 className={classes.fab}
 >
 <Icon.Edit2/>
-Edit Details
 </Fab>
 </Tooltip>
 
 
+</div>
+
 
 <br/><br/>
+<div className={classes.typo}>
+<Icon.AlertTriangle
+  className={classes.icon}/>
+  <Typography
+variant='body1'
+>
+Deleting your account will permanently erase your information
+</Typography>
+</div>
+<br/>
+<Tooltip title='This will erase everything'>
+<Fab
+variant='extended'
+onClick={delaccount}
+className={classes.delfab}
+>
+<Icon.Trash/>
+Delete Account
+</Fab>
+</Tooltip>
+
 
 < UserProfile
 OnOpen={open}

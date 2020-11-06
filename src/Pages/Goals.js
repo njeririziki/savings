@@ -35,9 +35,13 @@ const useStyles = makeStyles(theme=>({
       marginTop:theme.spacing(5)
    },
    typography:{
-      
-      
       fontSize: '30px',
+      alignSelf: 'center '
+     
+   },
+   savings:{
+      fontSize: '30px',
+      color:'#00701a',
       alignSelf: 'center '
      
    },
@@ -147,7 +151,7 @@ const Goals = (props) => {
        </Typography>
        <Typography
        variant='h5'
-       className={classes.typography}>
+       className={classes.savings}>
          {values.savings? `Savings : Ksh ${values.savings }` : null}
        </Typography>
       <br/>
@@ -161,7 +165,7 @@ const Goals = (props) => {
            textSize:'20px',
            strokeLinecap:'butt',
            pathTransitionDuration: 0.5,
-           pathColor: '#b0003a',
+           pathColor: '#c62828',
            trailColor:'#82ada9',
            textColor: '#000000',
        })

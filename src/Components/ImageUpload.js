@@ -61,38 +61,25 @@ const UploadImage = () => {
     const onFileChange= async(e) =>{
    
       const file= e.target.files[0];
-      setFile(file.name)
-    
+     
         const storageRef = Firebase.storage().ref();
         const fileRef= storageRef.child(file.name);
-       await fileRef.put(file).on('state_changed',(snap)=>{
+       await fileRef.put(file).then('state_changed',(snap)=>{
           const progress =  (snap.bytesTransferred / snap.totalBytes) * 100;
         console.log('Upload is' + progress + '% done');
         setProgress(progress)
        
         },(err)=> console.log (err));
-
-        }
-    React.useEffect(()=>{
-
-      const unsub= async()=>{
-        const storageRef = Firebase.storage().ref();
-        const fileRef= storageRef.child(file);
         await fileRef.getDownloadURL()
         .then(async(downloadURl)=>{
           console.log ('File is available at', downloadURl);
           await user.updateProfile({
             photoURL: downloadURl
           })
-        })((err)=> alert (err))  
-        
-      }
-      return ()=>unsub
-    },[file]);
+        },(err)=> alert (err))
 
-   
-     
-  
+        }
+
     React.useEffect(()=>{
       const user= Firebase.auth().currentUser;
        if (user !=null){
@@ -108,10 +95,7 @@ const UploadImage = () => {
        className={classes.avatar}
        src={imageUrl} />
       
-      <CircularProgress
-      className={classes.progress}
-      variant='static'
-      value={progress}/> 
+      
      <form className={classes.container}>
        <label>
        <input 
@@ -128,3 +112,25 @@ const UploadImage = () => {
 }
  
 export default UploadImage;
+
+
+/**   React.useEffect(()=>{
+
+      const unsub= async()=>{
+        const storageRef = Firebase.storage().ref();
+        const fileRef= storageRef.child(file);
+        await fileRef.getDownloadURL()
+        .then(async(downloadURl)=>{
+          console.log ('File is available at', downloadURl);
+          await user.updateProfile({
+            photoURL: downloadURl
+          })
+        })((err)=> alert (err))  
+        
+      }
+      return ()=>unsub
+    },[file]); 
+    <CircularProgress
+      className={classes.progress}
+      variant='static'
+      value={progress}/> */
