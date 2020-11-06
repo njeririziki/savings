@@ -99,7 +99,7 @@ const Goals = (props) => {
    unsub()  
     },[])
     
- const percentage = Math.ceil(values.savings/ values.amount)  ;
+ const percentage = Math.ceil((values.savings/ values.amount)*100)  ;
  const daysLeft = (values.time*365)-(values.savings/(values.amount/(values.time*365 )))
  const timeLeft =   Math.ceil(daysLeft/30)
  

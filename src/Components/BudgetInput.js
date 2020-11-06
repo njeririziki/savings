@@ -56,7 +56,7 @@ const BgDialog = (props) => {
              {
              Budget: values,
              Savings : savings
-             }
+             }, {merge:true}
          );
          setValues([]);
          props.OnClose();

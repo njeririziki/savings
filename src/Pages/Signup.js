@@ -52,7 +52,7 @@ const SignUp = (props) => {
     const [passwordO,setPasswordO]= React.useState()
     const [password,setPassword]= React.useState()
     const [showPassword,setShowPassword] = React.useState(false)
-    const [valid,setValid] = React.useState(false)
+    const [valid,setValid] = React.useState(true)
     const [error,setError] = React.useState(false)
     const revPassword=()=>{
         setShowPassword(!showPassword)
@@ -76,7 +76,8 @@ const SignUp = (props) => {
     }
     const invalid =()=>{
        if(password===passwordO) {
-           setValid(true)
+           setValid(false);
+           setError(false)
        }else {
            setError(true)
        }
@@ -105,7 +106,7 @@ const SignUp = (props) => {
                     required
                     label='email'
                     fullWidth
-                    className={classes.other}
+                    className={classes.other} 
                     />
                     <Textfield
                     variant='outlined'

@@ -131,8 +131,8 @@ const Expense = () => {
       try{ userRef.get().then(((docSnapshot)=>{
         if (docSnapshot.exists){
          userRef.onSnapshot((doc)=>{
-           const budget = doc.data().Expenses; 
-           setFields(budget)
+           const dailyBudget = doc.data().Expenses; 
+           setFields(dailyBudget)
          
          })
         }
@@ -162,12 +162,13 @@ const Expense = () => {
     // upload savings to firebase
     function unsubscribe(){
       const uid=  Firebase.auth().currentUser.uid
+      setTrasfer(true)
       try{
         Firebase.firestore().collection('Goal').doc(uid)
         .update({
         Savings : firebase.firestore.FieldValue.increment(savings)
         },
-        setTrasfer(true)
+       
         )
       } catch(error){
         alert(`Please add values correctly ${error}`)
@@ -187,7 +188,7 @@ const Expense = () => {
         <Typography
      variant='h6'
         >
-        {month} <br/>    {weekday}
+        {month} <br/>  {weekday}
      </Typography>
      <Typography
      variant='h6'

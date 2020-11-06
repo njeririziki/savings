@@ -9,7 +9,8 @@ import Tooltip from '@material-ui/core/Tooltip'
 import * as Icon from 'react-feather';
 import Home from '../Components/Home'
 import {makeStyles} from '@material-ui/core/styles'
-import Profile from '../Components/ImageUpload'
+import Profile from '../Components/ImageUpload';
+
 
 const useStyles = makeStyles( (theme) => ({
   content:{
@@ -32,7 +33,8 @@ const useStyles = makeStyles( (theme) => ({
   },
   fab:{
     backgroundColor:'#000000',
-    alignSelf:'flex-end'
+    color:'#ffffff',
+     width:'200px'
  },
  icon:{
      color:'#ffffff',
@@ -43,14 +45,22 @@ const User = () => {
     const classes= useStyles()
     const [open,setOpen]=React.useState(false);
     const [values,setValues] = React.useState({
-      name :'',
-      idno:'',
-      phone:''
+      name:'',
+      email:''
     })
 
   React.useEffect(()=>{
-    const uid = Firebase.auth().currentUser.uid
-    const unsub = Firebase.firestore().collection('Users').doc(uid)
+    const user = Firebase.auth().currentUser
+    if(user !=null){
+       const profile = {
+         name:user.displayName,
+         email:user.email
+       }
+
+       setValues(profile)
+
+    }
+    /*const unsub = Firebase.firestore().collection('Users').doc(uid)
     .get().then( (docsnapshot)=>{
       if(docsnapshot.exists) {
         Firebase.firestore().collection('Users').doc(uid)
@@ -58,14 +68,13 @@ const User = () => {
           const goal = {
             name : doc.data().Name ,
             idno : doc.data().Idno ,
-            phone: doc.data().Phone,
            profile: doc.data().Avatar }
             setValues(goal) 
         }) 
       } 
      
-    })
-    return ()=> unsub ;
+    })   return ()=> unsub ;*/
+  
     },[])
 
     const openModal=()=>{
@@ -82,42 +91,40 @@ const User = () => {
 <br/> <br/>
 
 <Typography
-variant='h5'
+variant='body1'
 >
 {values.name? `Name: ${values.name }` :null}
 </Typography>
 <br/>
 <Typography
-variant='h5'
+variant='body1'
 >
-{values.idno? `Idno: ${values.idno }` : ' '}
+{values.email? `Email: ${values.email }` :null}
 </Typography>
 <br/>
 <Typography
-variant='h5'
+variant='body1'
 >
-
- 
-{values.phone? `Phone: ${values.phone }` : null}
+Reset Password 
 </Typography>
 
 
+<br/>
+
 <Tooltip title='Add details'>
 <Fab
-variant='round'
+variant='extended'
 onClick={openModal}
 className={classes.fab}
 >
-<Icon.Plus
-className={classes.icon}
-/>
-</Fab> 
+<Icon.Edit2/>
+Edit Details
+</Fab>
 </Tooltip>
 
-<br/>
+
 
 <br/><br/>
-
 
 < UserProfile
 OnOpen={open}

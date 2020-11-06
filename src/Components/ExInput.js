@@ -35,6 +35,7 @@ import { generate } from "shortid";
     ])
     }
     
+    
     const uid = Firebase.auth().currentUser.uid;
     const saveInput =async(e)=>{
        e.preventDefault()
@@ -145,7 +146,8 @@ import { generate } from "shortid";
               variant='contained'
               onClick = {()=>{
                   props.close();
-                  setFields([]);}}
+                  setFields([])
+                  setError(false);}}
               >
                 Clear
             </Button>

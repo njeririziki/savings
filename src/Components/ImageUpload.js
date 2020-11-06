@@ -4,6 +4,7 @@ import Firebase from '../config';
 import * as Icon from 'react-feather'
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -22,6 +23,12 @@ const useStyles = makeStyles(theme => ({
     height:200,
     position:'relative',
     backgroundColor:'#005662'
+  },
+  progress:{
+   position:"absolute",
+   left:-6,
+   zIndex:1,
+   color:'black'
   },
   container:{
    alignSelf:'flex-end',
@@ -44,43 +51,54 @@ const useStyles = makeStyles(theme => ({
 
 const UploadImage = () => {
    const classes= useStyles()
-    const [fileUrl,setFileUrl] = React.useState();
+    const [file,setFile] = React.useState();
     const [imageUrl,setImageUrl] = React.useState(null)
+    const [progress,setProgress] = React.useState();
+    const [isloading,setIsLoading] =React.useState(false)
     const types =['images/png','image/jpeg'];
   
+    const user= Firebase.auth().currentUser;
     const onFileChange= async(e) =>{
-      
-      const file= e.target.files[0]
-      if (file && types.includes(file.type)){
+   
+      const file= e.target.files[0];
+      setFile(file.name)
+    
         const storageRef = Firebase.storage().ref();
         const fileRef= storageRef.child(file.name);
-        await fileRef.put(file);
-        setFileUrl (await fileRef.getDownloadURL());
-        console.log (fileUrl)
-        if(fileUrl){
-          const uid = Firebase.auth().currentUser.uid
-       await Firebase.firestore().collection('Users').doc(uid).set({
-            Avatar: fileUrl
-          },{merge:true}
-          )}
-     } else{
-      alert('Your internet connection is slow please try again')
-    }
-      
-    }
-    React.useEffect(()=>{
-      const uid = Firebase.auth().currentUser.uid
-      const unsub = Firebase.firestore().collection('Users').doc(uid)
-      .get().then( (docsnapshot)=>{
-        if(docsnapshot.exists) {
-          Firebase.firestore().collection('Users').doc(uid)
-          .onSnapshot((doc)=>{
-            setImageUrl(doc.data().Avatar)
-          }) 
-        } 
+       await fileRef.put(file).on('state_changed',(snap)=>{
+          const progress =  (snap.bytesTransferred / snap.totalBytes) * 100;
+        console.log('Upload is' + progress + '% done');
+        setProgress(progress)
        
-      })
-      return ()=> unsub ;
+        },(err)=> console.log (err));
+
+        }
+    React.useEffect(()=>{
+
+      const unsub= async()=>{
+        const storageRef = Firebase.storage().ref();
+        const fileRef= storageRef.child(file);
+        await fileRef.getDownloadURL()
+        .then(async(downloadURl)=>{
+          console.log ('File is available at', downloadURl);
+          await user.updateProfile({
+            photoURL: downloadURl
+          })
+        })((err)=> alert (err))  
+        
+      }
+      return ()=>unsub
+    },[file]);
+
+   
+     
+  
+    React.useEffect(()=>{
+      const user= Firebase.auth().currentUser;
+       if (user !=null){
+         const imageUrl= user.photoURL
+         setImageUrl(imageUrl)
+       }
       },[])
     
     
@@ -90,7 +108,10 @@ const UploadImage = () => {
        className={classes.avatar}
        src={imageUrl} />
       
-       
+      <CircularProgress
+      className={classes.progress}
+      variant='static'
+      value={progress}/> 
      <form className={classes.container}>
        <label>
        <input 

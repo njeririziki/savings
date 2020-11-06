@@ -105,7 +105,7 @@ const Home  = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [imageUrl,setImageUrl] = React.useState(null)
+      const [imageUrl,setImageUrl] = React.useState(null)
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -113,7 +113,7 @@ const Home  = (props) => {
    const logOut = ()=>{
      Firebase.auth().signOut();
    }
-   React.useEffect(()=>{
+   /*React.useEffect(()=>{
     const uid = Firebase.auth().currentUser.uid
     const unsub = Firebase.firestore().collection('Users').doc(uid)
     .get().then( (docsnapshot)=>{
@@ -127,7 +127,14 @@ const Home  = (props) => {
     })
     return ()=> unsub ;
     },[])
-
+*/
+React.useEffect(()=>{
+  const user= Firebase.auth().currentUser;
+   if (user !=null){
+     const imageUrl= user.photoURL
+     setImageUrl(imageUrl)
+   }
+  },[])
   const drawer = (
     <div>
       <div className={classes.toolbar} />

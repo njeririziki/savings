@@ -45,8 +45,8 @@ const GoalModal = (props) => {
     const classes= useStyles();
     const [values,setValues] = React.useState({
         title:'',
-        amount:'',
-        time:''
+        amount:0,
+        time:0
    })
    const [error,setError] = React.useState(false)
   const submitValues = async (event)=>{
@@ -88,14 +88,7 @@ const GoalModal = (props) => {
                     id='title'
                     placeholder='Goal title ie Masters Degree'
                     value={values.title}
-                    onChange={(e)=>{
-                        const val= e.target.value
-                        if (val === ""){
-                            setError(true)
-                           }else {
-                               handleChange('title')
-                           }   
-                        } }
+                    onChange={ handleChange('title')}
                     fullWidth
                     error={error}
                     helperText={error?"Please enter a goal": null}
@@ -106,15 +99,7 @@ const GoalModal = (props) => {
                     id='Amount'
                     placeholder='Amount to reach goal'
                     value={values.amount}
-                    onChange={(e)=>{
-                        const val= e.target.value
-                        if (isNaN(val)){
-                         setError(true)
-                        }else {
-                            handleChange('amount')
-                        }
-                       
-                    }}
+                    onChange={ handleChange('amount')}
                     error={error}
                     helperText={error?"Please enter a number": null}
                     fullWidth
@@ -126,15 +111,9 @@ const GoalModal = (props) => {
                     id='time'
                     placeholder='Years to achieve goal'
                     value={values.time}
-                    onChange={(e)=>{
-                        const val= e.target.value
-                        if (isNaN(val)){
-                         setError(true)
-                        }else {
+                    onChange={
                             handleChange('time')
-                        }
-                       
-                    }}
+                   }
                     error={error}
                     helperText={error?"Please enter a number": null}
                     fullWidth
@@ -148,6 +127,7 @@ const GoalModal = (props) => {
                     onClick = {()=>{
                         props.OnClose();
                         setValues({});
+                        setError(false)
                     }
                        }
                     >
