@@ -19,7 +19,8 @@ root:{
     marginTop: theme.spacing(8),
     display:'flex',
     justifyContent:'center',
-    flexDirection:'column'
+    flexDirection:'column',
+    
 },
 container:{
     backgroundColor:'#fafafa',

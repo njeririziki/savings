@@ -25,7 +25,7 @@ root:{
     flexDirection:'column'
 },
 container:{
-    backgroundColor:'#fafafa',
+    backgroundColor:'#f2f2f2',
 
 },
 avatar:{
