@@ -60,16 +60,20 @@ const SignUp = (props) => {
     }
     const submitInput = async (event)=>{
         event.preventDefault();
-        const { email ,password } = event.target.elements;
+        const { name, email ,password } = event.target.elements;
         try{
            await Firebase.auth().createUserWithEmailAndPassword(email.value,password.value);
                 props.history.push('/goals')
-                const uid = Firebase.auth().currentUser.uid;
-              await Firebase.firestore().collection('Goal').doc(uid).set(
+                const user = Firebase.auth().currentUser;
+              await Firebase.firestore().collection('Goal').doc(user.uid).set(
                  {
                      Savings: 0
                 } 
               )
+              await user.updateProfile({
+
+                displayName : name.value ,
+            })
                 console.log ('successful')
         } catch {
        alert ('not done')
@@ -99,6 +103,16 @@ const SignUp = (props) => {
                 <form
                  onSubmit = {submitInput}
                  className={classes.other}>
+                       <Textfield
+                    variant='outlined'
+                    name='name'
+                    type = 'text'
+                    placeholder='John Doe'
+                    required
+                    label='name'
+                    fullWidth
+                    className={classes.other} 
+                    />
                     <Textfield
                     variant='outlined'
                     name='email'
