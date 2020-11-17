@@ -71,15 +71,17 @@ const GoalModal = (props) => {
      }
     }
     React.useEffect(()=>{
-      
-      const unsub= user.updateProfile({
+      if(values.name&& values.email){
+        const unsub= user.updateProfile({
 
-                displayName : values.name,
-                email:values.email
-              })
-           
-    
-      return () => unsub;
+            displayName : values.name,
+            email:values.email
+          })
+       
+
+  return () => unsub;
+      }
+     
 
     },[user,values])
     const handleChange =name=>event=>{
@@ -92,6 +94,7 @@ const GoalModal = (props) => {
             setValid(false);
             setError(false)
         }else {
+            setValid(false);
             setError(true)
         }
      }

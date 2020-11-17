@@ -81,13 +81,13 @@ const SignUp = (props) => {
     }
     const invalid =()=>{
        if(password===passwordO) {
-           setValid(false);
+          
            setError(false)
        }else {
            setError(true)
+           setValid(false);
        }
     }
-   
    
     return (
        <> 
@@ -109,8 +109,9 @@ const SignUp = (props) => {
                     type = 'text'
                     placeholder='John Doe'
                     required
-                    label='name'
+                    label='Username'
                     fullWidth
+                    helperText='Use 8 or more letters and characters  '
                     className={classes.other} 
                     />
                     <Textfield
@@ -134,7 +135,7 @@ const SignUp = (props) => {
                           setPasswordO(val)
                     }}
                     error={error}
-                    helperText='Use letters and characters 8 or more characters'
+                    helperText='Use 8 or more letters and characters'
                     fullWidth
                     required
                     className={classes.other}

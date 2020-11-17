@@ -3,7 +3,6 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import Button  from '@material-ui/core/Button';
 import Textfield from '@material-ui/core/TextField'
-import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import * as Icon from 'react-feather';
 import { makeStyles } from '@material-ui/core';
@@ -13,7 +12,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton'
 import Firebase from '../config'
-import AuthContext from '../Context/AuthContext'
+
 
 const useStyle= makeStyles(theme=>({
  
@@ -125,8 +124,7 @@ const LogIn = ({history}) => {
                     required
                     label='password'
                     className={classes.other}
-                   
-                    helperText='Use letters and characters 8 or more characters'
+                    helperText='Use 8 or more letters and characters'
                     InputProps={ {
                       endAdornment:   <InputAdornment position='end'>
                       <IconButton

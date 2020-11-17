@@ -58,12 +58,6 @@ const useStyles = makeStyles( (theme) => ({
       }
 }))
 
-// interface Schedule {
-//   time: string;
-//   activity:string;
-//   budget: number;
-//   expense:number;
-// }
 
 const Expense = () => {
     const classes = useStyles()
@@ -105,26 +99,7 @@ const Expense = () => {
       },0)
       return math;
     } 
-    // get the sum  savings
-    /* const sumExpenses = (arr)=>{
-       let math = 0 ;
-       for (const val of arr){
-           math +=val
-       }
-          return math;
-      
-    } */
- 
-    
-    /*React.useEffect( ()=>{
-       
-        const json = localStorage.getItem('Schedule')
-        const values = JSON.parse(json);
-        if (values){
-          setFields(values) 
-        }
 
-    },[])*/
     React.useEffect(()=>{
       const uid = Firebase.auth().currentUser.uid
        const userRef= Firebase.firestore().collection('Expenses').doc(uid)

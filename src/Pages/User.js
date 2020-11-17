@@ -71,28 +71,12 @@ const User = () => {
        setValues(profile)
 
     }
- 
-    /*const unsub = Firebase.firestore().collection('Users').doc(uid)
-    .get().then( (docsnapshot)=>{
-      if(docsnapshot.exists) {
-        Firebase.firestore().collection('Users').doc(uid)
-        .onSnapshot((doc)=>{
-          const goal = {
-            name : doc.data().Name ,
-            idno : doc.data().Idno ,
-           profile: doc.data().Avatar }
-            setValues(goal) 
-        }) 
-      } 
-     
-    })   return ()=> unsub ;*/
   
     },[])
-    const delaccount =()=>{
-      const user = Firebase.auth().currentUser
-      user.delete().then(
+    const logOut =()=>{
+     
         Firebase.auth().signOut()
-      )
+    
 
     }
     const openModal=()=>{
@@ -147,24 +131,16 @@ className={classes.fab}
 
 
 <br/><br/>
-<div className={classes.typo}>
-<Icon.AlertTriangle
-  className={classes.icon}/>
-  <Typography
-variant='body1'
->
-Deleting your account will permanently erase your information
-</Typography>
-</div>
+
 <br/>
-<Tooltip title='This will erase everything'>
+<Tooltip title='Sign Out of the account'>
 <Fab
 variant='extended'
-onClick={delaccount}
+onClick={logOut}
 className={classes.delfab}
 >
 <Icon.Trash/>
-Delete Account
+Log Out
 </Fab>
 </Tooltip>
 

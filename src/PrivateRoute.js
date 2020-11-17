@@ -41,14 +41,4 @@ const PrivateRoute = ({
       );
 }
  export {PrivateRoute,PublicRoute}
-// const ProperRoute = () => {
-//     return (
-       
-//             <AuthProvider>
-//                 <PrivateRoute/>
-//             </AuthProvider>
-        
-//       );
-// }
- 
-// export default ProperRoute;
+
