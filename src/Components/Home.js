@@ -14,11 +14,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
 import Tooltip  from '@material-ui/core/Tooltip';
 import {Link} from 'react-router-dom'
 import Firebase from '../config'
-import Njeri from './profile.jpg'
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -188,11 +187,9 @@ React.useEffect(()=>{
             </ListItem> 
           </Tooltip>
          
-         
-
-          <Tooltip title =' Dashboard'>
+          <Tooltip title =' Savings'>
           <ListItem button 
-          component={Link} to ='/goals'>
+          component={Link} to ='/savings'>
           <ListItemIcon className={classes.listItems}>
             <Icon.Database/>
           </ListItemIcon>

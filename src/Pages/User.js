@@ -37,9 +37,10 @@ const useStyles = makeStyles( (theme) => ({
    
  },
  delfab:{
+   
   backgroundColor:'#c62828',
   color:'#ffffff',
-   width:'300px'
+   width:'200px'
 },
 typo:{
   display: 'flex',
@@ -139,7 +140,7 @@ variant='extended'
 onClick={logOut}
 className={classes.delfab}
 >
-<Icon.Trash/>
+<Icon.LogOut/>
 Log Out
 </Fab>
 </Tooltip>

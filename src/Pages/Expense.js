@@ -135,16 +135,33 @@ const Expense = () => {
    
    
     // upload savings to firebase
-    function unsubscribe(){
+    const unsubscribe= async ()=> {
       const uid=  Firebase.auth().currentUser.uid
-      setTrasfer(true)
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth() + 1; //January is 0!
+      let yyyy = today.getFullYear();
+      if (dd < 10) {
+        dd = '0' + dd;
+      } 
+      if (mm < 10) {
+        mm = '0' + mm;
+      } 
+      let now = dd + mm + yyyy;
+      
       try{
-        Firebase.firestore().collection('Goal').doc(uid)
+        await Firebase.firestore().collection('Goal').doc(uid)
         .update({
         Savings : firebase.firestore.FieldValue.increment(savings)
-        },
-       
-        )
+        });
+        await Firebase.firestore().collection('Savings').doc(uid)
+        .collection('Receipts').doc(now)
+        .set({
+          Amount: savings,
+          Time : firebase.firestore.Timestamp.toMills(),
+        });
+        setTrasfer(true)
+        
       } catch(error){
         alert(`Please add values correctly ${error}`)
       }
@@ -214,9 +231,7 @@ const Expense = () => {
                         currentamount=>
                         produce(currentamount,v=>{
                             v[index] = Number(val) 
-                        }
-                        )
-                      )
+                        } ))
                     }
                     }}
                     error={error}

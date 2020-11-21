@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme)=> ({
         },[]);
          
         if (paidFor) {
+            
             return(
                 <div className={classes.page}>
                          <Typography

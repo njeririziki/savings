@@ -13,10 +13,7 @@ import Home from '../Components/Home';
 import PayFunc from '../Components/PaypalComp'
 import {makeStyles} from '@material-ui/core/styles'
 
-// interface BudgetArr {
-//   category: string,
-//   amount: number
-// }
+
 const useStyles = makeStyles( (theme) => ({
   root : {
       display:'flex',
@@ -84,18 +81,7 @@ const Budget = () => {
       }
       
    },[])
-   // getting total bills
-/*   const sum = (arr,prop)=>{
-    const math = arr.reduce(
-        function (a,b){
-            return a+ b[prop] 
-        },0
-    )
-    return math;
-}
-const totalBills = sum(values,'amount')
-console.log(totalBills) */
-  // opening the dudget input dialog 
+
   const getData =()=>{
     setOpenForm(true)
   }
@@ -199,7 +185,7 @@ console.log(totalBills) */
        <BillsDialog
     OpenBillDialog={openBills}
     CloseBillDialog={closeBills}
-    />
+      />
    
      <br/>
           </Container>
