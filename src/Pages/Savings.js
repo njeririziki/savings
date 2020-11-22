@@ -25,21 +25,25 @@ const Savings = () => {
         const uid= Firebase.auth().currentUser.uid
       const userRef= Firebase.firestore().collection('Savings').doc(uid).collection('Receipts')
       const unsub=  userRef.get().then((docSnapshot)=>{
+        const transactions =[]
           if(docSnapshot.exists){
            userRef.onSnapshot ((snapshot)=>{
-               const transactions =[]
+         
                snapshot.doc.forEach(doc=>{
                 const transaction= {
                     Id:doc.id,
-                    Time: doc.data().Time,
-                    Amount: doc.data().Amount
+                    ...doc.data()
+                   
                 } 
-                setTrans(transaction)
-                console.log (transaction)
+                transactions.push(transaction)
                })
+             
+               setTrans(transactions)
+               console.log (transactions)
            })
           }
-      })
+      }).catch((error)=>
+      alert(error))
         return () => unsub
     }, [])
 
