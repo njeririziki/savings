@@ -83,6 +83,7 @@ const Expense = () => {
      let month = months[date.getMonth()]
      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
      let weekday = days[date.getDay()]
+     let tonow = day+ month
       
      // getting the budget amount
      const sum = (arr,prop)=>{
@@ -154,11 +155,13 @@ const Expense = () => {
         .update({
         Savings : firebase.firestore.FieldValue.increment(savings)
         });
+      
         await Firebase.firestore().collection('Savings').doc(uid)
-        .collection('Receipts').doc(now)
+        .collection('Receipts').doc(tonow)
         .set({
           Amount: savings,
-          Time : firebase.firestore.Timestamp.toMills(),
+          Time : firebase.firestore.FieldValue.serverTimestamp(),
+          Day: now
         });
         setTrasfer(true)
         
@@ -284,7 +287,8 @@ const Expense = () => {
         <Icon.Plus
         className={classes.icon}/>
         </Fab>
-        </Tooltip>           
+        </Tooltip>  
+        {tonow}         
        
     </div>
     )

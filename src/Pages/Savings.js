@@ -29,12 +29,13 @@ const Savings = () => {
            userRef.onSnapshot ((snapshot)=>{
                const transactions =[]
                snapshot.doc.forEach(doc=>{
-                transactions.push ({
+                const transaction= {
                     Id:doc.id,
                     Time: doc.data().Time,
                     Amount: doc.data().Amount
-                } )
-                setTrans(transactions)
+                } 
+                setTrans(transaction)
+                console.log (transaction)
                })
            })
           }
@@ -45,6 +46,7 @@ const Savings = () => {
     const content=(
         <div className={classes.root}>
             This are my savings 
+            {trans}
             <List>
             {trans.map((p)=>(
                 <ListItem
