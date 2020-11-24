@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter,Route} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import User from './Pages/User';
 import Expense from './Pages/Expense';
 import Goal from './Pages/Goals';

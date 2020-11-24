@@ -78,12 +78,23 @@ const Expense = () => {
       // getting the date
     let date = new Date();
     let day = date.getDate()
+    let year = date.getFullYear()
     const months =['Jan','Feb','Mar','Apr','May',
                    'Jun','Jul','Aug','Sept','Oct','Nov','Dec']
      let month = months[date.getMonth()]
      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
      let weekday = days[date.getDay()]
-     let tonow = day+ month
+     let tonow = day +''+ month + '' + year;
+     //getting the time
+     let hour = date.getHours();
+     let minutes = date.getMinutes()
+     if (minutes<10){
+       minutes= '0' + minutes ;
+     }
+     if (hour<10){
+       hour= '0'+ hour;
+     }
+     let exactTime = `${hour}:${minutes}` 
       
      // getting the budget amount
      const sum = (arr,prop)=>{
@@ -138,17 +149,7 @@ const Expense = () => {
     // upload savings to firebase
     const unsubscribe= async ()=> {
       const uid=  Firebase.auth().currentUser.uid
-      let today = new Date();
-      let dd = today.getDate();
-      let mm = today.getMonth() + 1; //January is 0!
-      let yyyy = today.getFullYear();
-      if (dd < 10) {
-        dd = '0' + dd;
-      } 
-      if (mm < 10) {
-        mm = '0' + mm;
-      } 
-      let now = dd + mm + yyyy;
+  
       
       try{
         await Firebase.firestore().collection('Goal').doc(uid)
@@ -157,11 +158,11 @@ const Expense = () => {
         });
       
         await Firebase.firestore().collection('Savings').doc(uid)
-        .collection('Receipts').doc(tonow)
+        .collection('Receipts').doc(exactTime)
         .set({
           Amount: savings,
-          Time : firebase.firestore.FieldValue.serverTimestamp(),
-          Day: now
+          Time : exactTime,
+          Day: tonow
         });
         setTrasfer(true)
         
@@ -288,7 +289,7 @@ const Expense = () => {
         className={classes.icon}/>
         </Fab>
         </Tooltip>  
-        {tonow}         
+        {exactTime}         
        
     </div>
     )
