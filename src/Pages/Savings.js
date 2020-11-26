@@ -2,12 +2,14 @@ import React, {useEffect, useState} from 'react';
 import Home from '../Components/Home'
 import {makeStyles} from '@material-ui/core/styles'
 import {List,ListItem, ListItemText, Divider,ListItemIcon} from '@material-ui/core';
+import Button  from '@material-ui/core/Button';
 import Box  from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Firebase from '../config';
 import * as Icon from 'react-feather';
-
+import {PDFDownloadLink} from '@react-pdf/renderer'
+import PdfDoc from '../pdf/PdfDoc'
 
 const useStyles = makeStyles( (theme) => ({
   root : {
@@ -27,18 +29,28 @@ const useStyles = makeStyles( (theme) => ({
       border:" solid 1px #b6b8c3",
       boxShadow:'2px 2px 2px 2px #e8eaf6',
       padding:theme.spacing(2),
+     
 
   },
   container:{
-    backgroundColor:'#ffffff',
+   backgroundColor:'#ffffff',
    border:" solid 1px #b6b8c3",
    width: '700px',
    marginTop:theme.spacing(3),
 
 },
 download :{
-    backgroundColor:'#0f1724',
-    color: '#ffffff'
+    backgroundColor:'#b0003a',
+   
+},
+link:{
+    color: '#000000',
+    textDecoration:'none'
+},
+header:{
+    backgroundColor: '#0f1724',
+    color: '#ffffff',
+   
 }
 }
 ))
@@ -88,6 +100,7 @@ const Savings = () => {
            } )
         return () => unsub
     }, [])
+  
 
     const content=(
         <div className={classes.root}>
@@ -103,11 +116,13 @@ const Savings = () => {
               $ {savings} USD
                </Typography>
             </Box>
-          <Container
+            <Container
           className={classes.container}>
             <List>
-                <ListItem>
-                    <ListItemIcon>
+                <ListItem
+                className={classes.header}>
+                    <ListItemIcon
+                     className={classes.header}>
                      <Icon.Sliders/>
                     </ListItemIcon>
                     <ListItemText
@@ -133,17 +148,28 @@ const Savings = () => {
             }
               <ListItem
               button 
-              className={classes.download}>
-                    <ListItemIcon>
+              className={classes.download} >
+            
+                    <PDFDownloadLink
+                document={<PdfDoc trans={trans}/>}
+                fileName= "Account Summary"
+                className={classes.link}>
+                     < ListItemIcon>
                      <Icon.Download/>
                     </ListItemIcon>
-                    <ListItemText
-                    primary='Download (Pdf)'/>
+             Download Pdf
+
+                </PDFDownloadLink>
+                
                 </ListItem> 
          
             
             </List>
             </Container> 
+           
+                
+           
+         
         </div>
     )
     return (  
