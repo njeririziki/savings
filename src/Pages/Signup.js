@@ -74,6 +74,11 @@ const SignUp = (props) => {
 
                 displayName : name.value ,
             })
+            await Firebase.collection('Users').doc(user.id).set({
+                email: user.email,
+                username:user.displayName,
+                status: 'active',
+            })
                 console.log ('successful')
         } catch {
        alert ('not done')
@@ -126,7 +131,7 @@ const SignUp = (props) => {
                     />
                     <Textfield
                     variant='outlined'
-                    name='password'
+                    name='password' 
                     type = {showPassword? 'text':'password'}
                     placeholder='$CT67!gU'
                     label='password'
