@@ -74,7 +74,7 @@ const SignUp = (props) => {
 
                 displayName : name.value ,
             })
-            await Firebase.collection('Users').doc(user.id).set({
+            await Firebase.collection('UserDeetalis').doc(user.id).set({
                 email: user.email,
                 username:user.displayName,
                 status: 'active',
