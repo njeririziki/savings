@@ -17,7 +17,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Tooltip  from '@material-ui/core/Tooltip';
 import {Link} from 'react-router-dom'
 import Firebase from '../config'
-
+import AdminContext from '../Context/AdminContext'
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -104,8 +104,9 @@ const Home  = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-      const [imageUrl,setImageUrl] = React.useState(null)
-
+  const [imageUrl,setImageUrl] = React.useState(null)
+  const context = React.useContext(AdminContext)
+ 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -182,7 +183,7 @@ React.useEffect(()=>{
             <Icon.Layers/> 
           </ListItemIcon>
           <ListItemText 
-            primary= 'Expenses'
+            primary= 'Expense Tracker'
            />
             </ListItem> 
           </Tooltip>
@@ -197,8 +198,22 @@ React.useEffect(()=>{
             primary= 'Savings'
             
             /> 
+
           </ListItem>
           </Tooltip> 
+          {context.admin? <Tooltip title =' Admin Panel'>
+          <ListItem button 
+          component={Link} to ='/adminpanel'>
+          <ListItemIcon className={classes.listItems}>
+            <Icon.Command/>
+          </ListItemIcon>
+          <ListItemText 
+            primary= 'Admin panel'
+            
+            /> 
+          </ListItem>
+          </Tooltip> : null}
+        
       </List>
     </div>
   );

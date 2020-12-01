@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {List,ListItem, ListItemText, Divider,ListItemIcon, IconButton} from '@material-ui/core';
+import {List,ListItem, ListItemText, Divider,ListItemIcon, IconButton,ListItemAvatar,ListSubheader} from '@material-ui/core';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Button  from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
 import Box  from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
@@ -57,19 +58,19 @@ const useStyles = makeStyles( (theme) => ({
   const AdminPanel = () => {
       const classes = useStyles();
       const[details,setDetails]=useState([])
-      const [savings,setSavings] =useState()
+  
   
       useEffect(() => {
           const uid= Firebase.auth().currentUser.uid
         const userRef= Firebase.firestore().collection('UserDetails')
-        const unsub=  userRef.get().then((docSnapshot)=>{
+        const unsub= userRef.get().then((docSnapshot)=>{
           const details =[]
         
          docSnapshot.docs.forEach(doc=>{
                   const detailsaction= {
                       id:doc.id,
                       email: doc.data().email,
-                      username: doc.data().Username,
+                      username: doc.data().username,
                       status: doc.data().status
                   } 
                   details.push(detailsaction)
@@ -88,51 +89,39 @@ const useStyles = makeStyles( (theme) => ({
       }
       const content=(
         <div className={classes.root}>
-           
-          
-            <Container
+         <Container
           className={classes.container}>
             <List>
-                <ListItem
-                className={classes.header}>
-                    <ListItemIcon
-                     className={classes.header}>
-                     <Icon.User/>
-                    </ListItemIcon>
+                <ListSubheader >
                     <ListItemText
                     primary='User details'/>
-                </ListItem>
+                </ListSubheader>
+              
             {details.map(p=>
                    
             <ListItem 
             key={p.id}
             >
-                 <ListItemIcon>
-                     <Icon.Activity/>
-                    </ListItemIcon>
+             <ListItemAvatar>
+                 <Avatar/>
+             </ListItemAvatar>
             <ListItemText
             primary= {p.email}
-            secondary={`${p.username} at ${p.status}`}
+            secondary={`${p.username} is ${p.status}`}
             
             />
                 <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete"
                     onClick={deleteUser}>
-                      <Icon.Delete />
+                      <Icon.Trash2 />
                     </IconButton>
                   </ListItemSecondaryAction>
             <Divider/>
             </ListItem>
             )
-            }
-          
-            
+            }  
             </List>
-            </Container> 
-           
-                
-           
-         
+            </Container>   
         </div>
     )
       return ( 
@@ -147,3 +136,12 @@ const useStyles = makeStyles( (theme) => ({
   }
    
   export default AdminPanel;
+   /**  <ListItem
+                className={classes.header}>
+                    <ListItemIcon
+                     className={classes.header}>
+                     <Icon.User/>
+                    </ListItemIcon>
+                    <ListItemText
+                    primary='User details'/>
+                </ListItem> */

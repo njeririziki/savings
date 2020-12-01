@@ -165,10 +165,6 @@ const Savings = () => {
             
             </List>
             </Container> 
-           
-                
-           
-         
         </div>
     )
     return (  

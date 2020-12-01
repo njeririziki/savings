@@ -5,14 +5,17 @@ import Expense from './Pages/Expense';
 import Goal from './Pages/Goals';
 import Budget from './Pages/Budget';
 import Savings from './Pages/Savings';
-import{PrivateRoute,PublicRoute} from './PrivateRoute'
+import{PrivateRoute,PublicRoute,AdminRoute} from './PrivateRoute'
 import Login from './Pages/LogIn'
 import Signup from './Pages/Signup'
+import AdminPanel from './Pages/AdminPanel'
 import {AuthProvider} from './Context/AuthContext';
+
 
 const Router = () => {
     
     return ( 
+       
         <AuthProvider>
              <BrowserRouter>
         <div>
@@ -23,7 +26,8 @@ const Router = () => {
             <PrivateRoute path='/expense' component={Expense} exact/>
             <PrivateRoute path='/budget' component={Budget} exact/>
             <PrivateRoute path='/savings' component={Savings} exact/>
-            <PublicRoute path='/signup' component={Signup} />
+            <PublicRoute path='/signup' component={Signup} exact/>
+            <AdminRoute path='/adminpanel' component={AdminPanel}exact/>
         </div>
         </BrowserRouter>
         </AuthProvider>

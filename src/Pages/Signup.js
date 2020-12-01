@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import Button  from '@material-ui/core/Button';
@@ -10,7 +10,8 @@ import IconButton from '@material-ui/core/IconButton'
 import * as Icon from 'react-feather';
 import { makeStyles } from '@material-ui/core';
 import {withRouter} from 'react-router-dom';
-import Firebase from '../config'
+import Firebase from '../config';
+
 
 const useStyle= makeStyles(theme=>({
 
@@ -55,35 +56,47 @@ const SignUp = (props) => {
     const [showPassword,setShowPassword] = React.useState(false)
     const [valid,setValid] = React.useState(true)
     const [error,setError] = React.useState(false)
+    
     const revPassword=()=>{
         setShowPassword(!showPassword)
     }
     const submitInput = async (event)=>{
         event.preventDefault();
         const { name, email ,password } = event.target.elements;
-        try{
-           await Firebase.auth().createUserWithEmailAndPassword(email.value,password.value);
-                props.history.push('/goals')
-                const user = Firebase.auth().currentUser;
-              await Firebase.firestore().collection('Goal').doc(user.uid).set(
-                 {
-                     Savings: 0
-                } 
-              )
-              await user.updateProfile({
+      
+       try {
+           await  Firebase.auth().createUserWithEmailAndPassword(email.value,password.value)
+           . then(
+             props.history.push('/goals')
+           
+           ).catch(  alert ('sign in not done'))
+           const user = Firebase.auth().currentUser;
+           await Firebase.firestore().collection('Goal').doc(user.uid).set(
+              {
+                  Savings: 0
+             } 
+           )
+           await user.updateProfile({
 
-                displayName : name.value ,
-            })
-            await Firebase.collection('UserDeetalis').doc(user.id).set({
-                email: user.email,
-                username:user.displayName,
-                status: 'active',
-            })
-                console.log ('successful')
-        } catch {
-       alert ('not done')
+             displayName : name.value ,
+         })
+         await  Firebase.collection('UserDetails').doc(user.id).set({
+             email: user.email,
+             username:user.displayName,
+             status: 'active',
+           
+         }).catch( alert ('user coll not set'))
+      
+       } catch( error){
+           alert(error)
        }
-    }
+            
+               
+                console.log ('successful')
+        } 
+    
+  
+ 
     const invalid =()=>{
        if(password===passwordO) {
           

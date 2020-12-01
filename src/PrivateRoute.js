@@ -37,8 +37,27 @@ const PrivateRoute = ({
         )
           
         }/>
+
         </div>
       );
 }
- export {PrivateRoute,PublicRoute}
+const AdminRoute = ({
+    component:Component 
+    ,...rest}) => 
+    {
+     const {user} = useContext(AuthContext)
+    return (
+        <div>
+        <Route  {...rest}
+        component= {(props)=>(
+            user?
+            (<Component {...props} />) :
+             (< Redirect to='/logIn'/>)
+        )
+          
+        }/>
+        </div>
+      );
+}
+ export {PrivateRoute,PublicRoute,AdminRoute}
 

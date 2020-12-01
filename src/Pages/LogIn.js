@@ -12,7 +12,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton'
 import Firebase from '../config'
-
+import AdminContext from '../Context/AdminContext'
 
 const useStyle= makeStyles(theme=>({
  
@@ -56,27 +56,45 @@ fontSize:20
 const LogIn = ({history}) => {
     const classes =useStyle();
     const [showPassword,setShowPassword] = React.useState(false)
-    // const [values,setValues]=React.useState(
-    //     {
-    //         email:'',
-    //         password:''
-    //     }
-    // )
-    // const takeInput=name=>e=>{
-    //     setValues({ ...values,[name]:e.target.vaue})
-    // }
+    const [values,setValues]=React.useState(
+        {
+            email:'',
+            password:''
+        }
+    )
+    const takeInput=name=>e=>{
+        setValues({ ...values,[name]:e.target.vaue})
+    }
+    const [adminRole,setAdminRole]= React.useState(false)
+    const context = useContext(AdminContext)
+
+
     const revPassword=()=>{
       setShowPassword(!showPassword)
   }
+ React.useEffect(()=>{
+ if (values.email === 'admin@edime.com'){
+   return context.update
+ }
+ },[values.email])
+ 
     const handleLogin = useCallback(
         async event => {
           event.preventDefault();
           const { email, password } = event.target.elements;
+        
           try {
             await Firebase
               .auth()
               .signInWithEmailAndPassword(email.value, password.value);
-            history.push("/goals");
+
+              if (email.value === 'admin@edime.com'){
+                return history.push("/adminpanel")
+                
+              }else{
+                history.push("/goals");
+              }
+          
           } catch (error) {
             alert(error);
           }
@@ -110,6 +128,7 @@ const LogIn = ({history}) => {
                     label='email'
                     type ='email'
                     fullWidth
+                    onChange={ takeInput}
                     className={classes.other}
                     required
                     
