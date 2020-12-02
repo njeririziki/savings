@@ -56,6 +56,16 @@ const SignUp = (props) => {
     const [showPassword,setShowPassword] = React.useState(false)
     const [valid,setValid] = React.useState(true)
     const [error,setError] = React.useState(false)
+    const [adminRole,setAdminRole]= React.useState(false)
+
+
+    // const changeRole=(e)=>{
+    //     e.preventDefault();
+    //     const email= e.target.value
+    //     if ( email === 'admin@edime.com'){
+    //       return setAdminRole(true)
+    //       }
+    // }
     
     const revPassword=()=>{
         setShowPassword(!showPassword)
@@ -66,10 +76,18 @@ const SignUp = (props) => {
       
        try {
            await  Firebase.auth().createUserWithEmailAndPassword(email.value,password.value)
-           . then(
-             props.history.push('/goals')
-           
-           ).catch(  alert ('sign in not done'))
+           . then( 
+            ()=> {
+                if ( email.value === 'admin@edime.com'){
+                return (
+                    props.history.push("/adminpanel")
+                   )
+                
+                }else{
+                   return  props.history.push('/goals')
+                }
+        
+             } ).catch((error)=>  alert (error))
            const user = Firebase.auth().currentUser;
            await Firebase.firestore().collection('Goal').doc(user.uid).set(
               {
@@ -77,15 +95,15 @@ const SignUp = (props) => {
              } 
            )
            await user.updateProfile({
-
              displayName : name.value ,
-         })
-         await  Firebase.collection('UserDetails').doc(user.id).set({
+         }).catch((error)=> alert(error))
+       
+         await  Firebase.firestore().collection('UserDetails').doc(user.uid).set({
              email: user.email,
              username:user.displayName,
              status: 'active',
-           
-         }).catch( alert ('user coll not set'))
+             isAdmin:adminRole
+         }).catch( (error)=> alert (error))
       
        } catch( error){
            alert(error)
@@ -129,6 +147,7 @@ const SignUp = (props) => {
                     required
                     label='Username'
                     fullWidth
+                  
                     helperText='Use 8 or more letters and characters  '
                     className={classes.other} 
                     />

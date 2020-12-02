@@ -72,12 +72,12 @@ const LogIn = ({history}) => {
     const revPassword=()=>{
       setShowPassword(!showPassword)
   }
- React.useEffect(()=>{
+ /**React.useEffect(()=>{
  if (values.email === 'admin@edime.com'){
    return context.update
  }
- },[values.email])
- 
+ },[values.email])*/
+
     const handleLogin = useCallback(
         async event => {
           event.preventDefault();
@@ -128,7 +128,7 @@ const LogIn = ({history}) => {
                     label='email'
                     type ='email'
                     fullWidth
-                    onChange={ takeInput}
+                    onChange={context.update}
                     className={classes.other}
                     required
                     
