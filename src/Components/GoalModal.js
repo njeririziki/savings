@@ -54,7 +54,7 @@ const GoalModal = (props) => {
      event.preventDefault();
      try{
       await Firebase.firestore().collection('Goal').doc (uid).set({
-         Amount : values.amount,
+        Amount : values.amount,
         Time : values.time,
         Title : values.title
       })
@@ -98,10 +98,11 @@ const GoalModal = (props) => {
                     variant='outlined'
                     id='Amount'
                     placeholder='Amount to reach goal'
+                    label='Amount'
                     value={values.amount}
                     onChange={ handleChange('amount')}
                     error={error}
-                    helperText={error?"Please enter a number": null}
+                    helperText={error?"Please enter a number": 'Amount reaquired to reach goal'}
                     fullWidth
                     required
                     className={classes.other}
@@ -109,13 +110,14 @@ const GoalModal = (props) => {
                      <Textfield
                     variant='outlined'
                     id='time'
+                    label='Time'
                     placeholder='Years to achieve goal'
                     value={values.time}
                     onChange={
                             handleChange('time')
                    }
                     error={error}
-                    helperText={error?"Please enter a number": null}
+                    helperText={error? "Please enter a number": 'Time required to reach goal'}
                     fullWidth
                     required
                     className={classes.other}

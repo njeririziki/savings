@@ -182,16 +182,11 @@ const Expense = () => {
         {day}
      </Typography>
         <Typography
-     variant='h6'
+     variant='h5'
         >
         {month} <br/>  {weekday}
      </Typography>
-     <Typography
-     variant='h6'
-        >
-      
-     </Typography>
-    
+     
         </Container>
       
         <Table  className={classes.table}>
@@ -289,7 +284,7 @@ const Expense = () => {
         className={classes.icon}/>
         </Fab>
         </Tooltip>  
-        {exactTime}         
+             
        
     </div>
     )

@@ -58,7 +58,12 @@ header:{
 const Savings = () => {
     const classes= useStyles();
     const[trans,setTrans]=useState([])
-    const [savings,setSavings] =useState()
+    const [savings,setSavings] =useState({   
+            title:'',
+            amount: 0,
+            time:0,
+            savings: 0
+        })
 
     useEffect(() => {
         const uid= Firebase.auth().currentUser.uid
@@ -89,7 +94,12 @@ const Savings = () => {
         const unsub =  userRef.get().then((docSnapshot)=>{
              if(docSnapshot.exists){
               userRef.onSnapshot((doc)=>{
-                 const goal= doc.data().Savings
+                 const goal= {
+                    title:  doc.data().Title,
+                    amount: doc.data().Amount ,
+                    time:  doc.data().Time ,
+                    savings: doc.data().Savings
+                 }
                 
                   setSavings(goal) ;
                   console.log (goal)
@@ -113,7 +123,7 @@ const Savings = () => {
                </Typography> 
                <br/>
                <Typography variant='body1'>
-              $ {savings} USD
+              $ {savings.savings} USD
                </Typography>
             </Box>
             <Container

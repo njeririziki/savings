@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme)=> ({
                 }       
              })
              .render(payPalRef.current);
-        },[]);
+        },[props.price]);
          
         if (paidFor) {
             
