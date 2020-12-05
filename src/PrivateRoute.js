@@ -14,8 +14,7 @@ const PrivateRoute = ({
             user?
             (<Component {...props} />) :
              (< Redirect to='/logIn'/>)
-        )
-          
+        )   
         }/>
         </div>
       );
@@ -25,7 +24,7 @@ const PrivateRoute = ({
     component:Component 
     ,...rest}) => 
     {
-     const {user} =useContext(AuthContext)
+     const {user} = useContext(AuthContext)
     return (
         <div>
         <Route  {...rest}

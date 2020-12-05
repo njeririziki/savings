@@ -10,7 +10,7 @@ import Login from './Pages/LogIn'
 import Signup from './Pages/Signup'
 import AdminPanel from './Pages/AdminPanel'
 import {AuthProvider} from './Context/AuthContext';
-
+import PasswordReset from './Pages/PasswordReset'
 
 const Router = () => {
     
@@ -27,6 +27,7 @@ const Router = () => {
             <PrivateRoute path='/budget' component={Budget} exact/>
             <PrivateRoute path='/savings' component={Savings} exact/>
             <PublicRoute path='/signup' component={Signup} exact/>
+            <PublicRoute path='/passwordreset' component={PasswordReset} exact/>
             <AdminRoute path='/adminpanel' component={AdminPanel}exact/>
         </div>
         </BrowserRouter>

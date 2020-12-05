@@ -105,7 +105,10 @@ const LogIn = ({history}) => {
     //   if (user){
     //     return  <Redirect to = '/' />
     //   }
-
+    const forgotPassword=()=>{
+      history.push("/passwordreset");
+    }
+ 
     return (
        <> 
             <Container  maxWidth='xs'
@@ -128,11 +131,10 @@ const LogIn = ({history}) => {
                     label='email'
                     type ='email'
                     fullWidth
-                    onChange={context.update}
+                    onChange={takeInput}
                     className={classes.other}
                     required
                     
-                    //onChange={takeInput}
                     />
                     <Textfield
                     variant='outlined'
@@ -168,6 +170,13 @@ const LogIn = ({history}) => {
                     Log in 
                     </Button>
                 </form>
+                <Button
+                variant='text'
+                 className={classes.typo}
+                 onClick={forgotPassword}
+                >
+                    Forgot password ?
+                </Button>
                 <Typography
                  className={classes.typo}
                  component ={Link } to ='/signup'
