@@ -24,7 +24,7 @@ root:{
     
 },
 container:{
-    backgroundColor:'#fafafa',
+    backgroundColor:'#f2f2f2',
 
 },
 avatar:{
@@ -49,8 +49,9 @@ fontSize:20
  
 
 
-const SignUp = (props) => {
+const SignUp = ({history}) => {
     const classes =useStyle()
+    const [email,setEmail]= React.useState()
     const [passwordO,setPasswordO]= React.useState()
     const [password,setPassword]= React.useState()
     const [showPassword,setShowPassword] = React.useState(false)
@@ -77,41 +78,54 @@ const SignUp = (props) => {
        try {
            await  Firebase.auth().createUserWithEmailAndPassword(email.value,password.value)
            . then( 
-            ()=> {
-                if ( email.value === 'admin@edime.com'){
+            (user)=> {
+                if ( user.email === 'admin1@edime.com'){
                 return (
-                    props.history.push("/adminpanel")
+                   history.push("/adminpanel")
                    )
                 
                 }else{
-                   return  props.history.push('/goals')
+                   return history.push('/goals')
                 }
         
              } ).catch((error)=>  alert (error))
            const user = Firebase.auth().currentUser;
            await Firebase.firestore().collection('Goal').doc(user.uid).set(
               {
-                  Savings: 0
+                  Savings:0
              } 
            )
            await user.updateProfile({
              displayName : name.value ,
          }).catch((error)=> alert(error))
-       
-         await  Firebase.firestore().collection('UserDetails').doc(user.uid).set({
-             email: user.email,
-             username:user.displayName,
-             status: 'active',
-             isAdmin:adminRole
-         }).catch( (error)=> alert (error))
       
+                        await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
+                            email: user.email,
+                            username:user.displayName,
+                            status: 'active',
+                            isAdmin: false
+                        }).catch( (error)=> alert (error))
+                  
        } catch( error){
            alert(error)
-       }
-            
-               
+       }      
                 console.log ('successful')
         } 
+
+        React.useEffect(()=>{
+            const user = Firebase.auth().currentUser;
+            if (user){
+                if ( user.email === 'admin1@edime.com'){
+                          return    Firebase.firestore().collection('UserDetails').doc(user.uid).set({
+                            email: user.email,
+                            username:user.displayName,
+                            status: 'active',
+                            isAdmin: true
+                        }).catch( (error)=> alert (error))
+                 }
+                        
+            }
+        },[])
     
   
  
@@ -147,7 +161,9 @@ const SignUp = (props) => {
                     required
                     label='Username'
                     fullWidth
-                  
+                     onChange={(e)=>{
+                         setEmail(e.target.value)
+                     }}
                     helperText='Use 8 or more letters and characters  '
                     className={classes.other} 
                     />

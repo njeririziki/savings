@@ -14,7 +14,7 @@ const PrivateRoute = ({
             user?
             (<Component {...props} />) :
              (< Redirect to='/logIn'/>)
-        )   
+        )    
         }/>
         </div>
       );
