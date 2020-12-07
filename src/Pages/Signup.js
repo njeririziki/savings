@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext,useEffect} from 'react'
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import Button  from '@material-ui/core/Button';
@@ -97,36 +97,44 @@ const SignUp = ({history}) => {
            )
            await user.updateProfile({
              displayName : name.value ,
-         }).catch((error)=> alert(error))
-      
-                        await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
-                            email: user.email,
-                            username:user.displayName,
-                            status: 'active',
-                            isAdmin: false
-                        }).catch( (error)=> alert (error))
-                  
+             }).catch((error)=> alert(error))
+             await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
+                email: user.email,
+                username:user.displayName,
+                status: 'active',
+                isAdmin: false
+            }).catch( (error)=> alert (error))
        } catch( error){
            alert(error)
        }      
                 console.log ('successful')
         } 
 
-        React.useEffect(()=>{
-            const user = Firebase.auth().currentUser;
-            if (user){
-                if ( user.email === 'admin1@edime.com'){
-                          return    Firebase.firestore().collection('UserDetails').doc(user.uid).set({
-                            email: user.email,
-                            username:user.displayName,
-                            status: 'active',
-                            isAdmin: true
-                        }).catch( (error)=> alert (error))
-                 }
-                        
+      useEffect(() => {
+        const unsub =  async()=> {
+            Firebase.auth().onAuthStateChanged(setAdminRole(true))
+            try {
+                if (adminRole){
+                    const user = Firebase.auth().currentUser;
+                    if ( user.email === 'admin1@edime.com'){
+                        return await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
+                          email: user.email,
+                          username:user.displayName,
+                          status: 'active',
+                          isAdmin: true
+                      }).catch( (error)=> alert (error))
+               } 
+               await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
+                email: user.email,
+                username:user.displayName,
+                status: 'active',
+                isAdmin: false
+            }).catch( (error)=> alert (error))
             }
-        },[])
-    
+            }catch(error){ alert (error)}   
+    }
+    return()=> unsub
+},[adminRole])
   
  
     const invalid =()=>{

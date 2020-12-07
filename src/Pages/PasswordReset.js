@@ -51,8 +51,8 @@ const useStyle= makeStyles(theme=>({
     }))
 
 const PasswordReset = (e) => {
-    const classes =useStyle();
-    
+
+    const classes =useStyle(); 
     const handleEmail=()=>{
         e.preventDefault();
     const { email } = e.target.elements;
