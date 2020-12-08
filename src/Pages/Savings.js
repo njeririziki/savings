@@ -112,6 +112,7 @@ const Savings = () => {
            } )
         return () => unsub
     }, [])
+    
     const percentage = Math.ceil((savings.savings/ savings.amount)*100)  ;
     const daysLeft = (savings.time*365)-(savings.savings/(savings.amount/(savings.time*365 )))
     const timeLeft =   Math.ceil(daysLeft/30)
@@ -127,7 +128,7 @@ const Savings = () => {
                </Typography> 
                <br/>
                <Typography variant='body1'>
-               Account Balance : $ {savings.savings} USD
+               Account Balance : $ {savings.savings} USD <br/>
                </Typography>
             </Box>
             <Container

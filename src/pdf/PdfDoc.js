@@ -4,13 +4,15 @@ import {Document,Page,Text,View, StyleSheet} from '@react-pdf/renderer'
 const styles= StyleSheet.create({
     pgView:{
       display:'flex',
-      flexDirection:'row',
+      flexDirection:'column',
       justifyContent:'center',
-      alignContent:'center'
+      alignItems:'center',
+      marginTop:'70px',
+      padding:'10px'
+
     },
     fpg:{
-        backgroundColor: 'tomato',
-        color:'#ffffff'
+        fontSize: "14pt",
     }
 })
 
@@ -22,26 +24,31 @@ const PdfDoc = (props) => {
        let year = date.getFullYear()
     return ( 
         <Document>
+            <Page>
+                <View style={styles.pgView}>
+                <Text >
+                           EVERYDIME MONTHLY REPORT
+                        </Text>
+                        <Text >
+                           Goal : {props.goalTitle}
+                        </Text>
+                        <Text >
+                            Target amount: {props.goalAmount} USD
+                        </Text>
+                        <Text >
+                            Target time {props.goalTime} year 
+                        </Text>
+                        <Text >
+                            You have  {props.goalTimeLeft} months to go to achieve it 
+                        </Text>
+                   
+                </View>
+            </Page>
           
             <Page 
             size='A4'>
-                <View>
-                <Text style={styles.fpg}>
-                            Every Dime Monthly report
-                        </Text>
-                        <Text style={styles.fpg}>
-                            Your Goal {props.goalTitle}
-                        </Text>
-                        <Text style={styles.fpg}>
-                            Target amount {props.goalAmount}
-                        </Text>
-                        <Text style={styles.fpg}>
-                            Target time {props.goalTime}
-                        </Text>
-                        <Text style={styles.fpg}>
-                            TimeLeft {props.goalTimeLeft}
-                        </Text>
-                   
+                <View style={styles.pgView}>
+               
                     
                 <Text >
                         Saving transactions for {month} {year}
@@ -50,10 +57,10 @@ const PdfDoc = (props) => {
                {props.trans.map(p=> {
                   return(
                     <View >
-                  <Text key={p.id}>
+                  <Text key={p.id} style={styles.fpg}>
                  Amount {p.amount} payed to savings account 
                   </Text>
-                  <Text>
+                  <Text style={styles.fpg}>
                 Transaction dates {p.day} at {p.time}
                   </Text>
                   </View>
