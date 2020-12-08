@@ -3,13 +3,10 @@ import ReactDOM from 'react-dom';
 import  Budget from './Pages/Budget'
 import Router from './Router'
 import * as serviceWorker from './serviceWorker';
-import {AdminProvider} from './Context/AdminContext'
+
 ReactDOM.render(
   <React.StrictMode>
-     <AdminProvider>
      <Router/>
-     </AdminProvider>
-    
   </React.StrictMode>,
   document.getElementById('root')
 );

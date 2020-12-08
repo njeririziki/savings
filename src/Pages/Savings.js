@@ -88,6 +88,8 @@ const Savings = () => {
       alert(error))
         return () => unsub
     }, [])
+  
+
     useEffect(() => {
         const uid = Firebase.auth().currentUser.uid
         const userRef =  Firebase.firestore().collection('Goal').doc(uid)
@@ -110,20 +112,22 @@ const Savings = () => {
            } )
         return () => unsub
     }, [])
-  
+    const percentage = Math.ceil((savings.savings/ savings.amount)*100)  ;
+    const daysLeft = (savings.time*365)-(savings.savings/(savings.amount/(savings.time*365 )))
+    const timeLeft =   Math.ceil(daysLeft/30)
 
     const content=(
         <div className={classes.root}>
            
             <Box
             className={classes.box}>
-           
+          
            <Typography variant='h6'>
-               Account Balance
+             Goal : {savings.title}
                </Typography> 
                <br/>
                <Typography variant='body1'>
-              $ {savings.savings} USD
+               Account Balance : $ {savings.savings} USD
                </Typography>
             </Box>
             <Container
@@ -160,13 +164,18 @@ const Savings = () => {
               className={classes.download} >
             
                     <PDFDownloadLink
-                document={<PdfDoc trans={trans}/>}
+                document={<PdfDoc trans={trans}
+                goalTitle={savings.title}
+                goalAmount={savings.amount}
+                goalTime={savings.time}
+                goalTimeLeft= {timeLeft}
+                />}
                 fileName= "Account Summary"
                 className={classes.link}>
                      < ListItemIcon>
                      <Icon.Download/>
                     </ListItemIcon>
-             Download Pdf
+             Download Report
 
                 </PDFDownloadLink>
                 

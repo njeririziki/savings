@@ -2,6 +2,7 @@ import React,{useContext} from 'react'
 import {Route,Redirect} from 'react-router-dom'
 import AuthContext ,{AuthProvider} from './Context/AuthContext'
 
+
 const PrivateRoute = ({
     component:Component 
     ,...rest}) => 
@@ -19,6 +20,10 @@ const PrivateRoute = ({
         </div>
       );
 }
+
+
+ 
+
 
  const  PublicRoute=({
     component:Component 

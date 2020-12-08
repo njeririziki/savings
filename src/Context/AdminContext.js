@@ -9,21 +9,22 @@ const AdminProvider = ({children})=>{
     
     const [admin,setAdmin] = React.useState(false);
 
-    // useEffect(()=>{
-    //     const person = Firebase.auth().currentUser.uid
-    //     const unsub=  Firebase.firestore().collection('UserDetails').doc(person)
-    //     .get().then((doc)=>{
-    //         const role= doc.data().isAdmin;
-    //         setAdmin(role)
-    //     }).catch(error=> alert(error))
+    useEffect(()=>{
+        const person = Firebase.auth().currentUser.uid
+       if (person) {
+           const unsub=  Firebase.firestore().collection('UserDetails').doc(person)
+        .get().then((doc)=>{
+            const role= doc.data().isAdmin;
+            setAdmin(role)
+        }).catch(error=> alert(error))
 
-    //     return ()=> unsub
-    // })
+        return ()=> unsub
+    }
+    })
     
-   const update =()=>setAdmin(true)
+  // const update =()=>setAdmin(true)
     return (
-        <AdminContext.Provider value={{admin,update}}
-       >
+        <AdminContext.Provider value={{admin}} >
             {children}
         </AdminContext.Provider>
     )

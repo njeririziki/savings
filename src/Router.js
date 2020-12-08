@@ -28,7 +28,7 @@ const Router = () => {
             <PrivateRoute path='/savings' component={Savings} exact/>
             <PublicRoute path='/signup' component={Signup} exact/>
             <PublicRoute path='/passwordreset' component={PasswordReset} exact/>
-            <AdminRoute path='/adminpanel' component={AdminPanel}exact/>
+            <PrivateRoute path='/adminpanel' component={AdminPanel}exact/>
         </div>
         </BrowserRouter>
         </AuthProvider>
@@ -36,4 +36,5 @@ const Router = () => {
      );
 }
  
+
 export default Router;

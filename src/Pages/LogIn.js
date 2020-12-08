@@ -12,7 +12,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton'
 import Firebase from '../config'
-import AdminContext from '../Context/AdminContext'
+
 
 const useStyle= makeStyles(theme=>({
  
@@ -66,7 +66,7 @@ const LogIn = ({history}) => {
         setValues({ ...values,[name]:e.target.vaue})
     }
     const [adminRole,setAdminRole]= React.useState(false)
-    const context = useContext(AdminContext)
+
 
 
     const revPassword=()=>{

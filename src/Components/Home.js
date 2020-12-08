@@ -17,7 +17,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Tooltip  from '@material-ui/core/Tooltip';
 import {Link} from 'react-router-dom'
 import Firebase from '../config'
-import AdminContext from '../Context/AdminContext'
+
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -105,7 +106,7 @@ const Home  = (props) => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [imageUrl,setImageUrl] = React.useState(null)
-  const context = React.useContext(AdminContext)
+  const [admin,setAdmin] = React.useState(false);
  
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -134,7 +135,17 @@ React.useEffect(()=>{
      const imageUrl= user.photoURL
      setImageUrl(imageUrl)
    }
-  },[])
+ 
+       const unsub=  Firebase.firestore().collection('UserDetails').doc(user.uid)
+    .get().then((doc)=>{
+        const role= doc.data().isAdmin;
+        setAdmin(role)
+    }).catch(error=> alert(error))
+
+    return ()=> unsub
+
+  },[imageUrl,admin])
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
@@ -195,13 +206,12 @@ React.useEffect(()=>{
             <Icon.Database/>
           </ListItemIcon>
           <ListItemText 
-            primary= 'Savings'
-            
+            primary= 'Savings'  
             /> 
 
           </ListItem>
           </Tooltip> 
-          {context.admin? <Tooltip title =' Admin Panel'>
+          {admin? <Tooltip title =' Admin Panel'>
           <ListItem button 
           component={Link} to ='/adminpanel'>
           <ListItemIcon className={classes.listItems}>
@@ -219,6 +229,7 @@ React.useEffect(()=>{
   );
 
   return (
+ 
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
@@ -295,6 +306,7 @@ React.useEffect(()=>{
         </div> 
       </main>
        </div>
+  
       );
 }
  

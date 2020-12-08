@@ -57,8 +57,7 @@ const PasswordReset = (e) => {
         e.preventDefault();
     const { email } = e.target.elements;
         Firebase.auth().sendPasswordResetEmail(email.value).then(()=>{
-        console.log('email sent')
-      
+        console.log('email sent');
       }
       ).catch(error=> alert(error))
     }
