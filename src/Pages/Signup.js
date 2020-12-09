@@ -106,8 +106,7 @@ const SignUp = ({history}) => {
             }).catch( (error)=> alert (error))
        } catch( error){
            alert(error)
-       }      
-                console.log ('successful')
+       }     
         } 
 
       useEffect(() => {

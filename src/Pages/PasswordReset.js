@@ -50,18 +50,27 @@ const useStyle= makeStyles(theme=>({
     }
     }))
 
-const PasswordReset = () => {
+const PasswordReset = (props) => {
 
     const classes =useStyle(); 
-    const handleEmail=(e)=>{
+
+    const handleEmail= async(e)=>{
         e.preventDefault();
-    const email  = e.target.value;
-        Firebase.auth().sendPasswordResetEmail(email,{url:'http://localhost:3000/login'})
-        .then((email)=>{
-        alert({email} +'email sent');
-      }
-      ).catch(alert('an error occured'))
-    }
+    const {email}  = e.target.elements;
+      try{
+        await Firebase.auth().sendPasswordResetEmail(email.value)
+        .then(()=>{
+        alert('A password reset link has been emailed to you');
+        props.history.push('/login')
+          }
+         
+         ).catch( (error)=> alert (error))
+      } catch( error){
+        alert(error)
+    } 
+         
+    
+}
     return ( 
        <div>
              <Container  maxWidth='xs'

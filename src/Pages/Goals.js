@@ -51,10 +51,7 @@ const useStyles = makeStyles(theme=>({
       justifyContent:'space-around ',
       backgroundColor:'#006978',
       padding: '1em 1em 1em 1em',
-      color:'#ffffff',
-        
-    
-    
+      color:'#ffffff', 
    },
    circular:{
       width:250,
@@ -79,7 +76,7 @@ const Goals = (props) => {
  React.useEffect(()=>{
    const uid = Firebase.auth().currentUser.uid
    const userRef =  Firebase.firestore().collection('Goal').doc(uid)
-   function unsub() {
+  
       try{
          userRef.get().then((docSnapshot)=>{
         if(docSnapshot.exists){
@@ -99,9 +96,9 @@ const Goals = (props) => {
       } catch (error){
          alert(error)
       }   
-   } 
-   unsub()  
-    },[])
+    
+  
+    },[values])
     
  const percentage = Math.ceil((values.savings/ values.amount)*100)  ;
  const daysLeft = (values.time*365)-(values.savings/(values.amount/(values.time*365 )))
