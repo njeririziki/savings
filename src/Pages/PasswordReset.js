@@ -50,16 +50,17 @@ const useStyle= makeStyles(theme=>({
     }
     }))
 
-const PasswordReset = (e) => {
+const PasswordReset = () => {
 
     const classes =useStyle(); 
-    const handleEmail=()=>{
+    const handleEmail=(e)=>{
         e.preventDefault();
-    const { email } = e.target.elements;
-        Firebase.auth().sendPasswordResetEmail(email.value).then(()=>{
-        console.log('email sent');
+    const email  = e.target.value;
+        Firebase.auth().sendPasswordResetEmail(email,{url:'http://localhost:3000/login'})
+        .then((email)=>{
+        alert({email} +'email sent');
       }
-      ).catch(error=> alert(error))
+      ).catch(alert('an error occured'))
     }
     return ( 
        <div>
@@ -92,7 +93,7 @@ const PasswordReset = (e) => {
                     fullWidth
                      type = 'submit'
                     >
-                   send password reset email
+                   send email
                     </Button>
            </form>
            </div> 

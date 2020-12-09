@@ -170,6 +170,7 @@ const Savings = () => {
                 goalAmount={savings.amount}
                 goalTime={savings.time}
                 goalTimeLeft= {timeLeft}
+                savings={savings.savings}
                 />}
                 fileName= "Account Summary"
                 className={classes.link}>

@@ -8,12 +8,37 @@ const styles= StyleSheet.create({
       justifyContent:'center',
       alignItems:'center',
       marginTop:'70px',
-      padding:'10px'
-
     },
     fpg:{
-        fontSize: "14pt",
-    }
+        fontSize: "20pt",
+        padding:'5px',
+        color:'#006978'
+    },
+    prpg:{
+        fontSize: "13pt",
+       marginLeft:"30px"
+    },
+    sepg:{
+        fontSize: "10pt",
+        paddingBottom:'10px',
+        marginLeft:"30px"
+    },
+    head:{
+        color:'#006978',
+        fontSize: "20pt",
+        padding:'10px',
+        marginLeft:"20px"
+    },
+    total:{
+        fontSize: "15pt",
+        padding:'10px',
+        marginLeft:"40px"
+    },
+    pg2View:{
+        display:'flex',
+        flexDirection:'column',
+        marginTop:'50px',
+      },
 })
 
 const PdfDoc = (props) => {
@@ -26,46 +51,48 @@ const PdfDoc = (props) => {
         <Document>
             <Page>
                 <View style={styles.pgView}>
-                <Text >
+                <Text style={styles.fpg}>
                            EVERYDIME MONTHLY REPORT
                         </Text>
-                        <Text >
+                        <Text style={styles.fpg}>
                            Goal : {props.goalTitle}
                         </Text>
-                        <Text >
+                        <Text style={styles.fpg}>
                             Target amount: {props.goalAmount} USD
                         </Text>
-                        <Text >
+                        <Text style={styles.fpg} >
                             Target time {props.goalTime} year 
                         </Text>
-                        <Text >
-                            You have  {props.goalTimeLeft} months to go to achieve it 
-                        </Text>
+                       
+                      
                    
                 </View>
             </Page>
           
             <Page 
             size='A4'>
-                <View style={styles.pgView}>
+                <View style={styles.pg2View}>
                
                     
-                <Text >
+                <Text style={styles.head}>
                         Saving transactions for {month} {year}
                     </Text>
                  
                {props.trans.map(p=> {
                   return(
                     <View >
-                  <Text key={p.id} style={styles.fpg}>
-                 Amount {p.amount} payed to savings account 
+                  <Text key={p.id} style={styles.prpg}>
+                 Amount $ {p.amount} payed to savings account 
                   </Text>
-                  <Text style={styles.fpg}>
+                  <Text style={styles.sepg}>
                 Transaction dates {p.day} at {p.time}
                   </Text>
                   </View>
                     ) 
                })}
+                <Text style={styles.total}>
+                            Total savings amount $ {props.savings}
+                        </Text>
                 </View>
                
             </Page>
