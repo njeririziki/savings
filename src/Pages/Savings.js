@@ -40,7 +40,7 @@ const useStyles = makeStyles( (theme) => ({
 
 },
 download :{
-    backgroundColor:'#b0003a',
+    backgroundColor:'#c5e1a5',
    
 },
 link:{
@@ -93,29 +93,37 @@ const Savings = () => {
     useEffect(() => {
         const uid = Firebase.auth().currentUser.uid
         const userRef =  Firebase.firestore().collection('Goal').doc(uid)
-        const unsub =  userRef.get().then((docSnapshot)=>{
-             if(docSnapshot.exists){
-              userRef.onSnapshot((doc)=>{
-                 const goal= {
-                    title:  doc.data().Title,
-                    amount: doc.data().Amount ,
-                    time:  doc.data().Time ,
-                    savings: doc.data().Savings
-                 }
-                
-                  setSavings(goal) ;
-                  console.log (goal)
-                 });
-             }
-             }).catch((error)=>{
-              alert(error)
-           } )
-        return () => unsub
-    }, [])
-    
-    const percentage = Math.ceil((savings.savings/ savings.amount)*100)  ;
-    const daysLeft = (savings.time*365)-(savings.savings/(savings.amount/(savings.time*365 )))
+        try{
+            userRef.get().then((docSnapshot)=>{
+                if(docSnapshot.exists){
+                 userRef.onSnapshot((doc)=>{
+                    const goal= {
+                       title:  doc.data().Title,
+                       amount: doc.data().Amount ,
+                       time:  doc.data().Time ,
+                       savings: doc.data().Savings
+                    }
+                   
+                     setSavings(goal) ;
+                     console.log (goal)
+                    });
+                }
+                }).catch((error)=>{
+                 alert(error)
+              } )
+
+        } catch(error){
+         alert(error)
+        }
+           
+       
+    },[])
+    const amountNeeded = Number(savings.amount) 
+    const amountSaved= Number(savings.savings)
+    const percentage = Math.ceil((amountSaved/ amountNeeded)*100)  ;
+    const daysLeft = (savings.time*365)-(amountSaved/(amountNeeded/(savings.time*365 )))
     const timeLeft =   Math.ceil(daysLeft/30)
+    
 
     const content=(
         <div className={classes.root}>
@@ -129,6 +137,8 @@ const Savings = () => {
                <br/>
                <Typography variant='body1'>
                Account Balance : $ {savings.savings} USD <br/>
+               Percentage covered: {percentage} <br/>
+               TimeLeft : {timeLeft} months
                </Typography>
             </Box>
             <Container
@@ -169,7 +179,8 @@ const Savings = () => {
                 goalTitle={savings.title}
                 goalAmount={savings.amount}
                 goalTime={savings.time}
-                goalTimeLeft= {timeLeft}
+              goalTimeLeft={timeLeft}
+              percentage={percentage }
                 savings={savings.savings}
                 />}
                 fileName= "Account Summary"
@@ -185,7 +196,9 @@ const Savings = () => {
          
             
             </List>
+           
             </Container> 
+            
         </div>
     )
     return (  

@@ -58,10 +58,9 @@ const useStyles = makeStyles( (theme) => ({
   const AdminPanel = () => {
       const classes = useStyles();
       const[details,setDetails]=useState([])
-  
+      const [selected ,setSelected] =useState()
   
       useEffect(() => {
-          const uid= Firebase.auth().currentUser.uid
         const userRef= Firebase.firestore().collection('UserDetails')
         const unsub= userRef.get().then((docSnapshot)=>{
           const details =[]
@@ -83,14 +82,15 @@ const useStyles = makeStyles( (theme) => ({
         alert(error))
           return () => unsub
       }, [])
-      const deleteUser=()=>{
-        const user = Firebase.auth().currentUser;
-        return user.delete()
-      }
+     
       const content=(
         <div className={classes.root}>
          <Container
           className={classes.container}>
+              <Typography
+              variant='h6'>
+             Admin Panel 
+              </Typography>
             <List>
                 <ListSubheader >
                     <ListItemText
@@ -112,8 +112,8 @@ const useStyles = makeStyles( (theme) => ({
             />
                 <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete"
-                    onClick={deleteUser}>
-                      <Icon.Trash2 />
+                   >
+                      <Icon.Voicemail />
                     </IconButton>
                   </ListItemSecondaryAction>
             <Divider/>

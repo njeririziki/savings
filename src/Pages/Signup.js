@@ -109,31 +109,31 @@ const SignUp = ({history}) => {
        }     
         } 
 
-      useEffect(() => {
-        const unsub =  async()=> {
-            Firebase.auth().onAuthStateChanged(setAdminRole(true))
-            try {
-                if (adminRole){
-                    const user = Firebase.auth().currentUser;
-                    if ( user.email === 'admin1@edime.com'){
-                        return await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
-                          email: user.email,
-                          username:user.displayName,
-                          status: 'active',
-                          isAdmin: true
-                      }).catch( (error)=> alert (error))
-               } 
-               await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
-                email: user.email,
-                username:user.displayName,
-                status: 'active',
-                isAdmin: false
-            }).catch( (error)=> alert (error))
-            }
-            }catch(error){ alert (error)}   
-    }
-    return()=> unsub
-},[adminRole])
+//       useEffect(() => {
+//         const unsub =  async()=> {
+//             Firebase.auth().onAuthStateChanged(setAdminRole(true))
+//             try {
+//                 if (adminRole){
+//                     const user = Firebase.auth().currentUser;
+//                     if ( user.email === 'admin1@edime.com'){
+//                         return await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
+//                           email: user.email,
+//                           username:user.displayName,
+//                           status: 'active',
+//                           isAdmin: true
+//                       }).catch( (error)=> alert (error))
+//                } 
+//                await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
+//                 email: user.email,
+//                 username:user.displayName,
+//                 status: 'active',
+//                 isAdmin: false
+//             }).catch( (error)=> alert (error))
+//             }
+//             }catch(error){ alert (error)}   
+//     }
+//     return()=> unsub
+// },[adminRole])
   
  
     const invalid =()=>{
@@ -154,7 +154,7 @@ const SignUp = ({history}) => {
                 <div className={classes.root}>
                 <Avatar
                 className={classes.avatar}>
-                <Icon.Unlock/>
+                <Icon.UserPlus/>
                 </Avatar>
                 
                 <form
@@ -171,7 +171,7 @@ const SignUp = ({history}) => {
                      onChange={(e)=>{
                          setEmail(e.target.value)
                      }}
-                    helperText='Use 8 or more letters and characters  '
+                    helperText='This field is compulsory. Please provide. '
                     className={classes.other} 
                     />
                     <Textfield
@@ -182,6 +182,7 @@ const SignUp = ({history}) => {
                     required
                     label='email'
                     fullWidth
+                    helperText='The email is compulsory and must be valid.'
                     className={classes.other} 
                     />
                     <Textfield
@@ -195,7 +196,7 @@ const SignUp = ({history}) => {
                           setPasswordO(val)
                     }}
                     error={error}
-                    helperText='Use 8 or more letters and characters'
+                    helperText='Compulsory. Use 8 or more characters with a mix of letters, numbers & symbols'
                     fullWidth
                     required
                     className={classes.other}
@@ -227,7 +228,7 @@ const SignUp = ({history}) => {
                     error={error}
                     required
                     className={classes.other}
-                    helperText='Confirm password'
+                    helperText='Compulsory. Confirm password'
                     label='password'
                     InputProps={{
                         endAdornment: < InputAdornment position='end'>

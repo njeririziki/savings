@@ -65,7 +65,7 @@ const LogIn = ({history}) => {
     const takeInput=name=>e=>{
         setValues({ ...values,[name]:e.target.vaue})
     }
-    const [adminRole,setAdminRole]= React.useState(false)
+  
 
 
 
@@ -105,9 +105,7 @@ const LogIn = ({history}) => {
     //   if (user){
     //     return  <Redirect to = '/' />
     //   }
-    const forgotPassword=()=>{
-      history.push("/passwordreset");
-    }
+  
  
     return (
        <> 
@@ -118,7 +116,7 @@ const LogIn = ({history}) => {
                
                 <Avatar
                 className={classes.avatar}>
-                <Icon.LogIn/>
+                <Icon.Unlock/>
                 </Avatar>
                 
                 <form
@@ -134,7 +132,7 @@ const LogIn = ({history}) => {
                     onChange={takeInput}
                     className={classes.other}
                     required
-                    
+                    helperText='The email you used to sign up'
                     />
                     <Textfield
                     variant='outlined'
@@ -145,7 +143,7 @@ const LogIn = ({history}) => {
                     required
                     label='password'
                     className={classes.other}
-                    helperText='Use 8 or more letters and characters'
+                    helperText='Use 8 or more characters with a mix of letters, numbers & symbols'
                     InputProps={ {
                       endAdornment:   <InputAdornment position='end'>
                       <IconButton
@@ -170,18 +168,17 @@ const LogIn = ({history}) => {
                     Log in 
                     </Button>
                 </form>
-                <Button
-                variant='text'
+                <Typography
                  className={classes.typo}
-                 onClick={forgotPassword}
+                 component ={Link } to ='/passwordreset'
                 >
-                    Forgot password ?
-                </Button>
+                   Forgot password?
+                </Typography>
                 <Typography
                  className={classes.typo}
                  component ={Link } to ='/signup'
                 >
-                    Create account
+                    Create a new account
                 </Typography>
                 </div>
             </Container>

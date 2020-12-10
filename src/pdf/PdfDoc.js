@@ -16,23 +16,29 @@ const styles= StyleSheet.create({
     },
     prpg:{
         fontSize: "13pt",
-       marginLeft:"30px"
+       marginLeft:"35px"
     },
     sepg:{
         fontSize: "10pt",
         paddingBottom:'10px',
-        marginLeft:"30px"
+        marginLeft:"35px"
     },
     head:{
         color:'#006978',
-        fontSize: "20pt",
+        fontSize: "15pt",
         padding:'10px',
         marginLeft:"20px"
     },
+    transvw:{
+       fontSize: "15pt",
+       padding:'10px',
+       marginLeft:"20px"
+    },
     total:{
-        fontSize: "15pt",
-        padding:'10px',
-        marginLeft:"40px"
+        fontSize: "13pt",
+        padding:'5px',
+        marginLeft:"40px",
+        color:'#00701a'
     },
     pg2View:{
         display:'flex',
@@ -58,10 +64,10 @@ const PdfDoc = (props) => {
                            Goal : {props.goalTitle}
                         </Text>
                         <Text style={styles.fpg}>
-                            Target amount: {props.goalAmount} USD
+                            Target amount: $ {props.goalAmount} 
                         </Text>
                         <Text style={styles.fpg} >
-                            Target time {props.goalTime} year 
+                            Target time: {props.goalTime} years 
                         </Text>
                        
                       
@@ -80,7 +86,7 @@ const PdfDoc = (props) => {
                  
                {props.trans.map(p=> {
                   return(
-                    <View >
+                    <View style={styles.transvw}>
                   <Text key={p.id} style={styles.prpg}>
                  Amount $ {p.amount} payed to savings account 
                   </Text>
@@ -91,8 +97,15 @@ const PdfDoc = (props) => {
                     ) 
                })}
                 <Text style={styles.total}>
-                            Total savings amount $ {props.savings}
+                $ {props.savings} total savings amount 
                         </Text>
+                        <Text style={styles.total}>
+                        {props.percentage} % of total amount covered 
+                        </Text>
+                        <Text style={styles.total}>
+                        {props.goalTimeLeft} months left
+                        </Text>
+                       
                 </View>
                
             </Page>

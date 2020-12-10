@@ -6,10 +6,7 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import {makeStyles} from '@material-ui/core/styles';
 import * as Icon from 'react-feather';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography';
 
 const useStyle= makeStyles(theme=>({
  
@@ -80,8 +77,9 @@ const PasswordReset = (props) => {
                
                 <Avatar
                 className={classes.avatar}>
-                <Icon.LogIn/>
+                <Icon.Send/>
                 </Avatar>
+             
            <form
                  className={classes.other}
                  onSubmit={handleEmail}>
@@ -92,10 +90,11 @@ const PasswordReset = (props) => {
                     label='email'
                     type ='email'
                     fullWidth
-                 
+                    helperText='A password reset link will be sent to this email address '
                     className={classes.other}
                     required
                     />
+               
                        <Button
                     className={classes.submit}
                     variant='contained'

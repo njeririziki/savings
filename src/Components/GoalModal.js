@@ -96,7 +96,7 @@ const GoalModal = (props) => {
                     /><br/>
                     <Textfield
                     variant='outlined'
-                    id='Amount'
+                    id='amount'
                     placeholder='Amount to reach goal'
                     label='Amount'
                     value={values.amount}
@@ -110,7 +110,7 @@ const GoalModal = (props) => {
                      <Textfield
                     variant='outlined'
                     id='time'
-                    label='Time'
+                    label='Time in years'
                     placeholder='Years to achieve goal'
                     value={values.time}
                     onChange={

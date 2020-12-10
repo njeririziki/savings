@@ -8,9 +8,9 @@ import Button from '@material-ui/core/Button'
 import Tooltip  from '@material-ui/core/Tooltip';
 import * as Icon from 'react-feather'
 import BgModal from '../Components/BudgetInput';
-import BillsDialog from '../Components/Bills'
+
 import Home from '../Components/Home';
-import PayFunc from '../Components/PaypalComp'
+
 import {makeStyles} from '@material-ui/core/styles'
 
 
@@ -71,8 +71,7 @@ const Budget = () => {
          setValues (budget)
         const totalBudget= doc.data().Savings;
          setTotal(totalBudget)
-         const totalBills= doc.data().TotalBills;
-         setTotalBills(totalBills)
+         
        })
       }
        
@@ -158,34 +157,19 @@ const Budget = () => {
                  </TableCell>
                </TableRow>
              <TableRow >
-             <TableCell rowSpan={2}>
-               <Button 
-               variant="contained"
-               className={classes.button}
-               onClick={openDialog}>
-                 Pay Bills
-               </Button>
-              
+             <TableCell rowSpan={2}> 
                </TableCell>
                <TableCell rowSpan={2}>
                  <b>Total:{totalBills}</b>
                </TableCell>
-              
-               <TableCell  rowSpan={2}>
-                 {totalBills?  <PayFunc price={totalBills}/>:
-                 null}
-              
-               </TableCell>
+         
              </TableRow>
               
            
             </TableBody>
 
        </Table>
-       <BillsDialog
-    OpenBillDialog={openBills}
-    CloseBillDialog={closeBills}
-      />
+  
    
      <br/>
           </Container>
