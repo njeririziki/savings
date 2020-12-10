@@ -130,9 +130,15 @@ const Expense = () => {
         
      },[])
   React.useEffect( () => {
+       const uid=  Firebase.auth().currentUser.uid
         const totalBudget = sum (fields,'budget')
         console.log(`total budget ${totalBudget}`)
-       
+        Firebase.firestore().collection('Budget').doc(uid).set(
+          {
+          DailyBudget : totalBudget
+          }, {merge:true}
+         ).then( console.log('sent') ).catch(err=>{ alert(err)})
+        
         const totalExpense = sumExpenses(expenses)
         console.log(`total expense ${totalExpense}`)
         if(totalBudget > totalExpense) {
@@ -144,7 +150,24 @@ const Expense = () => {
            } 
     },[fields,expenses])
    // get the savings 
-   
+  //  React.useEffect(() => {
+  //   const uid = Firebase.auth().currentUser.uid;
+  //   const unsub = async()=>{
+  //     const totalBudget = sum (fields,'budget')
+  //     try{  
+  //        await Firebase.firestore().collection('Budget').doc(uid).set(
+  //       {
+  //       DailyBudget : totalBudget
+  //       }, {merge:true}
+  //      ).then( console.log('sent') ).catch(err=>{ alert(err)})
+      
+  //     } catch(error){
+  //      alert(error)
+  //     }
+  //   }
+  //   return () => unsub
+    
+  // }, [fields])
    
     // upload savings to firebase
     const unsubscribe= async ()=> {

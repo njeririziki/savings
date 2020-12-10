@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import {Table,TableBody,TableCell,TableHead,TableRow} from '@material-ui/core'
@@ -55,13 +55,12 @@ const useStyles = makeStyles( (theme) => ({
 const Budget = () => {
   const classes = useStyles()
   const [openForm,setOpenForm]= React.useState(false);
-  const [openBills,setOpenBills]= React.useState(false);
   const [total, setTotal]=React.useState()
-  const [totalBills,setTotalBills]= React.useState();
+  const [dailyBudget,setDailyBudget]= React.useState();
   const [ values, setValues] = React.useState([])
  
   // fetching the budget data
-   React.useEffect(()=>{
+   React.useEffect( ()=>{
     const uid = Firebase.auth().currentUser.uid
      const userRef= Firebase.firestore().collection('Budget').doc(uid)
     try{ userRef.get().then(((docSnapshot)=>{
@@ -69,9 +68,10 @@ const Budget = () => {
        userRef.onSnapshot((doc)=>{
          const budget = doc.data().Budget; 
          setValues (budget)
-        const totalBudget= doc.data().Savings;
+        const totalBudget= doc.data().TotalBudget;
          setTotal(totalBudget)
-         
+         const dailyBudget= doc.data().DailyBudget;
+         setDailyBudget(dailyBudget)
        })
       }
        
@@ -81,18 +81,15 @@ const Budget = () => {
       
    },[])
 
+
+
   const getData =()=>{
     setOpenForm(true)
   }
   const closeModal=()=>{
     setOpenForm(false)
   }
-  const closeBills=()=>{
-    setOpenBills(false)
-  }
-  const openDialog=()=>{
-    setOpenBills(true)
-  }
+
   //getting the month
   let date = new Date();
   const months =['Jan','Feb','Mar','Apr','May',
@@ -146,25 +143,37 @@ const Budget = () => {
                <TableRow>
                  <TableCell>
                  <Typography
-                variant='body1'
-
-                    >
-                <b>Total</b> 
+                variant='body1'  >
+                <b>Total Budget</b> 
                 </Typography>
                  </TableCell>
                  <TableCell align='right'>
                 <b>{total}</b>
                  </TableCell>
                </TableRow>
-             <TableRow >
-             <TableCell rowSpan={2}> 
-               </TableCell>
-               <TableCell rowSpan={2}>
-                 <b>Total:{totalBills}</b>
-               </TableCell>
-         
-             </TableRow>
-              
+            
+             <TableRow>
+                 <TableCell>
+                 <Typography
+                variant='body1'  >
+                <b>Daily Budget</b> 
+                </Typography>
+                 </TableCell>
+                 <TableCell align='right'>
+                <b>{dailyBudget}</b>
+                 </TableCell>
+               </TableRow>
+               <TableRow>
+                 <TableCell>
+                 <Typography
+                variant='body1'  >
+                <b>Spending Money</b> 
+                </Typography>
+                 </TableCell>
+                 <TableCell align='right'>
+             <b>{total-dailyBudget}</b>
+                 </TableCell>
+               </TableRow>
            
             </TableBody>
 

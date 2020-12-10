@@ -44,7 +44,7 @@ const BgDialog = (props) => {
     ]    
     );
    
-    const [savings,setSavings] =React.useState()
+    const [totalBudget,setTotalBudget] =React.useState()
     const [error,setError] = React.useState(false)
     const uid = Firebase.auth().currentUser.uid;
 
@@ -55,7 +55,7 @@ const BgDialog = (props) => {
          await Firebase.firestore().collection('Budget').doc(uid).set(
              {
              Budget: values,
-             Savings : savings
+             TotalBudget : totalBudget
              }, {merge:true}
          );
          setValues([]);
@@ -75,8 +75,8 @@ const BgDialog = (props) => {
     }
     React.useEffect(()=>{
         const totalAmount = sum(values,'amount');
-        setSavings(totalAmount)
-    },[values,savings])
+        setTotalBudget (totalAmount)
+    },[values])
     
     // const takeInput= (index) =>(e)=>{
     //         setValues( (currentCategory)=>

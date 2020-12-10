@@ -100,9 +100,11 @@ const GoalModal = (props) => {
                     placeholder='Amount to reach goal'
                     label='Amount'
                     value={values.amount}
-                    onChange={ handleChange('amount')}
+                    onChange={  
+                            handleChange('amount')
+                    }
                     error={error}
-                    helperText={error?"Please enter a number": 'Amount reaquired to reach goal'}
+                    helperText={error?"Please enter a number": 'Amount required to reach goal'}
                     fullWidth
                     required
                     className={classes.other}
