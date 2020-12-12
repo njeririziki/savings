@@ -18,26 +18,15 @@ const useStyles = makeStyles( (theme) => ({
         marginTop:theme.spacing(15),
       
     },
-    box:{
-        width :'300px',
-        height: '200px',
-        display:'flex',
-        flexDirection:'column',
-        justifyContent: 'center',
-        alignContent:'center',
-        backgroundColor:'#ffffff',
-        border:" solid 1px #b6b8c3",
-        boxShadow:'2px 2px 2px 2px #e8eaf6',
-        padding:theme.spacing(2),
-       
   
-    },
     container:{
      backgroundColor:'#ffffff',
      border:" solid 1px #b6b8c3",
-     width: '700px',
+    
      marginTop:theme.spacing(3),
-  
+     [theme.breakpoints.up('sm')] :{
+        width : 700
+    }
   },
   download :{
       backgroundColor:'#b0003a',

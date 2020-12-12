@@ -19,8 +19,7 @@ const useStyles = makeStyles( (theme) => ({
     
   },
   box:{
-      width :'300px',
-      height: '200px',
+     
       display:'flex',
       flexDirection:'column',
       justifyContent: 'center',
@@ -29,15 +28,20 @@ const useStyles = makeStyles( (theme) => ({
       border:" solid 1px #b6b8c3",
       boxShadow:'2px 2px 2px 2px #e8eaf6',
       padding:theme.spacing(2),
-     
+      [theme.breakpoints.up('sm')] :{
+        width : 250,
+        height: 200
+    }
 
   },
   container:{
    backgroundColor:'#ffffff',
    border:" solid 1px #b6b8c3",
-   width: '700px',
+   
    marginTop:theme.spacing(3),
-
+   [theme.breakpoints.up('sm')] :{
+    width : 660
+}
 },
 download :{
     backgroundColor:'#c5e1a5',
