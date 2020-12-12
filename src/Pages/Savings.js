@@ -137,8 +137,8 @@ const Savings = () => {
                <br/>
                <Typography variant='body1'>
                Account Balance : $ {savings.savings} USD <br/>
-               Percentage covered: {percentage} <br/>
-               TimeLeft : {timeLeft} months
+               Percentage covered: { isNaN(percentage)? '0':percentage} <br/>
+               TimeLeft : { isNaN(timeLeft) ?  '0': timeLeft} months
                </Typography>
             </Box>
             <Container

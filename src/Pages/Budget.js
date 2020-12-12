@@ -57,7 +57,8 @@ const Budget = () => {
   const [openForm,setOpenForm]= React.useState(false);
   const [total, setTotal]=React.useState()
   const [dailyBudget,setDailyBudget]= React.useState();
-  const [ values, setValues] = React.useState([])
+  const [values, setValues] = React.useState([])
+  const [spendingMoney,setSpendingMoney] = React.useState()
  
   // fetching the budget data
    React.useEffect( ()=>{
@@ -72,6 +73,8 @@ const Budget = () => {
          setTotal(totalBudget)
          const dailyBudget= doc.data().DailyBudget;
          setDailyBudget(dailyBudget)
+         const spendingMoney= doc.data().MoneyLeft;
+          setSpendingMoney(spendingMoney)
        })
       }
        
@@ -89,6 +92,7 @@ const Budget = () => {
   const closeModal=()=>{
     setOpenForm(false)
   }
+//get spending money
 
   //getting the month
   let date = new Date();
@@ -167,11 +171,11 @@ const Budget = () => {
                  <TableCell>
                  <Typography
                 variant='body1'  >
-                <b>Spending Money</b> 
+                <b>Balance</b> 
                 </Typography>
                  </TableCell>
                  <TableCell align='right'>
-             <b>{total-dailyBudget}</b>
+             <b>{spendingMoney}</b>
                  </TableCell>
                </TableRow>
            

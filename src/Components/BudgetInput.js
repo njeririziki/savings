@@ -55,7 +55,8 @@ const BgDialog = (props) => {
          await Firebase.firestore().collection('Budget').doc(uid).set(
              {
              Budget: values,
-             TotalBudget : totalBudget
+             TotalBudget : totalBudget,
+             MoneyLeft:totalBudget,
              }, {merge:true}
          );
          setValues([]);
@@ -135,7 +136,7 @@ const BgDialog = (props) => {
               }
           }
           error={error}
-          helperText={error?"Please type a number": null}
+          helperText={error?"Please enter a number": null}
             
             value={p.amount}
             />

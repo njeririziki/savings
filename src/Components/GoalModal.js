@@ -1,6 +1,5 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography'
 import DialogBody from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -100,8 +99,14 @@ const GoalModal = (props) => {
                     placeholder='Amount to reach goal'
                     label='Amount'
                     value={values.amount}
-                    onChange={  
-                            handleChange('amount')
+                    onChange={  (e)=>{
+                        e.preventDefault();
+                        const val = e.target.value;
+                        if(isNaN(val)){
+                          setError(true)
+                        } else{
+                          setValues({...values,amount:val} )}
+                        }          
                     }
                     error={error}
                     helperText={error?"Please enter a number": 'Amount required to reach goal'}
@@ -115,9 +120,15 @@ const GoalModal = (props) => {
                     label='Time in years'
                     placeholder='Years to achieve goal'
                     value={values.time}
-                    onChange={
-                            handleChange('time')
-                   }
+                    onChange={  (e)=>{
+                        e.preventDefault();
+                        const val = e.target.value;
+                        if(isNaN(val)){
+                          setError(true)
+                        } else{
+                          setValues({...values,time:val} )}
+                        }             
+                     }
                     error={error}
                     helperText={error? "Please enter a number": 'Time required to reach goal'}
                     fullWidth

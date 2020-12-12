@@ -149,6 +149,8 @@ const Expense = () => {
             setSavings('0'); 
            } 
     },[fields,expenses])
+    const totalBudget = sum (fields,'budget')
+    const totalExpense = sumExpenses(expenses)
    // get the savings 
   //  React.useEffect(() => {
   //   const uid = Firebase.auth().currentUser.uid;
@@ -188,11 +190,14 @@ const Expense = () => {
           Day: tonow
         });
         setTrasfer(true)
+        await Firebase.firestore().collection('Budget').doc(uid).update(
+          {
+          MoneyLeft: firebase.firestore.FieldValue.increment(-totalBudget)
+          }).then( console.log('sent') ).catch(err=>{ alert(err)})
         
       } catch(error){
         alert(`Please add values correctly ${error}`)
-      }
-     
+      } 
     } 
   
 
@@ -221,7 +226,7 @@ const Expense = () => {
                 <TableCell variant='head'
                 align='right'>Budget</TableCell>
                 <TableCell variant='head'
-                align='right'>Expenses</TableCell>
+                align='center'>Expenses</TableCell>
                 </TableRow>  
             </TableHead>
             <TableBody>
@@ -270,16 +275,36 @@ const Expense = () => {
                  </TableCell> 
               </TableRow>)
               }
-                <TableRow>
+              <TableRow>
+              <TableCell  > 
+                
+                </TableCell> 
+                
+                  <TableCell align='right'
+                  > 
+                <b>Daily Budget:</b> 
+                
+                </TableCell>
                 <TableCell align='right' > 
+               <b>{totalBudget}</b> 
+              </TableCell>
+              <TableCell align='right' > 
+                <b>{`Daily Expense:   ${totalExpense}`}</b>
+                </TableCell>  
+              </TableRow>
+                <TableRow>
+                <TableCell  > 
                 
                   </TableCell> 
                   
                     <TableCell align='right'
                     > 
-                  <b>{`Savings: ${savings}`}</b> 
+                  <b> Savings:</b> 
                   
                   </TableCell>
+                  <TableCell align='right' > 
+                  {savings}
+                </TableCell> 
                   <TableCell align='right' > 
                   <Button 
                     className={classes.button}

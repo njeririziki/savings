@@ -206,7 +206,7 @@ React.useEffect(()=>{
             <Icon.Database/>
           </ListItemIcon>
           <ListItemText 
-            primary= 'Savings'  
+            primary= 'Savings & Report'  
             /> 
 
           </ListItem>

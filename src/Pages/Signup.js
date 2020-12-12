@@ -52,7 +52,7 @@ fontSize:20
 const SignUp = ({history}) => {
     const classes =useStyle()
     const [email,setEmail]= React.useState()
-    const [passwordO,setPasswordO]= React.useState()
+    const [password0,setPassword0]= React.useState()
     const [password,setPassword]= React.useState()
     const [showPassword,setShowPassword] = React.useState(false)
     const [valid,setValid] = React.useState(true)
@@ -102,7 +102,7 @@ const SignUp = ({history}) => {
                 email: user.email,
                 username:user.displayName,
                 status: 'active',
-                isAdmin: false
+                isAdmin: 'user'
             }).catch( (error)=> alert (error))
        } catch( error){
            alert(error)
@@ -135,16 +135,33 @@ const SignUp = ({history}) => {
 //     return()=> unsub
 // },[adminRole])
   
- 
-    const invalid =()=>{
-       if(password===passwordO) {
-          
-           setError(false)
-       }else {
-           setError(true)
-           setValid(false);
-       }
-    }
+//   useEffect(() => {
+//     if(password0 === "") {
+//      return setError(false)
+//     } else if (password0 < 8){
+//       return  setError(false)
+//     }
+//     else if(password !== password0) {
+//         return setError(false) && setValid(false);
+       
+//     }else {
+//        return setError(true)
+//     }
+//   }, [password,password0])
+
+  const validatePassword =async(event)=>{
+      event.preventDefault()
+      const pass= event.target.value
+      const reg = new RegExp("^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$")
+      const validate= reg.test(pass)
+      if (!validate){
+        setError(true);
+        setValid(false)
+      }
+     
+      
+  }
+    
    
     return (
        <> 
@@ -192,11 +209,12 @@ const SignUp = ({history}) => {
                     placeholder='$CT67!gU'
                     label='password'
                     onChange={(e)=>{
-                      const val= e.target.value;
-                          setPasswordO(val)
+                        const val = e.target.value
+                        setPassword(val)
                     }}
                     error={error}
-                    helperText='Compulsory. Use 8 or more characters with a mix of letters, numbers & symbols'
+                    helperText={error?'Mix letters and symbols to make a strong password':
+                    'Compulsory. Use 8 or more characters with a mix of letters, numbers & symbols'}
                     fullWidth
                     required
                     className={classes.other}
@@ -218,17 +236,14 @@ const SignUp = ({history}) => {
                     type = {showPassword? 'text':'password'}
                     placeholder='$CT67!gU'
                     fullWidth
-                    onChange={ (e)=>{
-                        const val = e.target.value
-                        setPassword(val)
-                        invalid()
-                    }
+                    onChange={  validatePassword }
                        
-                    }
+                    
                     error={error}
                     required
                     className={classes.other}
-                    helperText='Compulsory. Confirm password'
+                    helperText= {error? "Please confirm password"
+                        :'Compulsory. Confirm password'}
                     label='password'
                     InputProps={{
                         endAdornment: < InputAdornment position='end'>
