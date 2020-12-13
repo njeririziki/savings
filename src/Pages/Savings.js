@@ -16,11 +16,16 @@ const useStyles = makeStyles( (theme) => ({
       display:'flex',
       flexDirection: 'row',
       marginTop:theme.spacing(15),
+      [theme.breakpoints.down('sm')] :{
+        flexDirection: 'column',
+    }
     
   },
   box:{
      
       display:'flex',
+      width : 300,
+      height: 200,
       flexDirection:'column',
       justifyContent: 'center',
       alignContent:'center',
@@ -28,7 +33,7 @@ const useStyles = makeStyles( (theme) => ({
       border:" solid 1px #b6b8c3",
       boxShadow:'2px 2px 2px 2px #e8eaf6',
       padding:theme.spacing(2),
-      [theme.breakpoints.up('sm')] :{
+      [theme.breakpoints.down('sm')] :{
         width : 250,
         height: 200
     }
@@ -37,10 +42,13 @@ const useStyles = makeStyles( (theme) => ({
   container:{
    backgroundColor:'#ffffff',
    border:" solid 1px #b6b8c3",
-   
+   width : 700,
    marginTop:theme.spacing(3),
-   [theme.breakpoints.up('sm')] :{
-    width : 660
+   [theme.breakpoints.only('md')] :{
+    width : 460
+},
+[theme.breakpoints.down('sm')] :{
+    width : 330
 }
 },
 download :{
@@ -140,8 +148,8 @@ const Savings = () => {
                </Typography> 
                <br/>
                <Typography variant='body1'>
-               Account Balance : $ {savings.savings} USD <br/>
-               Percentage covered: { isNaN(percentage)? '0':percentage} <br/>
+               Account Balance : $ {savings.savings} <br/>
+               Percentage covered: { isNaN(percentage)? '0':percentage} % <br/>
                TimeLeft : { isNaN(timeLeft) ?  '0': timeLeft} months
                </Typography>
             </Box>
@@ -208,7 +216,7 @@ const Savings = () => {
     return (  
         <div>
        <Home
-        AppbarName='Savings'
+        Appbarname='Savings'
         Content={content}
         />
         </div>

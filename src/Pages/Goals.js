@@ -52,6 +52,11 @@ const useStyles = makeStyles(theme=>({
       backgroundColor:'#006978',
       padding: '1em 1em 1em 1em',
       color:'#ffffff', 
+      [theme.breakpoints.down('sm')] :{
+         flexDirection: 'column',
+        
+     }
+
    },
    circular:{
       width:250,
@@ -190,6 +195,7 @@ const Goals = (props) => {
     return ( 
         <div  className={classes.content}>
         <Home
+        Appbarname='Dashboard'
         Content= {Content}
         />
              

@@ -289,7 +289,7 @@ const Expense = () => {
                <b>{totalBudget}</b> 
               </TableCell>
               <TableCell align='right' > 
-                <b>{`Daily Expense:   ${totalExpense}`}</b>
+                <b>{totalExpense}</b>
                 </TableCell>  
               </TableRow>
                 <TableRow>

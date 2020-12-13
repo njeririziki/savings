@@ -105,8 +105,9 @@ const useStyles = makeStyles( (theme) => ({
                       <Icon.Voicemail />
                     </IconButton>
                   </ListItemSecondaryAction>
-            <Divider/>
+          
             </ListItem>
+            
             )
             }   
             </List>
@@ -116,7 +117,7 @@ const useStyles = makeStyles( (theme) => ({
       return ( 
           <div>
          <Home
-        AppbarName='Admin Panel'
+        Appbarname='Admin Panel'
         Content={content}
         />
 

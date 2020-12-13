@@ -45,7 +45,10 @@ const useStyles = makeStyles(theme => ({
   title: {
     justifyContent:'space-between',
     fontSize:40,
-    fontFamily:'Sriracha'
+    fontFamily:'Sriracha',
+    [theme.breakpoints.down('sm')]: {
+      fontSize:35,
+    },
   },
   avatar:{
     marginLeft:theme.spacing(5),
@@ -67,7 +70,7 @@ const useStyles = makeStyles(theme => ({
   logOut:{
     color:'#000000',
     backgroundColor:'#ffffff',
-      
+
     '&:hover' : {
       backgroundColor: '#cdcdcd',
      

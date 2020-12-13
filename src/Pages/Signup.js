@@ -73,8 +73,8 @@ const SignUp = ({history}) => {
     }
     const submitInput = async (event)=>{
         event.preventDefault();
-        const { name, email ,password } = event.target.elements;
-      
+        const { name, email ,password,passwordII } = event.target.elements;
+       
        try {
            await  Firebase.auth().createUserWithEmailAndPassword(email.value,password.value)
            . then( 
@@ -135,30 +135,29 @@ const SignUp = ({history}) => {
 //     return()=> unsub
 // },[adminRole])
   
-//   useEffect(() => {
-//     if(password0 === "") {
-//      return setError(false)
-//     } else if (password0 < 8){
-//       return  setError(false)
-//     }
-//     else if(password !== password0) {
-//         return setError(false) && setValid(false);
-       
-//     }else {
-//        return setError(true)
-//     }
-//   }, [password,password0])
+const checkValid = () => {
+    if((password!== null)&&(password>8) && (password === password0) ) {
+        return setValid(false) 
+ }else {
+    return setError(true) ;
+    }
+  }
 
   const validatePassword =async(event)=>{
       event.preventDefault()
       const pass= event.target.value
-      const reg = new RegExp("^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$")
-      const validate= reg.test(pass)
-      if (!validate){
-        setError(true);
-        setValid(false)
-      }
-     
+    //   const reg = new RegExp("^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$")
+    //   const validate= reg.test(pass)
+    //   if (!validate){
+    //     setValid(false)
+     // }
+     if (password === pass && ( pass.length >8) )  {
+            setValid(false) ;
+            setError(false)
+        
+ }else {
+    return setError(true) ;
+    }
       
   }
     
@@ -208,14 +207,14 @@ const SignUp = ({history}) => {
                     type = {showPassword? 'text':'password'}
                     placeholder='$CT67!gU'
                     label='password'
-                    onChange={(e)=>{
-                        const val = e.target.value
-                        setPassword(val)
-                    }}
                     error={error}
                     helperText={error?'Mix letters and symbols to make a strong password':
                     'Compulsory. Use 8 or more characters with a mix of letters, numbers & symbols'}
                     fullWidth
+                    onChange={(e)=>{
+                        setPassword(e.target.value);
+                        
+                    }}
                     required
                     className={classes.other}
                     InputProps={{
@@ -235,10 +234,8 @@ const SignUp = ({history}) => {
                     name='passwordII'
                     type = {showPassword? 'text':'password'}
                     placeholder='$CT67!gU'
-                    fullWidth
-                    onChange={  validatePassword }
-                       
-                    
+                    fullWidth 
+                    onChange={validatePassword} 
                     error={error}
                     required
                     className={classes.other}
