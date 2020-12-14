@@ -2,10 +2,7 @@ import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Firebase from '../config';
 import * as Icon from 'react-feather'
-import Fab from '@material-ui/core/Fab';
-import Tooltip from '@material-ui/core/Tooltip'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   body:{
@@ -51,10 +48,8 @@ const useStyles = makeStyles(theme => ({
 
 const UploadImage = () => {
    const classes= useStyles()
-    const [file,setFile] = React.useState();
-    const [imageUrl,setImageUrl] = React.useState(null)
-    const [progress,setProgress] = React.useState();
-    const [isloading,setIsLoading] =React.useState(false)
+      const [imageUrl,setImageUrl] = React.useState(null)
+  
     const types =['images/png','image/jpeg'];
   
     const user= Firebase.auth().currentUser;
@@ -67,7 +62,7 @@ const UploadImage = () => {
        await fileRef.put(file).then('state_changed',(snap)=>{
           const progress =  (snap.bytesTransferred / snap.totalBytes) * 100;
         console.log('Upload is' + progress + '% done');
-        setProgress(progress)
+       
        
         },(err)=> console.log (err));
         await fileRef.getDownloadURL()
@@ -103,7 +98,7 @@ const UploadImage = () => {
         onChange={onFileChange}
         className={classes.input}
         />
-        <Icon.Camera/>
+        <Icon.Edit2/>
        
        </label>
      </form> 

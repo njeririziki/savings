@@ -86,11 +86,11 @@ const PdfDoc = (props) => {
                  
                {props.trans.map(p=> {
                   return(
-                    <View style={styles.transvw}>
-                  <Text key={p.id} style={styles.prpg}>
+                    <View  key={p.id}style={styles.transvw}>
+                  <Text style={styles.prpg}>
                  Amount $ {p.amount} payed to savings account 
                   </Text>
-                  <Text style={styles.sepg}>
+                  <Text  style={styles.sepg}>
                 Transaction dates {p.day} at {p.time}
                   </Text>
                   </View>

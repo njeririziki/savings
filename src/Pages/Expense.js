@@ -172,10 +172,12 @@ const Expense = () => {
   // }, [fields])
    
     // upload savings to firebase
+    const openPay=()=>{
+      setTrasfer(true)
+    }
     const unsubscribe= async ()=> {
-      const uid=  Firebase.auth().currentUser.uid
-  
-      
+     
+      const uid=  Firebase.auth().currentUser.uid;
       try{
         await Firebase.firestore().collection('Goal').doc(uid)
         .update({
@@ -189,7 +191,7 @@ const Expense = () => {
           Time : exactTime,
           Day: tonow
         });
-        setTrasfer(true)
+        
         await Firebase.firestore().collection('Budget').doc(uid).update(
           {
           MoneyLeft: firebase.firestore.FieldValue.increment(-totalBudget)
@@ -308,14 +310,16 @@ const Expense = () => {
                   <TableCell align='right' > 
                   <Button 
                     className={classes.button}
-                    onClick={unsubscribe}
+                    onClick={openPay}
                     variant= 'contained'
                         >
                         Save
                   </Button>
                   </TableCell>
                 {transfer? 
-                 <PayFunc price  ={savings}/>
+                 <PayFunc 
+                 price  ={savings}
+               afterFunc={unsubscribe}/>
                 :null}
                   
                 </TableRow>    

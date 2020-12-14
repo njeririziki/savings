@@ -139,11 +139,11 @@ React.useEffect(()=>{
      setImageUrl(imageUrl)
    }
  
-       const unsub=  Firebase.firestore().collection('UserDetails').doc(user.uid)
+     const unsub=  Firebase.firestore().collection('UserDetails').doc(user.uid)
     .get().then((doc)=>{
         const role= doc.data().isAdmin;
         setAdmin(role)
-    }).catch(error=> alert(error))
+    }).catch(error=> console.log(error))
 
     return ()=> unsub
 

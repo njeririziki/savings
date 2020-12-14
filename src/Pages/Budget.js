@@ -1,10 +1,9 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import {Table,TableBody,TableCell,TableHead,TableRow} from '@material-ui/core'
 import Fab from '@material-ui/core/Fab';
 import Firebase from '../config';
-import Button from '@material-ui/core/Button'
 import Tooltip  from '@material-ui/core/Tooltip';
 import * as Icon from 'react-feather'
 import BgModal from '../Components/BudgetInput';
@@ -186,7 +185,7 @@ const Budget = () => {
    
      <br/>
           </Container>
-          <Tooltip title =' Create your Schedule '>
+          <Tooltip title =' Create your Budget '>
           <Fab 
             className={classes.fab}
             onClick={getData}>

@@ -1,26 +1,33 @@
-import { Update } from '@material-ui/icons';
+
 import React,{useEffect} from 'react';
 import Firebase from '../config'
-import {firebase} from '../config'
+
 
 const AdminContext = React.createContext();
 
 const AdminProvider = ({children})=>{
     
     const [admin,setAdmin] = React.useState(false);
+   
 
     useEffect(()=>{
-        const person = Firebase.auth().currentUser.uid
-       if (person) {
-           const unsub=  Firebase.firestore().collection('UserDetails').doc(person)
-        .get().then((doc)=>{
-            const role= doc.data().isAdmin;
-            setAdmin(role)
-        }).catch(error=> alert(error))
-
-        return ()=> unsub
-    }
-    })
+       const unsubscribe = Firebase.auth().onAuthStateChanged()
+       .apply( (user)=>{
+            const unsub=  Firebase.firestore().collection('UserDetails').doc(user.uid)
+         .get().then((doc)=>{
+             const role= doc.data().isAdmin;
+             setAdmin(role)
+         }).catch(error=> console.log(error))
+ 
+         return ()=> unsub
+    
+       } 
+            )
+        
+       return ()=>unsubscribe    
+       
+    
+    },[])
     
   // const update =()=>setAdmin(true)
     return (

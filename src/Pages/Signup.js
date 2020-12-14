@@ -1,4 +1,4 @@
-import React, {useContext,useEffect} from 'react'
+import React from 'react'
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import Button  from '@material-ui/core/Button';
@@ -98,14 +98,16 @@ const SignUp = ({history}) => {
            await user.updateProfile({
              displayName : name.value ,
              }).catch((error)=> alert(error))
+
              await Firebase.firestore().collection('UserDetails').doc(user.uid).set({
                 email: user.email,
                 username:user.displayName,
                 status: 'active',
-                isAdmin: 'user'
+                isAdmin: false
+
             }).catch( (error)=> alert (error))
        } catch( error){
-           alert(error)
+           console.log(error) 
        }     
         } 
 
@@ -151,13 +153,11 @@ const checkValid = () => {
     //   if (!validate){
     //     setValid(false)
      // }
-     if (password === pass && ( pass.length >8) )  {
+    
             setValid(false) ;
             setError(false)
         
- }else {
-    return setError(true) ;
-    }
+ 
       
   }
     
@@ -184,9 +184,7 @@ const checkValid = () => {
                     required
                     label='Username'
                     fullWidth
-                     onChange={(e)=>{
-                         setEmail(e.target.value)
-                     }}
+                    
                     helperText='This field is compulsory. Please provide. '
                     className={classes.other} 
                     />
@@ -197,6 +195,7 @@ const checkValid = () => {
                     placeholder='person@gmail.com'
                     required
                     label='email'
+                  
                     fullWidth
                     helperText='The email is compulsory and must be valid.'
                     className={classes.other} 

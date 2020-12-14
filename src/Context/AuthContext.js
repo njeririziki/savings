@@ -6,9 +6,10 @@ const AuthContext = React.createContext();
 const AuthProvider = ({children})=>{
     
     const [user,setUser] = React.useState(null);
+  
 
     useEffect (()=>{
-        Firebase.auth().onAuthStateChanged(setUser)
+        Firebase.auth().onAuthStateChanged(setUser) 
         
     },[]);
     return (

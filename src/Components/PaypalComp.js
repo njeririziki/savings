@@ -1,6 +1,7 @@
 import React,{useEffect,useState, useRef} from 'react';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
+import Firebase, { firebase} from '../config'
 
 const useStyles = makeStyles((theme)=> ({
     page:{
@@ -9,6 +10,9 @@ const useStyles = makeStyles((theme)=> ({
         height: '40px',
         width:'200px'
     },
+    typo:{
+        color:'#00701a'
+    }
   
        }
         
@@ -39,7 +43,8 @@ const useStyles = makeStyles((theme)=> ({
                 onApprove: async(data,actions)=>{
                     const order= await actions.order.capture();
                     setPaidFor(true);
-                    console.log(order); 
+                    console.log(order);
+                    props.afterFunc(); 
                 },
                 onError:err =>{
                     setError(err);
@@ -47,20 +52,21 @@ const useStyles = makeStyles((theme)=> ({
                 }       
              })
              .render(payPalRef.current);
-        },[props.price]);
+        },[props]);
          
-        if (paidFor) {
-            
-            return(
-                <div className={classes.page}>
-                         <Typography
-                        variant='h5'
-                        color='secondary'>
-                         Transaction Successful!
-                        </Typography>
 
-                </div>
-            )
+        //    
+        if (paidFor) {
+        return(
+            <div className={classes.page}>
+                     <Typography
+                    variant='h5'
+                    color='secondary'>
+                     Transaction Successful!
+                    </Typography>
+
+            </div>
+        )
         }
         return (  
             <div className={classes.page}>

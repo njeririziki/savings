@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {List,ListItem, ListItemText, Divider,ListItemIcon, IconButton,ListItemAvatar,ListSubheader} from '@material-ui/core';
+import {List,ListItem, ListItemText,IconButton,ListItemAvatar,ListSubheader} from '@material-ui/core';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Button  from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
-import Box  from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Firebase from '../config';
@@ -47,7 +45,7 @@ const useStyles = makeStyles( (theme) => ({
   const AdminPanel = () => {
       const classes = useStyles();
       const[details,setDetails]=useState([])
-      const [selected ,setSelected] =useState()
+     
   
       useEffect(() => {
         const userRef= Firebase.firestore().collection('UserDetails')
