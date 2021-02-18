@@ -3,8 +3,6 @@ import Firebase from '../config';
 import UserProfile from '../Components/UserProfile'
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import {Link,withRouter} from 'react-router-dom'
 import Tooltip from '@material-ui/core/Tooltip'
 import * as Icon from 'react-feather';
 import Home from '../Components/Home'

@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     display:'flex',
     justifyContent:'space-between',
     backgroundColor: '	#0f1724',
-    height:100, 
+    height:60, 
   },
  
   title: {
@@ -209,7 +209,7 @@ React.useEffect(()=>{
             <Icon.Database/>
           </ListItemIcon>
           <ListItemText 
-            primary= 'Savings & Report'  
+            primary= 'Savings'  
             /> 
 
           </ListItem>
@@ -249,7 +249,7 @@ React.useEffect(()=>{
             <Icon.Menu />
           </IconButton>
           <Typography 
-          variant="h4"
+          variant="h5"
           className={classes.title}
           noWrap>
            {props.Appbarname? props.Appbarname:'Every Dime' } 

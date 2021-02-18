@@ -17,6 +17,7 @@ const useStyles = makeStyles( (theme) => ({
       marginTop:theme.spacing(15),
       [theme.breakpoints.down('sm')] :{
         flexDirection: 'column',
+        backgroundColor:'#fafafa'
     }
     
   },
@@ -29,7 +30,7 @@ const useStyles = makeStyles( (theme) => ({
       justifyContent: 'center',
       alignContent:'center',
       backgroundColor:'#ffffff',
-      border:" solid 1px #b6b8c3",
+    //  border:" solid 1px #b6b8c3",
       boxShadow:'2px 2px 2px 2px #e8eaf6',
       padding:theme.spacing(2),
       [theme.breakpoints.down('sm')] :{
@@ -40,9 +41,10 @@ const useStyles = makeStyles( (theme) => ({
   },
   container:{
    backgroundColor:'#ffffff',
-   border:" solid 1px #b6b8c3",
+ //  border:" solid 1px #b6b8c3",
    width : 700,
    marginTop:theme.spacing(3),
+   boxShadow:'2px 2px 2px 2px #e8eaf6',
    [theme.breakpoints.only('md')] :{
     width : 460
 },
@@ -147,7 +149,7 @@ const Savings = () => {
                </Typography> 
                <br/>
                <Typography variant='body1'>
-               Account Balance : $ {savings.savings} <br/>
+               Account Balance :  {savings.savings} KES <br/>
                Percentage covered: { isNaN(percentage)? '0':percentage} % <br/>
                TimeLeft : { isNaN(timeLeft) ?  '0': timeLeft} months
                </Typography>

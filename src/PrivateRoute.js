@@ -4,8 +4,7 @@ import AuthContext ,{AuthProvider} from './Context/AuthContext'
 
 
 const PrivateRoute = ({
-    component:Component 
-    ,...rest}) => 
+    component:Component  ,...rest}) => 
     {
      const {user} = useContext(AuthContext)
     return (
@@ -20,11 +19,6 @@ const PrivateRoute = ({
         </div>
       );
 }
-
-
- 
-
-
  const  PublicRoute=({
     component:Component 
     ,...rest}) => 
@@ -36,13 +30,9 @@ const PrivateRoute = ({
         component= {(props)=>(
             user?
             (< Redirect to='/'/>):
-            (<Component {...props} />) 
-             
-        )
-          
-        }/>
-
-        </div>
+            (<Component {...props} />)      
+        ) }/>
+         </div>
       );
 }
 const AdminRoute = ({

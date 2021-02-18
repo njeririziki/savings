@@ -21,7 +21,7 @@ const useStyles = makeStyles( (theme) => ({
         flexDirection: 'column',
         justifyContent:'center',
         alignContent:'center',
-        marginTop:theme.spacing(15),
+        marginTop:theme.spacing(8),
        
     },
     table:{
@@ -41,9 +41,11 @@ const useStyles = makeStyles( (theme) => ({
         backgroundColor:'#cfd8dc',
        display: 'flex' ,
        flexDirection:'row',
+       width: '70wh',
        '& > *' : {
         margin: theme.spacing(1)
-       }
+       },
+      
       },
       savcontainer:{
         display: 'flex' ,

@@ -1,5 +1,6 @@
 import React from 'react';
 import Fab from '@material-ui/core/Fab';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Tooltip  from '@material-ui/core/Tooltip';
 import Container from '@material-ui/core/Container'
@@ -13,13 +14,15 @@ import Home from '../Components/Home';
  
 const useStyles = makeStyles(theme=>({
    content:{
-      marginTop:theme.spacing(15),
+      marginTop:theme.spacing(5),
      
    },
    root:{
-      display:'flex',
-      flexDirection:'column',
-      justifyContent:'center ',
+      display:'grid',
+      gridTemplateColumns: '2fr 2fr',
+      gridTemplateRows:'auto auto ',
+      gridGap: '20px'
+
       
    },
    fab:{
@@ -35,12 +38,12 @@ const useStyles = makeStyles(theme=>({
       marginTop:theme.spacing(5)
    },
    typography:{
-      fontSize: '30px',
+      fontSize: '25px',
       alignSelf: 'center '
      
    },
    savings:{
-      fontSize: '30px',
+      fontSize: '25px',
       color:'#00701a',
       alignSelf: 'center '
      
@@ -48,21 +51,53 @@ const useStyles = makeStyles(theme=>({
    container:{
       display: 'flex',
       flexDirection: 'row',
-      justifyContent:'space-around ',
+      justifyContent:'space-between ',
+      width:'25vw',
       backgroundColor:'#006978',
       padding: '1em 1em 1em 1em',
       color:'#ffffff', 
+      
       [theme.breakpoints.down('sm')] :{
          flexDirection: 'column',
         
-     }
+     },
+   },
+   containerTime:{
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent:'space-between ',
+      width:'30vw',
+      backgroundColor:'#c41c00',
+      padding: '1em 1em 1em 1em',
+      color:'#ffffff', 
+      
+      [theme.breakpoints.down('sm')] :{
+         flexDirection: 'column',
+        
+     },
+   },
+     box:{
+      display:'flex',
+      width : 400,
+      height: 400,
+      flexDirection:'column',
+      justifyContent: 'center',
+      alignContent:'center',
+      backgroundColor:'#ffffff',
+    //  border:" solid 1px #b6b8c3",
+      boxShadow:'2px 2px 2px 2px #e8eaf6',
+      padding:theme.spacing(2),
+      [theme.breakpoints.down('sm')] :{
+        width : 250,
+        height: 200
+    }
 
    },
    circular:{
-      width:250,
-      height:250,
-      alignSelf:'center'
-   }
+      width:200,
+      height:200,
+      alignSelf:''
+   },
    
 }))
 
@@ -117,32 +152,38 @@ const Goals = (props) => {
    }
    const Content=(
       <div
-      
+      className={classes.content}
     >
        <div className={classes.root}>
     
        <Container 
     className={classes.container}>
+       <Icon.Compass/>
          <Typography
        variant='h3'
        >
+          
          {values.title? ` ${values.title }` :'Set your goal'}
        </Typography>
-     
+       </Container> 
+       <Container className={classes.containerTime}>
+       <Icon.Clock/>
       {values.title?( <Typography
        variant='h4'
-       >
+       >   
         { timeLeft? timeLeft : values.time *12 } months to go!
        </Typography>): null}
-    </Container>
-     
-       <br/>
+       </Container>
+    
+    
+     <Box className={classes.box}>
+    
        <Typography
        variant='h5'
        className={classes.typography}
 
       >
-         {values.amount? `Amount: ${values.amount }` : null}
+         {values.amount? `Amount: ${values.amount } KES` : null}
        </Typography>
     
        <Typography
@@ -156,7 +197,9 @@ const Goals = (props) => {
        className={classes.savings}>
          {values.savings? `Savings : Ksh ${values.savings }` : null}
        </Typography>
-      <br/>
+     
+     </Box>
+     <Box className={classes.box}>
              <CircularProgressbar
        className={classes.circular}
        value = {percentage? percentage: 2}
@@ -173,7 +216,7 @@ const Goals = (props) => {
        })
        }
        />
-    
+     </Box>
       <Tooltip title =' Create your Schedule '>
       <Fab
        className={classes.fab}

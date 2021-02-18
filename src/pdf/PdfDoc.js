@@ -64,7 +64,7 @@ const PdfDoc = (props) => {
                            Goal : {props.goalTitle}
                         </Text>
                         <Text style={styles.fpg}>
-                            Target amount: $ {props.goalAmount} 
+                            Target amount:  {props.goalAmount} KES
                         </Text>
                         <Text style={styles.fpg} >
                             Target time: {props.goalTime} years 

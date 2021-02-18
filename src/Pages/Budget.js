@@ -19,7 +19,7 @@ const useStyles = makeStyles( (theme) => ({
       flexDirection: 'column',
       justifyContent:'center',
       alignContent:'center',
-      marginTop:theme.spacing(15),
+      marginTop:theme.spacing(8),
      
   },
 
@@ -41,7 +41,9 @@ const useStyles = makeStyles( (theme) => ({
 
  container:{
    backgroundColor:'#c8e6c9',
-   padding: '2em 2em 2em 2em'
+   padding: '2em 2em 2em 2em',
+   width:'50vw',
+   alignSelf:'flex-start'
  },
  table:{
   [theme.breakpoints.up('sm')] :{
