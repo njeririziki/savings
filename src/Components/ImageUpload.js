@@ -54,15 +54,12 @@ const UploadImage = () => {
   
     const user= Firebase.auth().currentUser;
     const onFileChange= async(e) =>{
-   
       const file= e.target.files[0];
-     
         const storageRef = Firebase.storage().ref();
         const fileRef= storageRef.child(file.name);
        await fileRef.put(file).then('state_changed',(snap)=>{
           const progress =  (snap.bytesTransferred / snap.totalBytes) * 100;
         console.log('Upload is' + progress + '% done');
-       
        
         },(err)=> console.log (err));
         await fileRef.getDownloadURL()
