@@ -2,8 +2,8 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import Tooltip  from '@material-ui/core/Tooltip';
-import Container from '@material-ui/core/Container'
+import {Tooltip} from '@material-ui/core';
+
 import * as Icon from 'react-feather';
 import {makeStyles} from '@material-ui/core/styles';
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
@@ -15,23 +15,40 @@ import Home from '../Components/Home';
 const useStyles = makeStyles(theme=>({
    content:{
       marginTop:theme.spacing(5),
-     
+      backgroundColor: '#fafafa'
    },
    root:{
       display:'grid',
       gridTemplateColumns: '2fr 2fr',
       gridTemplateRows:'auto auto ',
-      gridGap: '20px'
-
-      
+      gridGap: '20px',
+      [theme.breakpoints.down('sm')] :{
+      display: 'flex',
+      flexDirection:'column'   
+        
+     },
+  
    },
    fab:{
       backgroundColor:'#000000',
-      alignSelf:'flex-end'
+      gridColumn:2,
+      placeSelf:'end',
+      [theme.breakpoints.down('sm')] :{
+        alignSelf:'flex-end'
+      }
    },
    icon:{
-       color:'#ffffff',
-       
+       color:'#ffffff',   
+   },
+   headIcons:{
+      marginRight: theme.spacing(1),
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+      [theme.breakpoints.down('sm')] :{
+         marginRight: theme.spacing(0),
+         width: theme.spacing(4),
+         height: theme.spacing(4),  
+      }
    },
 
    other:{
@@ -39,64 +56,78 @@ const useStyles = makeStyles(theme=>({
    },
    typography:{
       fontSize: '25px',
-      alignSelf: 'center '
+     // alignSelf: ''
      
    },
    savings:{
       fontSize: '25px',
       color:'#00701a',
-      alignSelf: 'center '
+     // alignSelf: ''
      
    },
    container:{
       display: 'flex',
       flexDirection: 'row',
-      justifyContent:'space-between ',
-      width:'25vw',
-      backgroundColor:'#006978',
+      //justifyContent:'space-between ',
+      // width:'25vw',
+      height:'100px',
+      backgroundColor:'#52c7b8',
       padding: '1em 1em 1em 1em',
       color:'#ffffff', 
-      
+      '& > *' : {
+         margin: theme.spacing(1)
+        },
       [theme.breakpoints.down('sm')] :{
-         flexDirection: 'column',
+         flexDirection: 'row',
         
      },
    },
    containerTime:{
       display: 'flex',
       flexDirection: 'row',
-      justifyContent:'space-between ',
-      width:'30vw',
-      backgroundColor:'#c41c00',
+     
+     // justifyContent:'space-around ',
+      // width:'30vw',
+      height:'100px',
+      backgroundColor:'#ffbcaf',
       padding: '1em 1em 1em 1em',
-      color:'#ffffff', 
-      
+      color: '#00363a', 
+      '& > *' : {
+         margin: theme.spacing(1),
+         
+        },
       [theme.breakpoints.down('sm')] :{
-         flexDirection: 'column',
+         flexDirection: 'row',
         
      },
    },
      box:{
       display:'flex',
-      width : 400,
-      height: 400,
+    //  width : 350,
+     height: 350,
       flexDirection:'column',
-      justifyContent: 'center',
-      alignContent:'center',
+      '& > *' : {
+         margin: theme.spacing(0),
+      
+        },
+        padding: '2em 2em 2em 2em',
+        marginTop:theme.spacing(3),
+      //justifyContent: 'center',
+      //alignContent:'center',
       backgroundColor:'#ffffff',
     //  border:" solid 1px #b6b8c3",
       boxShadow:'2px 2px 2px 2px #e8eaf6',
-      padding:theme.spacing(2),
-      [theme.breakpoints.down('sm')] :{
-        width : 250,
-        height: 200
-    }
+      paddingLeft:theme.spacing(2),
+   //    [theme.breakpoints.down('sm')] :{
+   //      width : 250,
+   //      height: 200
+   //  }
 
    },
    circular:{
       width:200,
       height:200,
-      alignSelf:''
+      alignSelf:'center'
    },
    
 }))
@@ -156,57 +187,52 @@ const Goals = (props) => {
     >
        <div className={classes.root}>
     
-       <Container 
+       <Box 
     className={classes.container}>
-       <Icon.Compass/>
+    <Icon.Compass className={classes.headIcons}/>
          <Typography
-       variant='h3'
-       >
-          
+       variant='h5'>
          {values.title? ` ${values.title }` :'Set your goal'}
        </Typography>
-       </Container> 
-       <Container className={classes.containerTime}>
-       <Icon.Clock/>
-      {values.title?( <Typography
-       variant='h4'
-       >   
+       </Box> 
+       <Box className={classes.containerTime}>
+       <Icon.Clock className={classes.headIcons}/>
+      {values.title?( 
+      <Typography variant='h5' >   
         { timeLeft? timeLeft : values.time *12 } months to go!
        </Typography>): null}
-       </Container>
-    
-    
+       </Box>
      <Box className={classes.box}>
-    
        <Typography
        variant='h5'
-       className={classes.typography}
-
-      >
+        >
          {values.amount? `Amount: ${values.amount } KES` : null}
        </Typography>
-    
        <Typography
        variant='h5'
-       className={classes.typography}
-      >
+        >
          {values.time? `Time : ${values.time } years` : null}
        </Typography>
        <Typography
        variant='h5'
-       className={classes.savings}>
+       >
          {values.savings? `Savings : Ksh ${values.savings }` : null}
+       </Typography>
+       <Typography variant='body1'>
+         That black 4k HD ave been wanting
        </Typography>
      
      </Box>
      <Box className={classes.box}>
-             <CircularProgressbar
+      <CircularProgressbar
        className={classes.circular}
+       circleRatio= {0.5}
        value = {percentage? percentage: 2}
        text={percentage? `${percentage}%`:'0%'}
        strokeWidth={5}
        styles ={ buildStyles({
-           rotation : 0,
+          
+           rotation: 1 / 2 + 1 / 4,
            textSize:'20px',
            strokeLinecap:'butt',
            pathTransitionDuration: 0.5,
@@ -215,7 +241,11 @@ const Goals = (props) => {
            textColor: '#000000',
        })
        }
+       
        />
+       <Typography> Trial 30% <br/>
+        Paying 50%<br/> Lost 20
+       </Typography>
      </Box>
       <Tooltip title =' Create your Schedule '>
       <Fab

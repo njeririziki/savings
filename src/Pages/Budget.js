@@ -1,6 +1,7 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
+import Box from '@material-ui/core/Box';
 import {Table,TableBody,TableCell,TableHead,TableRow} from '@material-ui/core'
 import Fab from '@material-ui/core/Fab';
 import Firebase from '../config';
@@ -17,8 +18,8 @@ const useStyles = makeStyles( (theme) => ({
   root : {
       display:'flex',
       flexDirection: 'column',
-      justifyContent:'center',
-      alignContent:'center',
+     // justifyContent:'center',
+    //  alignContent:'center',
       marginTop:theme.spacing(8),
      
   },
@@ -42,10 +43,14 @@ const useStyles = makeStyles( (theme) => ({
  container:{
    backgroundColor:'#c8e6c9',
    padding: '2em 2em 2em 2em',
-   width:'50vw',
-   alignSelf:'flex-start'
+   width:'500px',
+   [theme.breakpoints.up('sm')] :{
+    width : 460
+}
+   //alignSelf:'right'
  },
  table:{
+  // alignSelf:"center",
   [theme.breakpoints.up('sm')] :{
       width : 460
   }
@@ -110,14 +115,14 @@ const Budget = () => {
     OnClose ={closeModal}
     />
  
-    <Container 
+    <Box
     className={classes.container}>
         <Typography
      variant='h4'
         >
         {month} {year}
      </Typography>
-    </Container>
+    </Box>
     <br/>
     <Container >
        <Table className={classes.table}>

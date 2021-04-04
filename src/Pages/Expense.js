@@ -4,6 +4,7 @@ import Fab from '@material-ui/core/Fab';
 import * as Icon from 'react-feather';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip'
@@ -41,7 +42,7 @@ const useStyles = makeStyles( (theme) => ({
         backgroundColor:'#cfd8dc',
        display: 'flex' ,
        flexDirection:'row',
-       width: '70wh',
+       width: '550px',
        '& > *' : {
         margin: theme.spacing(1)
        },
@@ -207,7 +208,7 @@ const Expense = () => {
 
     const content =(
         <div className={classes.root}>
-         <Container 
+         <Box
     className={classes.container}>
           <Typography
      variant='h3'>
@@ -219,7 +220,7 @@ const Expense = () => {
         {month} <br/>  {weekday}
      </Typography>
      
-        </Container>
+        </Box>
       
         <Table  className={classes.table}>
             <TableHead>

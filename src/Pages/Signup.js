@@ -25,11 +25,14 @@ root:{
 },
 container:{
     backgroundColor:'#f2f2f2',
-
+    [theme.breakpoints.down('sm')] :{
+        margin: theme.spacing(1),   
+     alignSelf:'center'
+    }
 },
 avatar:{
-    marginTop:theme.spacing(3),
-    alignSelf:'center',
+   marginTop:theme.spacing(3),
+   alignSelf:'center',
    width: theme.spacing(7),
    height: theme.spacing(7),
    backgroundColor:'#000000'
