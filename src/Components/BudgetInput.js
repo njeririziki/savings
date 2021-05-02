@@ -121,8 +121,7 @@ const BgDialog = (props) => {
             <Textfield
             type ='text'
             label= 'amount'
-         
-            variant= 'standard'
+            variant= 'outlined'
             onChange = {(e)=>{
                 const amount = e.target.value;
                 if(isNaN(amount)){
