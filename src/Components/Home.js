@@ -38,13 +38,15 @@ const useStyles = makeStyles(theme => ({
   appToolbar:{
     display:'flex',
     justifyContent:'space-between',
-    backgroundColor: '	#0f1724',
+    backgroundColor: '#fafafa', 
+    color:'#0f1724',
+    boxShadow: 'none',
     height:60, 
   },
  
   title: {
     justifyContent:'space-between',
-    fontSize:40,
+    fontSize: '2rem',
     fontFamily:'Sriracha',
     [theme.breakpoints.down('sm')]: {
       fontSize:35,
@@ -101,6 +103,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    backgroundColor: '#f7f9f8',
   },
 }));
 const Home  = (props) => {

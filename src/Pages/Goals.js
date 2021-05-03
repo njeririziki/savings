@@ -2,8 +2,8 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import {Tooltip} from '@material-ui/core';
-
+import Tooltip from '@material-ui/core/Tooltip';
+import Grid from '@material-ui/core/Grid';
 import * as Icon from 'react-feather';
 import {makeStyles} from '@material-ui/core/styles';
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
@@ -15,13 +15,14 @@ import Home from '../Components/Home';
 const useStyles = makeStyles(theme=>({
    content:{
       marginTop:theme.spacing(5),
-      backgroundColor: '#fafafa'
+     
    },
    root:{
       display:'grid',
       gridTemplateColumns: '2fr 2fr',
       gridTemplateRows:'auto auto ',
       gridGap: '20px',
+      backgroundColor: '#f7f9f8',
       [theme.breakpoints.down('sm')] :{
       display: 'flex',
       flexDirection:'column'   
@@ -183,8 +184,7 @@ const Goals = (props) => {
    }
    const Content=(
       <div
-      className={classes.content}
-    >
+      className={classes.content}>
        <div className={classes.root}>
     
        <Box 
@@ -226,13 +226,13 @@ const Goals = (props) => {
      <Box className={classes.box}>
       <CircularProgressbar
        className={classes.circular}
-       circleRatio= {0.5}
-       value = {percentage? percentage: 2}
+       circleRatio= {0.75}
+       value = {percentage? percentage: 80}
        text={percentage? `${percentage}%`:'0%'}
        strokeWidth={5}
        styles ={ buildStyles({
           
-           rotation: 1 / 2 + 1 / 4,
+           rotation: 1 / 2 + 1 / 8,
            textSize:'20px',
            strokeLinecap:'butt',
            pathTransitionDuration: 0.5,
@@ -243,8 +243,8 @@ const Goals = (props) => {
        }
        
        />
-       <Typography> Trial 30% <br/>
-        Paying 50%<br/> Lost 20
+       <Typography> Saved 30% <br/>
+        Remaining 50%
        </Typography>
      </Box>
       <Tooltip title =' Create your Schedule '>
