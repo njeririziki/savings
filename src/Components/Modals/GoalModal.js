@@ -5,7 +5,7 @@ import DialogBody from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
 import Textfield from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
-import Firebase from '../config'
+import Firebase from '../../config'
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme=>({

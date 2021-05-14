@@ -7,7 +7,7 @@ import Fab from '@material-ui/core/Fab';
 import Firebase from '../config';
 import Tooltip  from '@material-ui/core/Tooltip';
 import * as Icon from 'react-feather'
-import BgModal from '../Components/BudgetInput';
+import BgModal from '../Components/Modals/BudgetInput';
 
 import Home from '../Components/Home';
 

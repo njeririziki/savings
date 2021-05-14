@@ -1,6 +1,6 @@
 import React from 'react' ;
 import Firebase from '../config';
-import UserProfile from '../Components/UserProfile'
+import UserProfile from '../Components/Modals/UserProfile'
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip'

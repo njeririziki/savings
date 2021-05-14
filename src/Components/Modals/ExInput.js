@@ -7,7 +7,7 @@ import {produce} from 'immer'
 import Dialog from '@material-ui/core/Dialog';
 import {DialogContent,DialogActions} from '@material-ui/core';
 import * as Icon from 'react-feather';
-import Firebase from '../config';
+import Firebase from '../../config';
 import { generate } from "shortid";
 
 

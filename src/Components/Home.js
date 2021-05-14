@@ -257,8 +257,9 @@ React.useEffect(()=>{
           noWrap>
            {props.Appbarname? props.Appbarname:'Every Dime' } 
           </Typography>
-          <Tooltip title ='Log out'>
-          <IconButton
+          
+          { /*
+          <Tooltip title ='Log out'> <IconButton
             color="inherit"
             aria-label="Log out"
             edge="start"
@@ -266,8 +267,11 @@ React.useEffect(()=>{
             onClick= {logOut}
           >
             <Icon.LogOut />
-          </IconButton>
-          </Tooltip>
+          </IconButton> 
+            </Tooltip>*/
+          }
+
+        
          
         </Toolbar>
       </AppBar>

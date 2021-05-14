@@ -13,7 +13,7 @@ import {produce} from 'immer';
 import Firebase, { firebase} from '../config'
 import Home from '../Components/Home';
 import PayFunc from '../Components/PaypalComp'
-import Exdialog from '../Components/ExInput'
+import Exdialog from '../Components/Modals/ExInput'
 
 
 const useStyles = makeStyles( (theme) => ({

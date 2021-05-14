@@ -2,38 +2,37 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import ActivityLine from '../Components/Charts/Line'
 import Tooltip from '@material-ui/core/Tooltip';
-import Grid from '@material-ui/core/Grid';
+import Grid from '../Components/Cards/Grid'
 import * as Icon from 'react-feather';
 import {makeStyles} from '@material-ui/core/styles';
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Firebase from '../config'
-import  GoalModal from '../Components/GoalModal'
+import  GoalModal from '../Components/Modals/GoalModal'
 import Home from '../Components/Home';
  
 const useStyles = makeStyles(theme=>({
    content:{
-      marginTop:theme.spacing(5),
-     
+      marginTop:theme.spacing(5), 
    },
    root:{
-      display:'grid',
-      gridTemplateColumns: '2fr 2fr',
-      gridTemplateRows:'auto auto ',
-      gridGap: '20px',
+      display:'flex',
+      flexDirection:'column' ,
+      //gridTemplateColumns: '2fr 2fr',
+     // gridTemplateRows:'auto auto ',
+     // gridGap: '20px',
       backgroundColor: '#f7f9f8',
       [theme.breakpoints.down('sm')] :{
       display: 'flex',
-      flexDirection:'column'   
-        
-     },
-  
+      flexDirection:'column'      
+     }, 
    },
    fab:{
       backgroundColor:'#000000',
       gridColumn:2,
-      placeSelf:'end',
+      alignSelf:'flex-end',
       [theme.breakpoints.down('sm')] :{
         alignSelf:'flex-end'
       }
@@ -186,43 +185,11 @@ const Goals = (props) => {
       <div
       className={classes.content}>
        <div className={classes.root}>
-    
-       <Box 
-    className={classes.container}>
-    <Icon.Compass className={classes.headIcons}/>
-         <Typography
-       variant='h5'>
-         {values.title? ` ${values.title }` :'Set your goal'}
-       </Typography>
-       </Box> 
-       <Box className={classes.containerTime}>
-       <Icon.Clock className={classes.headIcons}/>
-      {values.title?( 
-      <Typography variant='h5' >   
-        { timeLeft? timeLeft : values.time *12 } months to go!
-       </Typography>): null}
-       </Box>
-     <Box className={classes.box}>
-       <Typography
-       variant='h5'
-        >
-         {values.amount? `Amount: ${values.amount } KES` : null}
-       </Typography>
-       <Typography
-       variant='h5'
-        >
-         {values.time? `Time : ${values.time } years` : null}
-       </Typography>
-       <Typography
-       variant='h5'
-       >
-         {values.savings? `Savings : Ksh ${values.savings }` : null}
-       </Typography>
-       <Typography variant='body1'>
-         That black 4k HD ave been wanting
-       </Typography>
-     
-     </Box>
+    <Grid/>
+    <Box className={classes.box}>
+       <ActivityLine/>
+    </Box>
+      
      <Box className={classes.box}>
       <CircularProgressbar
        className={classes.circular}
@@ -277,3 +244,42 @@ const Goals = (props) => {
 }
  
 export default Goals;
+
+
+
+ /* <Box 
+    className={classes.container}>
+    <Icon.Compass className={classes.headIcons}/>
+         <Typography
+       variant='h5'>
+         {values.title? ` ${values.title }` :'Set your goal'}
+       </Typography>
+       </Box> 
+       <Box className={classes.containerTime}>
+       <Icon.Clock className={classes.headIcons}/>
+      {values.title?( 
+      <Typography variant='h5' >   
+        { timeLeft? timeLeft : values.time *12 } months to go!
+       </Typography>): null}
+       </Box> */
+     /* <Box className={classes.box}>
+       <Typography
+       variant='h5'
+        >
+         {values.amount? `Amount: ${values.amount } KES` : null}
+       </Typography>
+       <Typography
+       variant='h5'
+        >
+         {values.time? `Time : ${values.time } years` : null}
+       </Typography>
+       <Typography
+       variant='h5'
+       >
+         {values.savings? `Savings : Ksh ${values.savings }` : null}
+       </Typography>
+       <Typography variant='body1'>
+         That black 4k HD ave been wanting
+       </Typography>
+     
+     </Box> */

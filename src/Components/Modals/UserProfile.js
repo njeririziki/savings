@@ -3,7 +3,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import Textfield from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
-import Firebase from '../config'
+import Firebase from '../../config'
 import {makeStyles} from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
@@ -13,24 +13,21 @@ import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles(theme=>({
     modal:{
-        width :560,
-       
+        width :560, 
         backgroundColor: theme.palette.background.paper,
         border: 'none',
-        
-         padding: theme.spacing(2, 4, 3),
+        padding: theme.spacing(2, 4, 3),
         
        },
-       modalPaper:{
-       
+       modalPaper:{  
           display:'flex',
           flexDirection:'row',
           justifyContent:'center',
           alignSelf:'center'
        },
-    other:{
-        marginTop:theme.spacing(5)
-     },
+        other:{
+         marginTop:theme.spacing(5)
+          },
      icon:{
         color:'#ffffff',
         
@@ -207,7 +204,7 @@ const GoalModal = (props) => {
                     >
                         submit
                     </Button>
-</DialogActions>
+                 </DialogActions>
                  
                 </form>
                  </div>
