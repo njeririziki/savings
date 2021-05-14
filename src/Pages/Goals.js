@@ -3,6 +3,7 @@ import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import ActivityLine from '../Components/Charts/Line'
+import Pie from '../Components/Charts/Pie'
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '../Components/Cards/Grid'
 import * as Icon from 'react-feather';
@@ -104,8 +105,8 @@ const useStyles = makeStyles(theme=>({
      box:{
       display:'flex',
     //  width : 350,
-     height: 350,
-      flexDirection:'column',
+     height: 'auto',
+      flexDirection:'row',
       '& > *' : {
          margin: theme.spacing(0),
       
@@ -118,10 +119,11 @@ const useStyles = makeStyles(theme=>({
     //  border:" solid 1px #b6b8c3",
       boxShadow:'2px 2px 2px 2px #e8eaf6',
       paddingLeft:theme.spacing(2),
-   //    [theme.breakpoints.down('sm')] :{
-   //      width : 250,
-   //      height: 200
-   //  }
+       [theme.breakpoints.down('sm')] :{
+          flexDirection:'column',
+         width : 250,
+         height: 200
+     }
 
    },
    circular:{
@@ -186,9 +188,15 @@ const Goals = (props) => {
       className={classes.content}>
        <div className={classes.root}>
     <Grid/>
+    <div style={{display:'flex',justifyContent:'space-between'}}>
     <Box className={classes.box}>
        <ActivityLine/>
     </Box>
+    <Box className={classes.box}>
+       <Pie/>
+    </Box>
+    </div>
+  
       
      <Box className={classes.box}>
       <CircularProgressbar

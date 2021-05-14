@@ -11,273 +11,68 @@ const data =[
       "color": "hsl(249, 70%, 50%)",
       "data": [
         {
-          "x": "plane",
+          "x": "food",
           "y": 289
         },
         {
-          "x": "helicopter",
+          "x": "transport",
           "y": 154
         },
         {
-          "x": "boat",
+          "x": "electricity",
           "y": 53
         },
         {
-          "x": "train",
+          "x": "water",
           "y": 72
         },
         {
-          "x": "subway",
+          "x": "subscriprtions",
           "y": 145
         },
-        {
-          "x": "bus",
-          "y": 36
-        },
-        {
-          "x": "car",
-          "y": 185
-        },
-        {
-          "x": "moto",
-          "y": 63
-        },
-        {
-          "x": "bicycle",
-          "y": 172
-        },
-        {
-          "x": "horse",
-          "y": 262
-        },
-        {
-          "x": "skateboard",
-          "y": 183
-        },
+       
         {
           "x": "others",
           "y": 280
         }
       ]
     },
-    {
-      "id": "france",
-      "color": "hsl(152, 70%, 50%)",
-      "data": [
-        {
-          "x": "plane",
-          "y": 167
-        },
-        {
-          "x": "helicopter",
-          "y": 238
-        },
-        {
-          "x": "boat",
-          "y": 12
-        },
-        {
-          "x": "train",
-          "y": 36
-        },
-        {
-          "x": "subway",
-          "y": 65
-        },
-        {
-          "x": "bus",
-          "y": 185
-        },
-        {
-          "x": "car",
-          "y": 177
-        },
-        {
-          "x": "moto",
-          "y": 192
-        },
-        {
-          "x": "bicycle",
-          "y": 217
-        },
-        {
-          "x": "horse",
-          "y": 144
-        },
-        {
-          "x": "skateboard",
-          "y": 103
-        },
-        {
-          "x": "others",
-          "y": 258
-        }
-      ]
-    },
-    {
-      "id": "us",
-      "color": "hsl(240, 70%, 50%)",
-      "data": [
-        {
-          "x": "plane",
-          "y": 290
-        },
-        {
-          "x": "helicopter",
-          "y": 71
-        },
-        {
-          "x": "boat",
-          "y": 133
-        },
-        {
-          "x": "train",
-          "y": 197
-        },
-        {
-          "x": "subway",
-          "y": 161
-        },
-        {
-          "x": "bus",
-          "y": 218
-        },
-        {
-          "x": "car",
-          "y": 110
-        },
-        {
-          "x": "moto",
-          "y": 112
-        },
-        {
-          "x": "bicycle",
-          "y": 130
-        },
-        {
-          "x": "horse",
-          "y": 130
-        },
-        {
-          "x": "skateboard",
-          "y": 193
-        },
-        {
-          "x": "others",
-          "y": 263
-        }
-      ]
-    },
-    {
-      "id": "germany",
-      "color": "hsl(200, 70%, 50%)",
-      "data": [
-        {
-          "x": "plane",
-          "y": 245
-        },
-        {
-          "x": "helicopter",
-          "y": 133
-        },
-        {
-          "x": "boat",
-          "y": 45
-        },
-        {
-          "x": "train",
-          "y": 24
-        },
-        {
-          "x": "subway",
-          "y": 39
-        },
-        {
-          "x": "bus",
-          "y": 78
-        },
-        {
-          "x": "car",
-          "y": 1
-        },
-        {
-          "x": "moto",
-          "y": 278
-        },
-        {
-          "x": "bicycle",
-          "y": 205
-        },
-        {
-          "x": "horse",
-          "y": 4
-        },
-        {
-          "x": "skateboard",
-          "y": 231
-        },
-        {
-          "x": "others",
-          "y": 190
-        }
-      ]
-    },
+  
     {
       "id": "norway",
       "color": "hsl(336, 70%, 50%)",
       "data": [
         {
-          "x": "plane",
+          "x": "food",
           "y": 234
         },
         {
-          "x": "helicopter",
+          "x": "transport",
           "y": 145
         },
         {
-          "x": "boat",
+          "x": "electricity",
           "y": 13
         },
         {
-          "x": "train",
+          "x": "water",
           "y": 140
         },
         {
-          "x": "subway",
+          "x": "subscriprtions",
           "y": 7
         },
-        {
-          "x": "bus",
-          "y": 199
-        },
-        {
-          "x": "car",
-          "y": 262
-        },
-        {
-          "x": "moto",
-          "y": 300
-        },
-        {
-          "x": "bicycle",
-          "y": 197
-        },
-        {
-          "x": "horse",
-          "y": 178
-        },
-        {
-          "x": "skateboard",
-          "y": 249
-        },
+       
         {
           "x": "others",
           "y": 104
-        }
+        },
+        
       ]
     }
   ]
 const ActivityLine = () => (
+  <div style={{height:'370px', width:'580px'}}>
     <ResponsiveLine
         data={data}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
@@ -291,7 +86,7 @@ const ActivityLine = () => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'transportation',
+            legend: 'Expenses',
             legendOffset: 36,
             legendPosition: 'middle'
         }}
@@ -300,7 +95,7 @@ const ActivityLine = () => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'count',
+            legend: 'amount',
             legendOffset: -40,
             legendPosition: 'middle'
         }}
@@ -337,6 +132,7 @@ const ActivityLine = () => (
             }
         ]}
     />
+    </div>
 )
 
 export default ActivityLine;
