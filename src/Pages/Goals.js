@@ -3,6 +3,7 @@ import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import ActivityLine from '../Components/Charts/Line'
+import SpendingBar from '../Components/Charts/Bar'
 import Pie from '../Components/Charts/Pie'
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '../Components/Cards/Grid'
@@ -197,8 +198,12 @@ const Goals = (props) => {
     </Box>
     </div>
   
-      
-     <Box className={classes.box}>
+    <div style={{display:'flex',justifyContent:'space-between'}}>
+    <Box className={classes.box}>
+       <SpendingBar/>
+    </Box>
+    <Box className={classes.box}>
+       
       <CircularProgressbar
        className={classes.circular}
        circleRatio= {0.75}
@@ -215,13 +220,12 @@ const Goals = (props) => {
            trailColor:'#82ada9',
            textColor: '#000000',
        })
-       }
-       
+       }   
        />
-       <Typography> Saved 30% <br/>
-        Remaining 50%
-       </Typography>
+    
      </Box>
+       </div>  
+
       <Tooltip title =' Create your Schedule '>
       <Fab
        className={classes.fab}
@@ -252,8 +256,6 @@ const Goals = (props) => {
 }
  
 export default Goals;
-
-
 
  /* <Box 
     className={classes.container}>
