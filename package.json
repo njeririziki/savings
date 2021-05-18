@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
+    "@nivo/bar": "^0.69.1",
     "@nivo/core": "^0.69.0",
     "@nivo/line": "^0.69.1",
     "@nivo/pie": "^0.69.0",
@@ -22,7 +23,8 @@
     "react-joyride": "^2.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "tesseract.js": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
