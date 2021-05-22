@@ -8,9 +8,8 @@ import Firebase from '../config';
 import Tooltip  from '@material-ui/core/Tooltip';
 import * as Icon from 'react-feather'
 import BgModal from '../Components/Modals/BudgetInput';
-
 import Home from '../Components/Home';
-
+import InputComp from '../Components/Ocr/InputComp'
 import {makeStyles} from '@material-ui/core/styles'
 
 
@@ -43,9 +42,9 @@ const useStyles = makeStyles( (theme) => ({
  container:{
    backgroundColor:'#c8e6c9',
    padding: '2em 2em 2em 2em',
-   width:'500px',
+  // width:'500px',
    [theme.breakpoints.up('sm')] :{
-    width : 460
+  //  width : 460
 }
    //alignSelf:'right'
  },
@@ -124,6 +123,8 @@ const Budget = () => {
      </Typography>
     </Box>
     <br/>
+    <div style={{display:'flex'}}>
+    <InputComp/>
     <Container >
        <Table className={classes.table}>
        <TableHead>
@@ -187,12 +188,10 @@ const Budget = () => {
            
             </TableBody>
 
-       </Table>
-  
-   
+       </Table> 
      <br/>
-    
-          </Container>
+    </Container>
+    </div>
           <Tooltip title =' Create your Budget '>
           <Fab 
             className={classes.fab}

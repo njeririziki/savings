@@ -14,6 +14,7 @@ import Firebase, { firebase} from '../config'
 import Home from '../Components/Home';
 import PayFunc from '../Components/PaypalComp'
 import Exdialog from '../Components/Modals/ExInput'
+import InputComp from '../Components/Ocr/InputComp'
 
 
 const useStyles = makeStyles( (theme) => ({
@@ -39,10 +40,10 @@ const useStyles = makeStyles( (theme) => ({
         color:'#ffffff',   
     },
     container:{
-        backgroundColor:'#cfd8dc',
+      backgroundColor:'#cfd8dc',
        display: 'flex' ,
        flexDirection:'row',
-       width: '550px',
+     //  width: '550px',
        '& > *' : {
         margin: theme.spacing(1)
        },
@@ -179,7 +180,6 @@ const Expense = () => {
       setTrasfer(true)
     }
     const unsubscribe= async ()=> {
-     
       const uid=  Firebase.auth().currentUser.uid;
       try{
         await Firebase.firestore().collection('Goal').doc(uid)
@@ -195,8 +195,7 @@ const Expense = () => {
           Day: tonow
         });
         
-        await Firebase.firestore().collection('Budget').doc(uid).update(
-          {
+        await Firebase.firestore().collection('Budget').doc(uid).update({
           MoneyLeft: firebase.firestore.FieldValue.increment(-totalBudget)
           }).then( console.log('sent') ).catch(err=>{ alert(err)})
         
@@ -208,20 +207,17 @@ const Expense = () => {
 
     const content =(
         <div className={classes.root}>
-         <Box
-    className={classes.container}>
-          <Typography
-     variant='h3'>
-        {day}
-     </Typography>
-        <Typography
-     variant='h5'
-        >
-        {month} <br/>  {weekday}
-     </Typography>
+         <Box className={classes.container}>
+           <Typography variant='h3'>
+              {day}
+          </Typography>
+              <Typography  variant='h5' >
+              {month} <br/>  {weekday}
+          </Typography>
      
         </Box>
-      
+   
+       <InputComp/>
         <Table  className={classes.table}>
             <TableHead>
                 <TableRow>
@@ -329,7 +325,7 @@ const Expense = () => {
             </TableBody>
         </Table>
           
-                   
+                 
          
      <Tooltip title =' Create your Schedule '>
      <Fab 
