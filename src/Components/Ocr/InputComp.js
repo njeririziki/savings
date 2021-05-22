@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
     alignItems:'center',
     width: '500px',
     padding:'1em',
-    backgroundColor:'#eaeaea',
+    backgroundColor:'#eceff1',
+    color:'#4b636e',
     height:'200px',
     fontSize:'1.2em',
     border:'2px dashed #b0bec5',
@@ -42,6 +43,7 @@ const InputObj = () => {
   });
   
   const onImageUpload = async (imageUrl) => {
+    console.log(`uploaded ${imageUrl}`)
     await worker.load();
     await worker.loadLanguage("eng");
     await worker.initialize("eng");
