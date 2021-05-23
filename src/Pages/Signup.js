@@ -21,10 +21,10 @@ root:{
     display:'flex',
     justifyContent:'center',
     flexDirection:'column',
-    
+    backgroundColor:'#f2f2f2', 
 },
 container:{
-    backgroundColor:'#f2f2f2',
+    backgroundColor:'#ffffff',
     [theme.breakpoints.down('sm')] :{
         margin: theme.spacing(1),   
      alignSelf:'center'

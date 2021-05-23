@@ -15,18 +15,20 @@ import Firebase from '../config'
 
 
 const useStyle= makeStyles(theme=>({
- 
-
-root:{
-    marginTop: theme.spacing(8),
-    display:'flex',
-    justifyContent:'center',
-    flexDirection:'column'
+  
+rootdiv:{
+  backgroundColor:'#f2f2f2',
 },
 container:{
-    backgroundColor:'#f2f2f2',
-
+  backgroundColor:'#ffffff',
+  marginTop: theme.spacing(8),
+  display:'flex',
+  justifyContent:'center',
+  flexDirection:'column',
+  border:'2px solid #90a4ae'
 },
+
+
 avatar:{
     marginTop:theme.spacing(3),
     alignSelf:'center',
@@ -108,11 +110,11 @@ const LogIn = ({history}) => {
   
  
     return (
-       <> 
+      <div className={classes.rootDiv}> 
             <Container  maxWidth='xs'
             className={classes.container}
             >
-                <div className={classes.root}>
+               
                
                 <Avatar
                 className={classes.avatar}>
@@ -180,9 +182,9 @@ const LogIn = ({history}) => {
                 >
                     Create a new account
                 </Typography>
-                </div>
+             
             </Container>
-      </> 
+      </div> 
       );
 }
 

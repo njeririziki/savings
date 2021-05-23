@@ -12,23 +12,39 @@ const useStyles = makeStyles((theme) => ({
       //marginBottom:'10em'
     },
     paper: {
+      display:'flex',
+     // justifyContent:'space-between',
       height: 'auto',
-      //width: 'fit-content',
-      padding:'1em'
+      width: '300px',
+      padding:'1em 0em 1em 2em'
     },
-  
+    paperDiv:{
+      marginLeft:'1em'
+    },
+  typo:{
+    fontSize:'2em',
+    fontWeight:'400',
+    color:'#007c91'
+  },
+  typoDesc:{
+    fontSize:'1.5em',
+    color:'#34515e',
+  }
   }));
    const arr=[
-     {key: 1,
-      text:'The FlatScreen TV',
-     icon:<Icon.Compass/> 
+     {key: 1, 
+      text:'4K TV',
+      description:'Saving Goal',
+     icon:<Icon.Compass size='44px' color='#395C58'/> 
     },
     {key: 2,
         text:' 12,000',
-        icon:<Icon.DollarSign /> },
+        description:'Target Amount ',
+        icon:<Icon.DollarSign size='44px' color='#00838f'/> },
     {key: 3,
-          text:'12 months to go',
-          icon:<Icon.Clock/> }
+          text:'360 days  ',
+          description:'Time left',
+          icon:<Icon.Clock size='44px' color='#8D0E08'/> }
    ]
 
 
@@ -36,14 +52,23 @@ const DashGrid = () => {
     const classes = useStyles();
     return (  
         <Grid item xs>
-        <Grid container justify="center" spacing={5}>
+        <Grid container justify='flex-start' spacing={5}>
           {arr.map((value) => (
             <Grid key={value.key} item>
               <Paper className={classes.paper} >
-                <Typography variant='h5'>
-                  {value.icon}
+                
+                {value.icon}
+      
+               
+                <div className={classes.paperDiv}>
+                <Typography className={classes.typo}>
                 {value.text}
                 </Typography>
+                <Typography className={classes.typoDesc}>
+                {value.description}
+                </Typography>
+                </div>
+
                
               </Paper>
             </Grid>

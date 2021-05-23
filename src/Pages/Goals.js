@@ -105,7 +105,7 @@ const useStyles = makeStyles(theme=>({
    },
      box:{
       display:'flex',
-    //  width : 350,
+      width : 'auto',
      height: 'auto',
       flexDirection:'row',
       '& > *' : {
@@ -202,7 +202,7 @@ const Goals = (props) => {
     <Box className={classes.box}>
        <SpendingBar/>
     </Box>
-    <Box className={classes.box}>
+    {/* <Box className={classes.box}>
        
       <CircularProgressbar
        className={classes.circular}
@@ -223,7 +223,7 @@ const Goals = (props) => {
        }   
        />
     
-     </Box>
+     </Box> */}
        </div>  
 
       <Tooltip title =' Create your Schedule '>
