@@ -12,8 +12,8 @@ const pieData=[
    {
        id:'remainder',
        label: ' remainder',
-       value:70,
-       color: '#66bb6a'
+       value: 70,
+       color: '#395C58'
    },
 
 //    {

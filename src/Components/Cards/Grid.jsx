@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         icon:<Icon.DollarSign size='44px' color='#00838f'/> },
     {key: 3,
           text:'360 days  ',
-          description:'Time left',
+          description:'12 months left',
           icon:<Icon.Clock size='44px' color='#8D0E08'/> }
    ]
 

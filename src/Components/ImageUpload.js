@@ -31,10 +31,23 @@ const useStyles = makeStyles(theme => ({
   container:{
    alignSelf:'flex-end',
     position:'absolute',
-    bottom:0
+    bottom:0,
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    width:'50px',
+    height:'50px',
+    borderRadius: '50%',
+    backgroundColor:'#000000',
+    color:'#ffffff'
    
   },
+  editFab:{
+  
+
+  },
   input:{
+    alignSelf:'center',
     width:0,
     height:0,
     opacity:0
@@ -62,35 +75,28 @@ const UploadImage = () => {
         const fileRef= storageRef.child(file.name);
         fileRef.put(file).on('state_changed',(snap)=>{
           let progress =  (snap.bytesTransferred / snap.totalBytes) * 100;
-          setLoading(true);
-         setProgress (progress)
+          
         console.log('Upload is' + progress + '% done');
         },(err)=> console.log (err));
+
         await fileRef.getDownloadURL()
         .then(async(downloadURl)=>{
           console.log ('File is available at', downloadURl);
-          setImageUrl(downloadURl);
-           setLoading(false)
-          try{
             await user.updateProfile({
               photoURL: downloadURl
             });
-          } catch (error){
-            console.log(`Error occured updating url: ${error}`)
-          }
-         
         },(err)=> alert (err))
 
         }
 
     React.useEffect(()=>{
       const user= Firebase.auth().currentUser;
-       if (user.photoURL !=null){
-         const imageUrl= user.photoURL
-         setImageUrl(imageUrl)
-         console.log('found image URl')
+       if (user !=null){
+         const imageUrl= user.photoURL;
+         setImageUrl(imageUrl);
        }
-      },[imageUrl])
+       return;
+      },[])
     
     
     return ( 
@@ -99,14 +105,11 @@ const UploadImage = () => {
          <Avatar
        className={classes.avatar}
        src={imageUrl} 
-       imgProp={
-        loading? <CircularProgress
-      variant="determinate" value={progress} /> :''
-       } />
+        />
   
-      
-     <form >
-       <label>
+     
+      <form className={classes.container}>
+       <label className={classes.editFab}>
        <input 
        type='file'
         onChange={onFileChange}
@@ -115,7 +118,9 @@ const UploadImage = () => {
         <Icon.Edit2/>
        
        </label>
-     </form> 
+     </form>
+     
+     
       </div>   
      );
 }
