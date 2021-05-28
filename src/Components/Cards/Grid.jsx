@@ -19,15 +19,17 @@ const useStyles = makeStyles((theme) => ({
       padding:'1em 0em 1em 2em'
     },
     paperDiv:{
+      display:'flex',
+      flexDirection:'column',
       marginLeft:'1em'
     },
   typo:{
     fontSize:'2em',
     fontWeight:'400',
-    color:'#007c91'
+    color:'#00363a'
   },
   typoDesc:{
-    fontSize:'1.5em',
+    fontSize:'1.4em',
     color:'#34515e',
   }
   }));
@@ -35,16 +37,16 @@ const useStyles = makeStyles((theme) => ({
      {key: 1, 
       text:'4K TV',
       description:'Saving Goal',
-     icon:<Icon.Compass size='44px' color='#395C58'/> 
+     icon:<Icon.Anchor size='40px'color='#34515e' /> 
     },
     {key: 2,
         text:' 12,000',
         description:'Target Amount ',
-        icon:<Icon.DollarSign size='44px' color='#00838f'/> },
+        icon:<Icon.DollarSign size='40px' color='#34515e'/> },
     {key: 3,
           text:'360 days  ',
           description:'12 months left',
-          icon:<Icon.Clock size='44px' color='#8D0E08'/> }
+          icon:<Icon.Calendar size='40px' color='#34515e'/>  }
    ]
 
 
@@ -55,21 +57,19 @@ const DashGrid = () => {
         <Grid container justify='flex-start' spacing={5}>
           {arr.map((value) => (
             <Grid key={value.key} item>
-              <Paper className={classes.paper} >
-                
+              <Paper className={classes.paper} > 
                 {value.icon}
-      
-               
                 <div className={classes.paperDiv}>
-                <Typography className={classes.typo}>
-                {value.text}
-                </Typography>
                 <Typography className={classes.typoDesc}>
                 {value.description}
                 </Typography>
+                <Typography className={classes.typo}>
+                {value.text}
+                </Typography>
                 </div>
-
+                
                
+
               </Paper>
             </Grid>
           ))}

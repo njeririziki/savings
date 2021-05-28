@@ -5,11 +5,11 @@ import { ResponsiveLine } from '@nivo/line'
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const data =[
+const linedata =[
     {
-      "id": "japan",
-      "color": "hsl(249, 70%, 50%)",
-      "data": [
+      id: "japan",
+      color: "#34515e",
+      data: [
         {
           "x": "food",
           "y": 289
@@ -39,9 +39,9 @@ const data =[
     },
   
     {
-      "id": "norway",
-      "color": "hsl(336, 70%, 50%)",
-      "data": [
+      id: "norway",
+      color: "#a00037",
+      data: [
         {
           "x": "food",
           "y": 234
@@ -74,8 +74,9 @@ const data =[
 const ActivityLine = () => (
   <div style={{height:'370px', width:'580px'}}>
     <ResponsiveLine
-        data={data}
+        data={linedata}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        colors= { {  datum: 'color' }}
         xScale={{ type: 'point' }}
         yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
         yFormat=" >-.2f"

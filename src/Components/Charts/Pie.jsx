@@ -12,16 +12,16 @@ const pieData=[
    {
        id:'remainder',
        label: ' remainder',
-       value: 70,
+       value: 50,
        color: '#395C58'
    },
 
-//    {
-//      id:'paid',
-//      label: 'Paid ',
-//      value: 50,
-//      color: '#39796b'
-//  },
+   {
+     id:'spent',
+     label: 'spent ',
+     value: 50,
+     color: '#ffc400'
+ },
 ]
 
 const Pie = ({data}) => {
@@ -33,12 +33,16 @@ const Pie = ({data}) => {
              innerRadius={0.6}
              padAngle={0.5}
              cornerRadius={3}
-             colors={ { datum: 'data.color' }}
+             colors={{ datum: 'data.color' }}
              borderWidth={1}
              borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
-             
-             radialLabelsLinkColor={'#ffffff' }
-             radialLabelsTextColor={'#ffffff'}
+             arcLinkLabelsTextColor="#ffffff"
+             arcLinkLabelsThickness={2}
+             arcLinkLabelsColor= '#ffffff'
+            arcLabelsSkipAngle={10}
+             arcLabelsTextColor= '#ffffff'
+            //  radialLabelsLinkColor={'#ffffff' }
+            //  radialLabelsTextColor={'#ffc400'}
              legends={[
                  {
                      anchor: 'top-right',
